@@ -24,3 +24,7 @@ jobs:
       run: python scripts/generate_game_project.py
     - name: build game project
       run: python scripts/build_game.py
+    - uses: actions/upload-artifact@v4
+      with:
+        name: SpaceShip_Windows
+        path: "bin"
