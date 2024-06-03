@@ -10,8 +10,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../bin/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../bin)
 
 set(SFML_STATIC_LIBRARIES TRUE)
-list(APPEND CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/../../bin/lib/cmake")
-find_package(SFML 3 COMPONENTS Window Graphics System)
+
+include(FetchContent)
+FetchContent_Declare(SFML SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../engine)
+FetchContent_MakeAvailable(SFML)
 
 set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
