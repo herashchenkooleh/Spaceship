@@ -13,8 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    #- name: update submodules
-    #  run: git submodule update --init --recirsive
+      with: 
+        submodules: recursive
+    
+    - name: update submodules
+      run: git submodule update --init --recirsive
     - name: generate engine project
       run: python scripts/generate_engine_project.py
     - name: build engine project
