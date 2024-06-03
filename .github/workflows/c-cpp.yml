@@ -15,11 +15,7 @@ jobs:
     - uses: actions/checkout@v4
       with: 
         submodules: recursive
-        
-    - name: generate engine project
-      run: python scripts/generate_engine_project.py
-    - name: build engine project
-      run: python scripts/build_engine.py
+
     - name: generate game project
       run: python scripts/generate_game_project.py
     - name: build game project
