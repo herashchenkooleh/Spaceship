@@ -15,10 +15,21 @@ include(FetchContent)
 FetchContent_Declare(SFML SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../engine)
 FetchContent_MakeAvailable(SFML)
 
-set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp)
+set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputEvent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputManager.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameStateBase.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameStateManager.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameLoop.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameWindow.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
-set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/InputManager.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateBase.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateManager.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameLoop.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameWindow.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

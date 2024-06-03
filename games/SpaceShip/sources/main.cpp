@@ -1,22 +1,36 @@
-#include "SFML/Window/Window.hpp"
-#include "SFML/Window/VideoMode.hpp"
-#include "SFML/Window/Event.hpp"
-#include "SFML/System/String.hpp"
+#include "GameWindow.hpp"
+#include "InputManager.hpp"
+#include "GameLoop.hpp"
+
+#include <iostream>
 
 int main()
 {
-    sf::Window window (sf::VideoMode( sf::Vector2u(800, 600) ), sf::String("My window"));
+    using namespace SpaceShipGame;
 
-    while (window.isOpen())
+    GameWindow::Ptr Window = MakeShared<GameWindow>();
+    if (!Window || !Window->Create(800, 600, "SpaceShip"))
     {
-        while (sf::Event event = window.pollEvent())
-        {
-            // "close requested" event: we close the window
-            if (event.is<sf::Event::Closed>())
-                window.close();
-        }
+        std::cout << "Failed create game window" << std::endl;
+        return -1;
     }
 
+    InputManager::Ptr InpManager = MakeShared<InputManager>();
+    if (!InpManager || !InpManager->Initialize())
+    {
+        return -1;
+    }
+
+    GameLoop::Ptr Loop = MakeShared<GameLoop>();
+    if (!Loop || !Loop->Initialize(Window, InpManager))
+    {
+        std::cout << "Failed create game loop" << std::endl;
+        return -1;
+    }
+
+    Loop->Start();
+    
+    Loop->Deinitialize();
 
     return 0;
 }
