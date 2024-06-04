@@ -17,6 +17,7 @@ FetchContent_MakeAvailable(SFML)
 
 set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Object.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Actor.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputEvent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputManager.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListener.cpp
@@ -29,11 +30,14 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ShellGameState.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObject.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObjectComponent.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Renderer.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Renderer.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Vector2D.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PositionComponent.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/Object.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Actor.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/InputManager.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/InputListener.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateBase.hpp
@@ -45,7 +49,9 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ShellGameState.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameObject.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameObjectComponent.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Renderer.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Renderer.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Vector2D.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionComponent.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

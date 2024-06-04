@@ -24,19 +24,30 @@ namespace SpaceShipGame
         {
             if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
             {
-                return Iter->second;
+                return DynamicPointerCast<ComponentType>(Iter->second);
             }
 
             auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
-            m_Components[typeid(Component.get())] = Component;
+            m_Components[typeid(*Component.get())] = Component;
             
-            return Component;
+            return DynamicPointerCast<ComponentType>(m_Components[typeid(Component.get())]);
         }
 
         template<typename ComponentType>
         void RemoveComponent()
         {
             m_Components.erase(TypeIndex(typeid(ComponentType)));
+        }
+
+        template<typename ComponentType>
+        decltype(auto) GetComponent()
+        {
+            if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
+            {
+                return  DynamicPointerCast<ComponentType>(Iter->second);
+            }
+            
+            return DynamicPointerCast<ComponentType>(GameObjectComponent::Ptr{ });
         }
 
         void MarkForDelete() { m_IsValid = false; };

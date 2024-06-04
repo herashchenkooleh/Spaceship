@@ -1,6 +1,8 @@
 #include "World.hpp"
 #include "MissionGameState.hpp"
 #include "ShellGameState.hpp"
+#include "Actor.hpp"
+#include "PositionComponent.hpp"
 
 namespace SpaceShipGame
 {
@@ -33,7 +35,7 @@ namespace SpaceShipGame
             m_StateManager->RegisterState(ShellGameState::s_ShellHandle, SGameState);
 
             m_StateManager->Activate(ShellGameState::s_ShellHandle);
-
+            
             //m_InputManager->Register(SGameState);
             //m_InputManager->Register(MGameState);
         }

@@ -7,9 +7,16 @@
 #include <functional>
 #include <algorithm>
 #include <typeindex>
+#include <array>
 
 namespace SpaceShipGame
 {
+
+    using SizeT = std::size_t;
+
+    template<typename Type, SizeT Dimension>
+    using Array = std::array<Type, Dimension>;
+
     using TypeIndex = std::type_index;
 
     template<typename FirstType, typename SecondType>
@@ -41,6 +48,15 @@ namespace SpaceShipGame
     {
         return InThis->shared_from_this();
     }
+
+    template<typename DestType, typename ResType>
+    SharedPtr<DestType> DynamicPointerCast(const SharedPtr<ResType>& InPointer) noexcept
+    {
+        return std::dynamic_pointer_cast<DestType>(std::forward<const SharedPtr<ResType>&>(InPointer));
+    }
+
+    using NullPtr = std::nullptr_t;
+
 
     // template<typename Type>
     // using Function = std::function<Type>;
