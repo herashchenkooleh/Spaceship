@@ -16,22 +16,36 @@ FetchContent_Declare(SFML SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../engine)
 FetchContent_MakeAvailable(SFML)
 
 set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Object.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputEvent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputManager.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListener.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameStateBase.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameStateManager.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameLoop.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameWindow.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/World.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/World.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameState.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ShellGameState.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObject.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObjectComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Renderer.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Object.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/InputManager.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/InputListener.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateBase.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateManager.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameLoop.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameWindow.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/World.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/World.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/MissionGameState.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ShellGameState.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameObject.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameObjectComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Renderer.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

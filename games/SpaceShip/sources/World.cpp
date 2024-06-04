@@ -1,4 +1,6 @@
 #include "World.hpp"
+#include "MissionGameState.hpp"
+#include "ShellGameState.hpp"
 
 namespace SpaceShipGame
 {
@@ -22,9 +24,18 @@ namespace SpaceShipGame
 
         try
         {
-            //TODO create all needed game state and register in manager
+            GameStateBase::Ptr MGameState = MakeShared<MissionGameState>();
+            GameStateBase::Ptr SGameState = MakeShared<ShellGameState>();
 
             m_StateManager = MakeShared<GameStateManager>();
+
+            m_StateManager->RegisterState(MissionGameState::s_MissionHandle, MGameState);
+            m_StateManager->RegisterState(ShellGameState::s_ShellHandle, SGameState);
+
+            m_StateManager->Activate(ShellGameState::s_ShellHandle);
+
+            //m_InputManager->Register(SGameState);
+            //m_InputManager->Register(MGameState);
         }
         catch(...)
         {
@@ -42,6 +53,22 @@ namespace SpaceShipGame
         }
 
         m_StateManager->Update();
+
+        for (auto Object: m_GameObjects)
+        {
+            Object->Update();
+        }
+
+        for (auto Object: m_GameObjects)
+        {
+            if (Object->IsMarkForDelete())
+            {
+                Object->Destroy();
+            }
+        }
+
+        //TODO remove destroed object from world
+        //m_GameObjects.erase();
     }
 
 }

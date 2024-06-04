@@ -6,7 +6,7 @@ namespace SpaceShipGame
     {
         GameWindow::Ptr m_GameWindow;
 
-        MultiMap<InputEvent::Type, Listener> m_Listeners;
+        MultiMap<InputEvent::Type, InputListener::Ptr> m_Listeners;
 
         Implementation(GameWindow::Ptr InGameWindow);
         ~Implementation();
@@ -54,12 +54,12 @@ namespace SpaceShipGame
  
         for (auto Iter = Listeners.first; Iter != Listeners.second; ++Iter)
         {
-            Iter->second(Event);
+            Iter->second->HandleInput(Event);
         }
     }
 
-    void InputManager::Register(InputEvent::Type InType, Listener InFunction)
+    void InputManager::Register(InputEvent::Type InType, InputListener::Ptr InListener)
     {
-        m_Implementation->m_Listeners.insert({ InType, InFunction });
+        m_Implementation->m_Listeners.insert({ InType, InListener });
     }
 }

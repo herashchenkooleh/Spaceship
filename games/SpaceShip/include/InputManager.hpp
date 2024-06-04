@@ -2,7 +2,7 @@
 
 
 #include "Configs.hpp"
-#include "InputEvent.hpp"
+#include "InputListener.hpp"
 #include "GameWindow.hpp"
 
 namespace SpaceShipGame
@@ -14,7 +14,6 @@ namespace SpaceShipGame
 
     public:
         using Ptr = SharedPtr<InputManager>;
-        using Listener = Function<void(const InputEvent&)>;
 
     public:
         InputManager();
@@ -23,7 +22,7 @@ namespace SpaceShipGame
         bool Initialize(GameWindow::Ptr InGameWindow);
         void Update();
 
-        void Register(InputEvent::Type InType, Listener InFunction);
+        void Register(InputEvent::Type InType, InputListener::Ptr InListener);
 
     private:
         ImplementationPtr m_Implementation;

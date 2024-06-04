@@ -17,7 +17,7 @@ namespace SpaceShipGame
 
     /*virtual*/ void GameStateBase::Update()
     {
-        
+
     }
 
     /*virtual*/ void GameStateBase::Exit()

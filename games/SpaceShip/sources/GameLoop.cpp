@@ -11,8 +11,6 @@ namespace SpaceShipGame
 
         Implementation(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld);
         ~Implementation();
-
-        void OnExitCallback(const InputEvent& InEvent);
     };
 
     GameLoop::Implementation::Implementation(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld)
@@ -24,11 +22,6 @@ namespace SpaceShipGame
     }
 
     GameLoop::Implementation::~Implementation() = default;
-
-    void GameLoop::Implementation::OnExitCallback(const InputEvent& InEvent)
-    {
-        m_Exit = true;
-    }
 
     GameLoop::GameLoop()
         : m_Implementation(nullptr)
@@ -47,7 +40,7 @@ namespace SpaceShipGame
         try
         {
             m_Implementation = MakeShared<Implementation>(InWindow, InInputManager, InPlayWorld);
-            m_Implementation->m_InputManager->Register(InputEvent::Type::Exit, Bind(&GameLoop::Implementation::OnExitCallback, m_Implementation.get(), Placeholder1));
+            m_Implementation->m_InputManager->Register(InputEvent::Type::Exit, SharedFromThis(this));
         }
         catch (...)
         {
@@ -77,5 +70,10 @@ namespace SpaceShipGame
     void GameLoop::Deinitialize()
     {
         m_Implementation->m_Window->Close();
+    }
+
+    /*virtual*/ void GameLoop::HandleInput(const InputEvent& InEvent) /*override*/
+    {
+        
     }
 }
