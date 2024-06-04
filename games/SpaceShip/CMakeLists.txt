@@ -21,7 +21,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameStateBase.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameStateManager.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameLoop.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameWindow.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameWindow.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/World.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
@@ -29,7 +30,8 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateBase.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameStateManager.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameLoop.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameWindow.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/GameWindow.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/World.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

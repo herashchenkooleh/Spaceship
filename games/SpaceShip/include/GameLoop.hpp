@@ -2,7 +2,7 @@
 
 #include "Configs.hpp"
 #include "GameWindow.hpp"
-#include "InputManager.hpp"
+#include "World.hpp"
 
 namespace SpaceShipGame
 {
@@ -21,7 +21,7 @@ namespace SpaceShipGame
         GameLoop(const GameLoop& InObj) = delete;
         GameLoop& operator=(const GameLoop& InObj) = delete;
 
-        bool Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager);
+        bool Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld);
         void Start();
         void Deinitialize();
 

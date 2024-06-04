@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Configs.hpp"
+#include "GameStateBase.hpp"
 
 namespace SpaceShipGame
 {
@@ -11,5 +12,19 @@ namespace SpaceShipGame
 
         GameStateManager();
         ~GameStateManager();
+
+        GameStateManager(const GameStateManager& InObj) = delete;
+        GameStateManager& operator=(const GameStateManager& InObj) = delete;
+
+        void RegisterState(GameStateBase::Handle InHandler, GameStateBase::Ptr InState);
+
+        void Activate(GameStateBase::Handle InHandler);
+        void Update();
+        void DeactivateCurrent();
+
+    private:
+        UnorderedMap<GameStateBase::Handle, GameStateBase::Ptr> m_States;
+
+        GameStateBase::Ptr m_ActiveState;
     };
 }

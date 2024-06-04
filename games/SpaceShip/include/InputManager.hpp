@@ -3,6 +3,7 @@
 
 #include "Configs.hpp"
 #include "InputEvent.hpp"
+#include "GameWindow.hpp"
 
 namespace SpaceShipGame
 {
@@ -13,14 +14,16 @@ namespace SpaceShipGame
 
     public:
         using Ptr = SharedPtr<InputManager>;
+        using Listener = Function<void(const InputEvent&)>;
 
     public:
         InputManager();
         ~InputManager();
 
-        bool Initialize();
+        bool Initialize(GameWindow::Ptr InGameWindow);
+        void Update();
 
-        void HandleEvent(const InputEvent& InEvent);
+        void Register(InputEvent::Type InType, Listener InFunction);
 
     private:
         ImplementationPtr m_Implementation;
