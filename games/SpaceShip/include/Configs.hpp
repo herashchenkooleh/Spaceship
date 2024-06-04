@@ -6,9 +6,12 @@
 #include <memory>
 #include <functional>
 #include <algorithm>
+#include <typeindex>
 
 namespace SpaceShipGame
 {
+    using TypeIndex = std::type_index;
+
     template<typename FirstType, typename SecondType>
     using Pair = std::pair<FirstType, SecondType>;
 

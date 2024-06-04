@@ -67,8 +67,7 @@ namespace SpaceShipGame
             }
         }
 
-        //TODO remove destroed object from world
-        //m_GameObjects.erase();
+        RemoveIf(m_GameObjects.begin(), m_GameObjects.end(), [](const GameObject::Ptr InObj) { return InObj->IsMarkForDelete(); });
     }
 
 }

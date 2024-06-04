@@ -19,14 +19,31 @@ namespace SpaceShipGame
         virtual bool Construct();
         virtual bool Destroy();
 
-        void AddComponent(GameObjectComponent::Ptr InComponent);
-        void RemoveComponent(GameObjectComponent::Ptr InComponent);
+        template<typename ComponentType, typename ...Args>
+        decltype(auto) AddComponent(Args... InArgs)
+        {
+            if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
+            {
+                return Iter->second;
+            }
+
+            auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
+            m_Components[typeid(Component.get())] = Component;
+            
+            return Component;
+        }
+
+        template<typename ComponentType>
+        void RemoveComponent()
+        {
+            m_Components.erase(TypeIndex(typeid(ComponentType)));
+        }
 
         void MarkForDelete() { m_IsValid = false; };
         bool IsMarkForDelete() const { return !m_IsValid; };
 
     private:
         bool m_IsValid;
-        Vector<GameObjectComponent::Ptr> m_Components;
+        UnorderedMap<TypeIndex, GameObjectComponent::Ptr> m_Components;
     };
 }

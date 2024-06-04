@@ -21,14 +21,4 @@ namespace SpaceShipGame
     {
         return true;
     }
-
-    void GameObject::AddComponent(GameObjectComponent::Ptr InComponent)
-    {
-
-    }
-
-    void GameObject::RemoveComponent(GameObjectComponent::Ptr InComponent)
-    {
-
-    }
 }
