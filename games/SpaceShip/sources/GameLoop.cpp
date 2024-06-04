@@ -1,4 +1,5 @@
 #include "GameLoop.hpp"
+#include "Timer.hpp"
 
 namespace SpaceShipGame
 {
@@ -8,6 +9,7 @@ namespace SpaceShipGame
         GameWindow::Ptr m_Window;
         InputManager::Ptr m_InputManager;
         World::Ptr m_PlayWorld;
+        Timer m_Timer;
 
         Implementation(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld);
         ~Implementation();
@@ -60,10 +62,19 @@ namespace SpaceShipGame
             return;
         }
 
+        long long TimeSinceLastUpdate = 0;
+        long long TimeStamp = Timer::GetTimestempForFps(60);
         while (!m_Implementation->m_Exit)
         {
-            m_Implementation->m_InputManager->Update();
-            m_Implementation->m_PlayWorld->Update();
+            TimeSinceLastUpdate += m_Implementation->m_Timer.Reset();
+
+            Timer SubStepingTimer;
+            do
+            { 
+                m_Implementation->m_InputManager->Update();
+                m_Implementation->m_PlayWorld->Update(static_cast<float>(SubStepingTimer.Reset()) / static_cast<float>(Timer::GetTicksPerSecond()));
+                TimeSinceLastUpdate -= TimeStamp;
+            } while (TimeSinceLastUpdate > TimeStamp);
         }
     }
 

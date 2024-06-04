@@ -14,7 +14,7 @@ namespace SpaceShipGame
         GameObject();
         virtual ~GameObject();
 
-        virtual void Update();
+        virtual void Update(const float InDeltaTime);
 
         virtual bool Construct();
         virtual bool Destroy();

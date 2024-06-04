@@ -32,7 +32,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObjectComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Renderer.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Vector2D.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PositionComponent.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PositionComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Timer.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
@@ -51,7 +52,8 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/GameObjectComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/Renderer.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/Vector2D.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionComponent.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

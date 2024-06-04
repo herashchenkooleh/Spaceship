@@ -47,7 +47,7 @@ namespace SpaceShipGame
         return true;
     }
 
-    void World::Update()
+    void World::Update(const float InDeltaTime)
     {
         if (!m_StateManager || !m_InputManager)
         {
@@ -58,7 +58,7 @@ namespace SpaceShipGame
 
         for (auto Object: m_GameObjects)
         {
-            Object->Update();
+            Object->Update(InDeltaTime);
         }
 
         for (auto Object: m_GameObjects)

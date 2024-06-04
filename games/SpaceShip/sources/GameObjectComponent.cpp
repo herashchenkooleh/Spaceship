@@ -6,24 +6,32 @@ namespace SpaceShipGame
 
     /*virtual*/ GameObjectComponent::~GameObjectComponent() = default;
 
-    /*virtual*/ void GameObjectComponent::Update()
+    /*virtual*/ void GameObjectComponent::Update(const float InDeltaTime)
     {
-        for(auto& Component: m_ChildComponents)
+        for(auto& [TypeID, ChildComponent]: m_Components)
         {
-            if (Component.first)
+            if (ChildComponent.first)
             {
-                Component.second->Update();
+                ChildComponent.second->Update(InDeltaTime);
             }
         }
     }
 
-    void GameObjectComponent::AddComponent(GameObjectComponent::Ptr InComponent, const bool InNeedUpdate /*= false*/)
+    /*virtual*/ bool GameObjectComponent::Construct()
     {
-        m_ChildComponents.push_back({ InNeedUpdate, InComponent });
+        return true;
     }
 
-    void GameObjectComponent::RemoveComponent(GameObjectComponent::Ptr InComponent)
+    /*virtual*/ bool GameObjectComponent::Destroy()
     {
-        RemoveIf(m_ChildComponents.begin(), m_ChildComponents.end(), [InComponent](const ChildComponent& InItem) { return *InItem.second == *InComponent; });
+        for(auto& [TypeID, ChildComponent]: m_Components)
+        {
+            if (ChildComponent.first)
+            {
+                ChildComponent.second->Destroy();
+            }
+        }
+
+        return true;
     }
 }

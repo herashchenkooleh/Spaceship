@@ -19,7 +19,7 @@ namespace SpaceShipGame
         ~World();
 
         bool Initialize(InputManager::Ptr InInputManager);
-        void Update();
+        void Update(const float InDeltaTime);
 
     private:
         GameStateManager::Ptr m_StateManager;
