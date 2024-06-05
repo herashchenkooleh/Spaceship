@@ -1,7 +1,9 @@
 #include "Character.hpp"
+#include "ScaleComponent.hpp"
+#include "RotationComponent.hpp"
 #include "PositionComponent.hpp"
 #include "MeshComponent.hpp"
-#include <iostream>
+
 namespace SpaceShipGame
 {
     Character::Character(const String& InTexturePath)
@@ -19,10 +21,16 @@ namespace SpaceShipGame
             return false;
         }
 
+        ScaleComponent::Ptr SComponent = AddComponent<ScaleComponent>();
+        SComponent->SetScale({0.07f, 0.07f});
+        RotationComponent::Ptr RComponent = AddComponent<RotationComponent>();
         PositionComponent::Ptr PosComponent = GetComponent<PositionComponent>();
-        AddComponent<MeshComponent>(m_TexturePath, PosComponent);
-        
-        std::cout << "Constract character" << m_Components.size() << std::endl;
+        if(auto MComponent = AddComponent<MeshComponent>(m_TexturePath))
+        {
+            MComponent->AddComponent<RotationComponent>(RComponent);
+            MComponent->AddComponent<ScaleComponent>(SComponent);
+            MComponent->AddComponent<PositionComponent>(PosComponent);
+        }
 
         return true;
     }

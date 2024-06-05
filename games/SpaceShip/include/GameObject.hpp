@@ -29,9 +29,9 @@ namespace SpaceShipGame
             }
 
             auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
-            m_Components[TypeIndex(typeid(*Component.get()))] = Component;
+            m_Components[TypeIndex(typeid(ComponentType))] = Component;
 
-            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(*Component.get()))]);
+            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(ComponentType))]);
         }
 
         template<typename ComponentType>

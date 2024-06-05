@@ -1,8 +1,6 @@
 #include "Actor.hpp"
 #include "World.hpp"
 #include "PositionComponent.hpp"
-#include "MeshComponent.hpp"
-#include <iostream>
 
 namespace SpaceShipGame
 {

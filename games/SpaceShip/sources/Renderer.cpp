@@ -1,5 +1,8 @@
 #include "Renderer.hpp"
 #include "SFML/Graphics.hpp"
+#include "ScaleComponent.hpp"
+#include "RotationComponent.hpp"
+#include "PositionComponent.hpp"
 
 namespace SpaceShipGame
 {
@@ -76,13 +79,21 @@ namespace SpaceShipGame
         
         for (auto [Identifier, Mesh] : m_Implementation->m_Meshes)
         {
-            PositionComponent::Ptr PosComponent = Mesh->m_MeshComponent->GetComponent<PositionComponent>();
-            if (PosComponent)
+            if (ScaleComponent::Ptr SComponent = Mesh->m_MeshComponent->GetComponent<ScaleComponent>())
             {
-                //TODO Scale and Rotation
+                Vector2D Scale = SComponent->GetScale();
+                Mesh->m_Sprite->setScale({ Scale.GetX(), Scale.GetY() });
+            }
+
+            if (RotationComponent::Ptr RComponent = Mesh->m_MeshComponent->GetComponent<RotationComponent>())
+            {
+                Mesh->m_Sprite->setRotation(sf::degrees(RComponent->GetDegrees()));
+            }
+
+            if (PositionComponent::Ptr PosComponent = Mesh->m_MeshComponent->GetComponent<PositionComponent>())
+            {
                 Vector2D Position = PosComponent->GetPosition();
                 Mesh->m_Sprite->setPosition({ Position.GetX(), Position.GetY() });
-                Mesh->m_Sprite->setScale({ 0.1f, 0.1f });
             }
             
             m_Implementation->m_HwRenderTarget->draw(*Mesh->m_Sprite.get());

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Vector2D.hpp"
-#include "PositionComponent.hpp"
 #include "GameObjectComponent.hpp"
 
 namespace SpaceShipGame
@@ -11,14 +10,13 @@ namespace SpaceShipGame
     public:
         using Ptr = SharedPtr<MeshComponent>;
 
-        MeshComponent(const String InTexture, PositionComponent::Ptr InPositionComponent);
+        MeshComponent(const String InTexture);
         ~MeshComponent();
 
         virtual bool Construct();
         virtual bool Destroy();
 
         const String& GetTexture() const;
-        const Vector2D& GetPosition() const;
 
     private:
         String m_Texture;

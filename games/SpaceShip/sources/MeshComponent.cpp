@@ -2,10 +2,10 @@
 
 namespace SpaceShipGame
 {
-    MeshComponent::MeshComponent(const String InTexture, PositionComponent::Ptr InPositionComponent)
+    MeshComponent::MeshComponent(const String InTexture)
         : m_Texture(InTexture)
     {
-        AddComponent<PositionComponent>(InPositionComponent);
+
     }
 
     MeshComponent::~MeshComponent() = default;
@@ -23,16 +23,5 @@ namespace SpaceShipGame
     const String& MeshComponent::GetTexture() const
     {
         return m_Texture;
-    }
-
-    const Vector2D& MeshComponent::GetPosition() const
-    {
-        if (PositionComponent::Ptr PosComponent = GetComponent<PositionComponent>(); PosComponent != nullptr)
-        {
-            return PosComponent->GetPosition();
-        }
-
-        static Vector2D s_EmptyPosition;
-        return s_EmptyPosition;
     }
 }

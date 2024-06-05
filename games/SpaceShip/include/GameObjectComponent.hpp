@@ -26,9 +26,9 @@ namespace SpaceShipGame
             {
                 return DynamicPointerCast<ComponentType>(Iter->second.second);
             }
-            m_Components[TypeIndex(typeid(*InComponent.get()))] = {  true, InComponent };
+            m_Components[TypeIndex(typeid(ComponentType))] = {  NeedUpdate, InComponent };
             
-            return DynamicPointerCast<ComponentType>(m_Components[typeid(InComponent.get())].second);
+            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(ComponentType))].second);
         }
 
         template<typename ComponentType, typename ...Args>
@@ -42,7 +42,7 @@ namespace SpaceShipGame
             auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
             m_Components[TypeIndex(typeid(*Component.get()))] = {  true, Component };
             
-            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(*Component.get()))].second);
+            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(ComponentType))].second);
         }
 
         template<typename ComponentType>
