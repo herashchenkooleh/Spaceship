@@ -53,7 +53,7 @@ namespace SpaceShipGame
         try
         {
             m_Implementation = MakeShared<Implementation>(InWindow, InInputManager, InPlayWorld);
-            m_Implementation->m_InputManager->Register(InputEvent::Type::Exit, m_Implementation);
+            m_Implementation->m_InputManager->Register(m_Implementation, InputEvent::Type::Exit);
 
             m_Implementation->m_Renderer = InRenderer;
         }

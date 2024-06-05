@@ -38,7 +38,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MeshComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Character.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScaleComponent.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/RotationComponent.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/RotationComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PlayerController.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
@@ -63,7 +64,8 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/MeshComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/Character.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ScaleComponent.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/RotationComponent.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/RotationComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/PlayerController.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

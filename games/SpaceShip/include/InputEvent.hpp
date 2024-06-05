@@ -8,6 +8,7 @@ namespace SpaceShipGame
         enum class Type
         {
             Exit,
+            All,
             Unkwnown
         };
 

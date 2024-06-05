@@ -56,10 +56,21 @@ namespace SpaceShipGame
         {
             Iter->second->HandleInput(Event);
         }
+
+        auto FullListeners = m_Implementation->m_Listeners.equal_range(InputEvent::Type::All);
+        for (auto Iter = FullListeners.first; Iter != FullListeners.second; ++Iter)
+        {
+            Iter->second->HandleInput(Event);
+        }
     }
 
-    void InputManager::Register(InputEvent::Type InType, InputListener::Ptr InListener)
+    void InputManager::Register(InputListener::Ptr InListener, InputEvent::Type InType /*= InputEvent::Type::All*/)
     {
         m_Implementation->m_Listeners.insert({ InType, InListener });
+    }
+
+    void InputManager::Unregister(InputListener::Ptr InListener)
+    {
+        //TODO
     }
 }

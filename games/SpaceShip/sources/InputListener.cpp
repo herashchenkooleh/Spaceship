@@ -2,13 +2,8 @@
 
 namespace SpaceShipGame
 {
-    static InputListener::UUID s_GlobalUUID = 0;
-
-    InputListener::InputListener()
-        : m_ID(s_GlobalUUID++)
-    {
-
-    }
+    InputListener::InputListener() = default;
+    
     /*virtual*/ InputListener::~InputListener() = default;   
 
     /*virtual*/ void InputListener::HandleInput(const InputEvent& InEvent)

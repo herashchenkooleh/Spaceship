@@ -22,7 +22,8 @@ namespace SpaceShipGame
         bool Initialize(GameWindow::Ptr InGameWindow);
         void Update();
 
-        void Register(InputEvent::Type InType, InputListener::Ptr InListener);
+        void Register(InputListener::Ptr InListener, InputEvent::Type InType = InputEvent::Type::All);
+        void Unregister(InputListener::Ptr InListener);
 
     private:
         ImplementationPtr m_Implementation;
