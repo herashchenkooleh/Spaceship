@@ -8,9 +8,16 @@
 #include <algorithm>
 #include <typeindex>
 #include <array>
+#include <mutex>
 
 namespace SpaceShipGame
 {
+    using String = std::string;
+
+    using Mutex = std::mutex;
+
+    template<typename Type>
+    using Lock = std::lock_guard<Type>;
 
     using SizeT = std::size_t;
 
@@ -36,6 +43,9 @@ namespace SpaceShipGame
 
     template<typename KeyType, typename ValueType>
     using MultiMap = std::multimap<KeyType, ValueType>;
+
+    template<typename KeyType, typename ValueType>
+    using Map = std::map<KeyType, ValueType>;
 
     template<typename KeyType, typename ValueType>
     using UnorderedMap = std::unordered_map<KeyType, ValueType>;

@@ -13,6 +13,8 @@ namespace SpaceShipGame
     public:
         using Ptr = SharedPtr<GameWindow>;
 
+        using RenderTargetHandle = void*;
+
     public:
         GameWindow();
         ~GameWindow();
@@ -24,6 +26,8 @@ namespace SpaceShipGame
 
         InputEvent PollEvent();
         void Close();
+
+        RenderTargetHandle GetRenderTarget() const;
 
     private:
         ImplementationPtr m_Implementation;

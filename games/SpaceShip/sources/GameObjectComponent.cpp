@@ -19,6 +19,14 @@ namespace SpaceShipGame
 
     /*virtual*/ bool GameObjectComponent::Construct()
     {
+        for(auto& [TypeID, ChildComponent]: m_Components)
+        {
+            if (ChildComponent.first)
+            {
+                ChildComponent.second->Construct();
+            }
+        }
+
         return true;
     }
 

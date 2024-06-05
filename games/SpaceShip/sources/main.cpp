@@ -1,6 +1,7 @@
 #include "GameWindow.hpp"
 #include "GameLoop.hpp"
 #include "World.hpp"
+#include "Renderer.hpp"
 
 int main()
 {
@@ -18,11 +19,19 @@ int main()
         return -1;
     }
 
-    World::Ptr PlayWorld = MakeShared<World>();
-    if (!PlayWorld || !PlayWorld->Initialize(InpManager))
+    Renderer::Ptr Render = MakeShared<Renderer>();
+    if (!Render || !Render->Initialize(Window))
     {
         return -1;
     }
+
+    World::Ptr PlayWorld = MakeShared<World>();
+    if (!PlayWorld || !PlayWorld->Initialize(InpManager, Render))
+    {
+        return -1;
+    }
+
+    World::SetCurrentWorld(PlayWorld);
 
     GameLoop::Ptr Loop = MakeShared<GameLoop>();
     if (!Loop || !Loop->Initialize(Window, InpManager, PlayWorld))

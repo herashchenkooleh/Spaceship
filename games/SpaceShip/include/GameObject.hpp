@@ -6,7 +6,7 @@
 
 namespace SpaceShipGame
 {
-    class GameObject : public Object
+    class GameObject : public Object, public EnableSharedFromThis<GameObject>
     {
     public:
         using Ptr = SharedPtr<GameObject>;

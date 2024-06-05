@@ -1,5 +1,5 @@
 #include "GameWindow.hpp"
-#include "SFML/Window/Window.hpp"
+#include <SFML/Graphics.hpp>
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/System/String.hpp"
@@ -12,7 +12,7 @@ namespace SpaceShipGame
         unsigned int m_Height;
         const char* m_Title;
 
-        sf::Window m_HwWindow;
+        sf::RenderWindow m_HwWindow;
 
         Implementation(const unsigned int InWidth, const unsigned int InHeight, const char* InTitle);
         ~Implementation();
@@ -75,5 +75,10 @@ namespace SpaceShipGame
     void GameWindow::Close()
     {
         m_Implementation->m_HwWindow.close();
+    }
+
+    GameWindow::RenderTargetHandle GameWindow::GetRenderTarget() const
+    {
+        return reinterpret_cast<void*>(&m_Implementation->m_HwWindow);
     }
 }

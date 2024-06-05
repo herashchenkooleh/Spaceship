@@ -8,18 +8,18 @@ namespace SpaceShipGame
     {
     public:
         Vector2D();
-        Vector2D(const int InXCoord, const int InYCoord);
+        Vector2D(const float InXCoord, const float InYCoord);
 
         Vector2D(const Vector2D& InVector2D);
         Vector2D& operator=(const Vector2D& InVector2D);
 
         ~Vector2D();
 
-        int GetX() const { return m_XCoord; };
-        int GetY() const { return m_YCoord; };
+        float GetX() const { return m_XCoord; };
+        float GetY() const { return m_YCoord; };
 
-        void SetX(const int InCoordX) { m_XCoord = InCoordX; };
-        void SetY(const int InCoordY) { m_YCoord = InCoordY; };
+        void SetX(const float InCoordX) { m_XCoord = InCoordX; };
+        void SetY(const float InCoordY) { m_YCoord = InCoordY; };
 
         friend Vector2D operator+(const Vector2D& InLhl, const Vector2D& InRhl)
         {
@@ -93,7 +93,7 @@ namespace SpaceShipGame
             return *this;
         }
 
-        friend Vector2D operator+(const Vector2D& InLhl, const int InRhl)
+        friend Vector2D operator+(const Vector2D& InLhl, const float InRhl)
         {
             Vector2D Temp;
 
@@ -103,7 +103,7 @@ namespace SpaceShipGame
             return Temp;
         }
 
-        friend Vector2D operator-(const Vector2D& InLhl, const int InRhl)
+        friend Vector2D operator-(const Vector2D& InLhl, const float InRhl)
         {
             Vector2D Temp;
 
@@ -113,7 +113,7 @@ namespace SpaceShipGame
             return Temp;
         }
 
-        friend Vector2D operator*(const Vector2D& InLhl, const int InRhl)
+        friend Vector2D operator*(const Vector2D& InLhl, const float InRhl)
         {
             Vector2D Temp;
 
@@ -123,7 +123,7 @@ namespace SpaceShipGame
             return Temp;
         }
 
-        friend Vector2D operator/(const Vector2D& InLhl, const int InRhl)
+        friend Vector2D operator/(const Vector2D& InLhl, const float InRhl)
         {
             Vector2D Temp;
 
@@ -133,7 +133,7 @@ namespace SpaceShipGame
             return Temp;
         }
 
-        Vector2D& operator+=(const int InObj)
+        Vector2D& operator+=(const float InObj)
         {
             m_XCoord += InObj;
             m_YCoord += InObj;
@@ -141,7 +141,7 @@ namespace SpaceShipGame
             return *this;
         }
 
-        Vector2D& operator-=(const int InObj)
+        Vector2D& operator-=(const float InObj)
         {
             m_XCoord -= InObj;
             m_YCoord -= InObj;
@@ -149,7 +149,7 @@ namespace SpaceShipGame
             return *this;
         }
 
-        Vector2D& operator*=(const int InObj)
+        Vector2D& operator*=(const float InObj)
         {
             m_XCoord *= InObj;
             m_YCoord *= InObj;
@@ -157,7 +157,7 @@ namespace SpaceShipGame
             return *this;
         }
 
-        Vector2D& operator/=(const int InObj)
+        Vector2D& operator/=(const float InObj)
         {
             m_XCoord /= InObj;
             m_YCoord /= InObj;
@@ -166,7 +166,7 @@ namespace SpaceShipGame
         }
 
     private:
-        int m_XCoord;
-        int m_YCoord;
+        float m_XCoord;
+        float m_YCoord;
     };
 }

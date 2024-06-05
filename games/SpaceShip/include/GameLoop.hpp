@@ -6,7 +6,7 @@
 
 namespace SpaceShipGame
 {
-    class GameLoop : public InputListener, public EnableSharedFromThis<GameLoop>
+    class GameLoop
     {
         struct Implementation;
         using ImplementationPtr = SharedPtr<Implementation>;
@@ -24,8 +24,6 @@ namespace SpaceShipGame
         bool Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld);
         void Start();
         void Deinitialize();
-
-        virtual void HandleInput(const InputEvent& InEvent) override;
 
     private:
         ImplementationPtr m_Implementation;

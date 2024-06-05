@@ -18,8 +18,20 @@ namespace SpaceShipGame
         virtual bool Construct();
         virtual bool Destroy();
 
+        template<typename ComponentType>
+        decltype(auto) AddComponent(typename ComponentType::Ptr InComponent, bool NeedUpdate = false)
+        {
+            if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
+            {
+                return DynamicPointerCast<ComponentType>(Iter->second.second);
+            }
+            m_Components[typeid(*InComponent.get())] = {  true, InComponent };
+            
+            return DynamicPointerCast<ComponentType>(m_Components[typeid(InComponent.get())].second);
+        }
+
         template<typename ComponentType, typename ...Args>
-        decltype(auto) AddComponent(const bool NeedUpdate, Args... InArgs)
+        decltype(auto) AddNewComponent(Args... InArgs)
         {
             if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
             {
@@ -27,7 +39,7 @@ namespace SpaceShipGame
             }
 
             auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
-            m_Components[typeid(*Component.get())] = {  NeedUpdate, Component };
+            m_Components[typeid(*Component.get())] = {  true, Component };
             
             return DynamicPointerCast<ComponentType>(m_Components[typeid(Component.get())].second);
         }
@@ -39,7 +51,7 @@ namespace SpaceShipGame
         }
 
         template<typename ComponentType>
-        decltype(auto) GetComponent()
+        decltype(auto) GetComponent() const
         {
             if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
             {

@@ -9,7 +9,7 @@ namespace SpaceShipGame
 
     }
 
-    Vector2D::Vector2D(const int InXCoord, const int InYCoord)
+    Vector2D::Vector2D(const float InXCoord, const float InYCoord)
         : m_XCoord(InXCoord)
         , m_YCoord(InYCoord)
     {
