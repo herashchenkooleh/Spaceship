@@ -3,6 +3,7 @@
 #include "Configs.hpp"
 #include "Object.hpp"
 #include "GameObjectComponent.hpp"
+#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -28,9 +29,9 @@ namespace SpaceShipGame
             }
 
             auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
-            m_Components[typeid(*Component.get())] = Component;
-            
-            return DynamicPointerCast<ComponentType>(m_Components[typeid(Component.get())]);
+            m_Components[TypeIndex(typeid(*Component.get()))] = Component;
+
+            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(*Component.get()))]);
         }
 
         template<typename ComponentType>
@@ -44,7 +45,7 @@ namespace SpaceShipGame
         {
             if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
             {
-                return  DynamicPointerCast<ComponentType>(Iter->second);
+                return DynamicPointerCast<ComponentType>(Iter->second);
             }
             
             return DynamicPointerCast<ComponentType>(GameObjectComponent::Ptr{ });
@@ -53,7 +54,7 @@ namespace SpaceShipGame
         void MarkForDelete() { m_IsValid = false; };
         bool IsMarkForDelete() const { return !m_IsValid; };
 
-    private:
+    protected:
         bool m_IsValid;
         UnorderedMap<TypeIndex, GameObjectComponent::Ptr> m_Components;
     };

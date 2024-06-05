@@ -34,7 +34,7 @@ int main()
     World::SetCurrentWorld(PlayWorld);
 
     GameLoop::Ptr Loop = MakeShared<GameLoop>();
-    if (!Loop || !Loop->Initialize(Window, InpManager, PlayWorld))
+    if (!Loop || !Loop->Initialize(Window, InpManager, PlayWorld, Render))
     {
         return -1;
     }

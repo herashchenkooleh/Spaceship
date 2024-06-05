@@ -21,7 +21,7 @@ namespace SpaceShipGame
         GameLoop(const GameLoop& InObj) = delete;
         GameLoop& operator=(const GameLoop& InObj) = delete;
 
-        bool Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld);
+        bool Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld, Renderer::Ptr InRenderer);
         void Start();
         void Deinitialize();
 

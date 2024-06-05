@@ -10,18 +10,16 @@ namespace SpaceShipGame
     {
         for (auto& [TypeID, ChildComponent]: m_Components)
         {
-            ChildComponent->Update(InDeltaTime);
+            if (ChildComponent)
+            {
+                ChildComponent->Update(InDeltaTime);
+            }
         }
     }
 
     /*virtual*/ bool GameObject::Construct()
     {
         m_IsValid = true;
-
-        for (auto& [TypeID, ChildComponent]: m_Components)
-        {
-            ChildComponent->Construct();
-        }
 
         return true;
     }
@@ -30,7 +28,10 @@ namespace SpaceShipGame
     {
         for (auto& [TypeID, ChildComponent]: m_Components)
         {
-            ChildComponent->Destroy();
+            if (ChildComponent)
+            {
+                ChildComponent->Destroy();
+            }
         }
 
         return true;

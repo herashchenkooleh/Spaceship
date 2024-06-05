@@ -35,4 +35,9 @@ namespace SpaceShipGame
     {
 
     }
+
+     /*virtual*/ GameStateBase::Handle ShellGameState::GetHandle() const
+    {
+        return s_ShellHandle;
+    }
 }

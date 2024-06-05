@@ -2,6 +2,8 @@
 
 namespace SpaceShipGame
 {
+    int GameStateBase::s_InvalidHandle = -1;
+
     GameStateBase::GameStateBase() = default;
     /*virtual*/ GameStateBase::~GameStateBase() = default;
 
@@ -23,5 +25,10 @@ namespace SpaceShipGame
     /*virtual*/ void GameStateBase::Exit()
     {
 
+    }
+
+    /*virtual*/ GameStateBase::Handle GameStateBase::GetHandle() const
+    {
+        return s_InvalidHandle;
     }
 }

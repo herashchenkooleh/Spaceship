@@ -1,6 +1,8 @@
 #include "Actor.hpp"
 #include "World.hpp"
 #include "PositionComponent.hpp"
+#include "MeshComponent.hpp"
+#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -12,8 +14,6 @@ namespace SpaceShipGame
         }
 
         AddComponent<PositionComponent>();
-
-        World::GetCurrentWorld()->RegisterGameObject(SharedFromThis(this));
 
         return true;
     }

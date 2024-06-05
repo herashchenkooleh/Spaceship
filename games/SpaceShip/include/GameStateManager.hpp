@@ -25,6 +25,7 @@ namespace SpaceShipGame
     private:
         UnorderedMap<GameStateBase::Handle, GameStateBase::Ptr> m_States;
 
+        GameStateBase::Handle m_ActiveStateHandle;
         GameStateBase::Ptr m_ActiveState;
     };
 }

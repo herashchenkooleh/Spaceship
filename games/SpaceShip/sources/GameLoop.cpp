@@ -1,6 +1,7 @@
 #include "GameLoop.hpp"
 #include "Timer.hpp"
 #include "Renderer.hpp"
+#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -42,7 +43,7 @@ namespace SpaceShipGame
 
     GameLoop::~GameLoop() = default;
 
-    bool GameLoop::Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld)
+    bool GameLoop::Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld, Renderer::Ptr InRenderer)
     {
         if (m_Implementation)
         {
@@ -54,11 +55,7 @@ namespace SpaceShipGame
             m_Implementation = MakeShared<Implementation>(InWindow, InInputManager, InPlayWorld);
             m_Implementation->m_InputManager->Register(InputEvent::Type::Exit, m_Implementation);
 
-            m_Implementation->m_Renderer = MakeShared<Renderer>();
-            if (!m_Implementation->m_Renderer->Initialize(m_Implementation->m_Window))
-            {
-                return false;
-            }
+            m_Implementation->m_Renderer = InRenderer;
         }
         catch (...)
         {
@@ -91,9 +88,11 @@ namespace SpaceShipGame
                 m_Implementation->m_PlayWorld->Update(static_cast<float>(SubStepingTimer.Reset()) / static_cast<float>(Timer::GetTicksPerSecond()));
                 TimeSinceLastUpdate -= TimeStamp;
             } while (TimeSinceLastUpdate > TimeStamp);
+            
 
             float Interpolation = 0.2; //TODO
             m_Implementation->m_Renderer->Draw(Interpolation);
+            
         }
     }
 

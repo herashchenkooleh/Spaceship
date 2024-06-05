@@ -2,6 +2,7 @@
 
 #include "Configs.hpp"
 #include "Object.hpp"
+#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -25,7 +26,7 @@ namespace SpaceShipGame
             {
                 return DynamicPointerCast<ComponentType>(Iter->second.second);
             }
-            m_Components[typeid(*InComponent.get())] = {  true, InComponent };
+            m_Components[TypeIndex(typeid(*InComponent.get()))] = {  true, InComponent };
             
             return DynamicPointerCast<ComponentType>(m_Components[typeid(InComponent.get())].second);
         }
@@ -39,9 +40,9 @@ namespace SpaceShipGame
             }
 
             auto Component = MakeShared<ComponentType>(std::forward<Args>(InArgs)...);
-            m_Components[typeid(*Component.get())] = {  true, Component };
+            m_Components[TypeIndex(typeid(*Component.get()))] = {  true, Component };
             
-            return DynamicPointerCast<ComponentType>(m_Components[typeid(Component.get())].second);
+            return DynamicPointerCast<ComponentType>(m_Components[TypeIndex(typeid(*Component.get()))].second);
         }
 
         template<typename ComponentType>

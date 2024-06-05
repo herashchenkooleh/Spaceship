@@ -2,6 +2,7 @@
 #include "MissionGameState.hpp"
 #include "ShellGameState.hpp"
 #include "MeshComponent.hpp"
+#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -49,8 +50,8 @@ namespace SpaceShipGame
             m_StateManager->RegisterState(MissionGameState::s_MissionHandle, MGameState);
             m_StateManager->RegisterState(ShellGameState::s_ShellHandle, SGameState);
 
-            m_StateManager->Activate(ShellGameState::s_ShellHandle);
-            
+            m_StateManager->Activate(MissionGameState::s_MissionHandle);
+
             //m_InputManager->Register(SGameState);
             //m_InputManager->Register(MGameState);
         }
@@ -69,8 +70,6 @@ namespace SpaceShipGame
             return;
         }
 
-        m_StateManager->Update();
-
         {
             Lock<Mutex> Lock(m_NewPlacedGameObjectsMutex);
             for (auto Object: m_NewPlacedGameObjects)
@@ -79,7 +78,6 @@ namespace SpaceShipGame
                 {
                     continue;
                 }
-
                 Object->Construct();
                 MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>();
                 if (Mesh)
@@ -90,10 +88,14 @@ namespace SpaceShipGame
             }
             m_NewPlacedGameObjects.clear();
         }
+        m_StateManager->Update();
 
         for (auto Object: m_GameObjects)
         {
-            Object->Update(InDeltaTime);
+            if (Object)
+            {
+                Object->Update(InDeltaTime);
+            }
         }
 
         for (auto Object: m_GameObjects)
