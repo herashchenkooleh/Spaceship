@@ -48,7 +48,6 @@ namespace SpaceShipGame
 
     struct Renderer::Implementation
     {
-        sf::Texture m_EmptyTexture;
         sf::RenderWindow *m_HwRenderTarget;
         Map<Object::Identifier, SharedPtr<Drawable>> m_Meshes;
     };
@@ -56,7 +55,7 @@ namespace SpaceShipGame
     Renderer::Renderer()
         : m_Implementation(MakeShared<Implementation>())
     {
-        m_Implementation->m_EmptyTexture.loadFromFile("assets/ship.png");
+
     }
 
     Renderer::~Renderer() = default;

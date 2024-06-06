@@ -3,6 +3,7 @@
 #include "RotationComponent.hpp"
 #include "PositionComponent.hpp"
 #include "MeshComponent.hpp"
+#include "MoveComponent.hpp"
 
 namespace SpaceShipGame
 {
@@ -27,10 +28,18 @@ namespace SpaceShipGame
         PositionComponent::Ptr PosComponent = GetComponent<PositionComponent>();
         if(auto MComponent = AddComponent<MeshComponent>(m_TexturePath))
         {
-            MComponent->AddComponent<RotationComponent>(RComponent);
             MComponent->AddComponent<ScaleComponent>(SComponent);
+            MComponent->AddComponent<RotationComponent>(RComponent);
             MComponent->AddComponent<PositionComponent>(PosComponent);
         }
+
+        if (MoveComponent::Ptr MoveObjectComponent = AddComponent<MoveComponent>())
+        {
+            MoveObjectComponent->AddComponent<ScaleComponent>(SComponent);
+            MoveObjectComponent->AddComponent<RotationComponent>(RComponent);
+            MoveObjectComponent->AddComponent<PositionComponent>(PosComponent);
+        }
+
 
         return true;
     }

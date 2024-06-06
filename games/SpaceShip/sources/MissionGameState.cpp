@@ -14,16 +14,11 @@ namespace SpaceShipGame
 
     /*virtual*/ bool MissionGameState::Initialize() /*override*/
     {
-        m_Character = MakeShared<Character>("assets/ship.png");
-
         return true;
     }
 
     /*virtual*/ bool MissionGameState::Enter() /*override*/
     {
-        
-        World::GetCurrentWorld()->RegisterGameObject(m_Character);
-
         return true;
     }
 
@@ -34,7 +29,7 @@ namespace SpaceShipGame
 
     /*virtual*/ void MissionGameState::Exit() /*override*/
     {
-        m_Character->MarkForDelete();
+
     }
 
     /*virtual*/ void MissionGameState::HandleInput(const InputEvent& InEvent) /*override*/

@@ -69,6 +69,18 @@ namespace SpaceShipGame
             Event.SetType(InputEvent::Type::Exit);
         }
 
+        if (HwEvent.is<sf::Event::KeyPressed>())
+        {
+            Event.SetType(InputEvent::Type::KeyPressed);
+            Event.SetKey(static_cast<InputEvent::Key>(HwEvent.getIf<sf::Event::KeyPressed>()->code));
+        }
+
+        if (HwEvent.is<sf::Event::KeyReleased>())
+        {
+            Event.SetType(InputEvent::Type::KeyReleased);
+            Event.SetKey(static_cast<InputEvent::Key>(HwEvent.getIf<sf::Event::KeyReleased>()->code));
+        }
+
         return Event;
     }
 

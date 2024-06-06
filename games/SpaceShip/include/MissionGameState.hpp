@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Character.hpp"
 #include "GameStateBase.hpp"
 
 namespace SpaceShipGame
@@ -22,8 +21,5 @@ namespace SpaceShipGame
         virtual GameStateBase::Handle GetHandle() const override;
 
         static Handle s_MissionHandle;
-
-    private:
-        Character::Ptr m_Character;
     };
 }

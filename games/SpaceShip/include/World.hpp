@@ -6,6 +6,7 @@
 #include "GameObject.hpp"
 #include "Renderer.hpp"
 #include "Character.hpp"
+#include "PlayerController.hpp"
 
 namespace SpaceShipGame
 {
@@ -40,5 +41,8 @@ namespace SpaceShipGame
 
         static World::Ptr s_CurrentWorld;
         static Mutex s_CurrentWorldMutex;
+
+        Character::Ptr m_Character;
+        PlayerController::Ptr m_PlayerController;
     };
 }

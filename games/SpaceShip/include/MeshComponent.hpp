@@ -13,9 +13,6 @@ namespace SpaceShipGame
         MeshComponent(const String InTexture);
         ~MeshComponent();
 
-        virtual bool Construct();
-        virtual bool Destroy();
-
         const String& GetTexture() const;
 
     private:

@@ -1,7 +1,6 @@
 #include "GameLoop.hpp"
 #include "Timer.hpp"
 #include "Renderer.hpp"
-#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -75,24 +74,27 @@ namespace SpaceShipGame
             return;
         }
 
-        long long TimeSinceLastUpdate = 0;
-        long long TimeStamp = Timer::GetTimestempForFps(60);
+        unsigned long long TimeSinceLastUpdate = 0;
+        unsigned long long TimeStamp = Timer::GetTimestempForFps(60);
         while (!m_Implementation->m_Exit)
         {
-            TimeSinceLastUpdate += m_Implementation->m_Timer.Reset();
+            auto CurrentTime = m_Implementation->m_Timer.Reset();
+            TimeSinceLastUpdate += CurrentTime;
+
+            m_Implementation->m_InputManager->Update();
+            m_Implementation->m_PlayWorld->Update(static_cast<float>(TimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
 
             Timer SubStepingTimer;
-            do
-            { 
+            while (TimeSinceLastUpdate > TimeStamp)
+            {
+                unsigned long long SubStepingTimeSinceLastUpdate = SubStepingTimer.Reset();
                 m_Implementation->m_InputManager->Update();
-                m_Implementation->m_PlayWorld->Update(static_cast<float>(SubStepingTimer.Reset()) / static_cast<float>(Timer::GetTicksPerSecond()));
+                m_Implementation->m_PlayWorld->Update(static_cast<float>(SubStepingTimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
                 TimeSinceLastUpdate -= TimeStamp;
-            } while (TimeSinceLastUpdate > TimeStamp);
-            
+            } 
 
             float Interpolation = 0.2; //TODO
             m_Implementation->m_Renderer->Draw(Interpolation);
-            
         }
     }
 

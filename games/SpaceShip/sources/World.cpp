@@ -2,7 +2,6 @@
 #include "MissionGameState.hpp"
 #include "ShellGameState.hpp"
 #include "MeshComponent.hpp"
-#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -52,8 +51,13 @@ namespace SpaceShipGame
 
             m_StateManager->Activate(MissionGameState::s_MissionHandle);
 
-            //m_InputManager->Register(SGameState);
-            //m_InputManager->Register(MGameState);
+            m_Character = MakeShared<Character>("assets/ship.png");
+            RegisterGameObject(m_Character);
+            m_PlayerController = MakeShared<PlayerController>();
+            if (m_PlayerController && m_PlayerController->Initialize(m_Character))
+            {
+                m_InputManager->Register(m_PlayerController);
+            }
         }
         catch(...)
         {

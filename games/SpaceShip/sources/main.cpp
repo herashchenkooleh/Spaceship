@@ -3,7 +3,7 @@
 #include "World.hpp"
 #include "Renderer.hpp"
 
-int main()
+int main(int argc, const char * argv[])
 {
     using namespace SpaceShipGame;
 

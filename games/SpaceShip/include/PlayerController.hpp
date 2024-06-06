@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GameObject.hpp"
 #include "InputListener.hpp"
 
 namespace SpaceShipGame
@@ -11,5 +12,12 @@ namespace SpaceShipGame
 
         PlayerController();
         ~PlayerController();
+
+        bool Initialize(GameObject::Ptr InObject);
+
+        virtual void HandleInput(const InputEvent& InEvent) override;
+
+    private:
+        GameObject::Ptr m_Object;
     };
 }

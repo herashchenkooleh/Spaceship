@@ -6,7 +6,7 @@ namespace SpaceShipGame
 {
     struct Timer::Implementation
     {
-        std::optional<std::chrono::time_point<std::chrono::high_resolution_clock>> m_PrevTime;
+        std::optional<std::chrono::time_point<std::chrono::system_clock>> m_PrevTime;
     };
 
     Timer::Timer()
@@ -17,12 +17,12 @@ namespace SpaceShipGame
 
     Timer::~Timer() = default;
 
-    long long Timer::Reset()
+    unsigned long long Timer::Reset()
     {
-        auto CurrentTime = std::chrono::high_resolution_clock::now();
+        auto CurrentTime = std::chrono::system_clock::now();
         if (m_Implementation->m_PrevTime.has_value())
         {
-            std::chrono::nanoseconds TickCount = std::chrono::duration_cast<std::chrono::nanoseconds>(CurrentTime - m_Implementation->m_PrevTime.value());
+            std::chrono::milliseconds TickCount = std::chrono::duration_cast<std::chrono::milliseconds>(CurrentTime - m_Implementation->m_PrevTime.value());
             m_Implementation->m_PrevTime = CurrentTime;
             return TickCount.count();
         }
@@ -31,15 +31,15 @@ namespace SpaceShipGame
         return 0;
     }
 
-    /*static*/ long long Timer::GetTimestempForFps(const long long InFps)
+    /*static*/ unsigned long long Timer::GetTimestempForFps(const long long InFps)
     {
         return GetTicksPerSecond() / InFps;
     }
 
-    /*static*/ long long Timer::GetTicksPerSecond()
+    /*static*/ unsigned long long Timer::GetTicksPerSecond()
     {
         using namespace std::chrono_literals;
-        static const std::chrono::nanoseconds s_NanoSecondsInSecond(1s);
+        static const std::chrono::milliseconds s_NanoSecondsInSecond(1s);
 
         return s_NanoSecondsInSecond.count();
     }
