@@ -7,6 +7,7 @@
 #include "Renderer.hpp"
 #include "Character.hpp"
 #include "PlayerController.hpp"
+#include "Physic.hpp"
 
 namespace SpaceShipGame
 {
@@ -44,5 +45,7 @@ namespace SpaceShipGame
 
         Character::Ptr m_Character;
         PlayerController::Ptr m_PlayerController;
+
+        Physic::Ptr m_Physic;
     };
 }

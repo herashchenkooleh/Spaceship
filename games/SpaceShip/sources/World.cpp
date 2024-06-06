@@ -23,6 +23,7 @@ namespace SpaceShipGame
     World::World()
         : m_StateManager(nullptr)
         , m_InputManager(nullptr)
+        , m_Physic(nullptr)
     {
 
     }
@@ -58,6 +59,12 @@ namespace SpaceShipGame
             {
                 m_InputManager->Register(m_PlayerController);
             }
+
+            m_Physic = MakeShared<Physic>();
+            if(!m_Physic || !m_Physic->Initialize())
+            {
+                return false;
+            }
         }
         catch(...)
         {
@@ -83,10 +90,14 @@ namespace SpaceShipGame
                     continue;
                 }
                 Object->Construct();
-                MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>();
-                if (Mesh)
+                if (MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>();)
                 {
                     m_Renderer->Register(Mesh);
+                }
+
+                if(PhysicComponent::Ptr PhComponent = Object->GetComponent<PhysicComponent>())
+                {
+                    m_Physic->Register(PhComponent);
                 }
                 m_GameObjects.push_back(Object);
             }
@@ -106,10 +117,14 @@ namespace SpaceShipGame
         {
             if (Object->IsMarkForDelete())
             {
-                MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>();
-                if (Mesh)
+                if (MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>())
                 {
                     m_Renderer->Unregister(Mesh);
+                }
+
+                if (PhysicComponent::Ptr PhComponent = Object->GetComponent<PhysicComponent>())
+                {
+                    m_Physic->Unregister(PhComponent);
                 }
                 Object->Destroy();
             }

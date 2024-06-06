@@ -39,7 +39,10 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScaleComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/RotationComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/PlayerController.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MoveComponent.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MoveComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PhysicComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Physic.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/QuadTree.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
@@ -65,7 +68,10 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ScaleComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/RotationComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/PlayerController.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/MoveComponent.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/MoveComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/PhysicComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/Physic.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/QuadTree.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})
