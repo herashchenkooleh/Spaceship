@@ -85,7 +85,7 @@ namespace SpaceShipGame
             m_Implementation->m_PlayWorld->Update(static_cast<float>(TimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
 
             Timer SubStepingTimer;
-            while (TimeSinceLastUpdate > TimeStamp)
+            while (TimeSinceLastUpdate >= (2 * TimeStamp))
             {
                 unsigned long long SubStepingTimeSinceLastUpdate = SubStepingTimer.Reset();
                 m_Implementation->m_InputManager->Update();

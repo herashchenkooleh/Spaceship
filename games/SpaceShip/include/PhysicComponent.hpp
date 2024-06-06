@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObjectComponent.cpp"
+#include "GameObjectComponent.hpp"
 
 namespace SpaceShipGame
 {

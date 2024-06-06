@@ -26,6 +26,6 @@ namespace SpaceShipGame
     private:
         QuadTree m_Tree;
 
-        Vector<PhysicComponent> 
+        Vector<PhysicComponent> m_Components;
     };
 }

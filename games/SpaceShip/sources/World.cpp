@@ -90,7 +90,7 @@ namespace SpaceShipGame
                     continue;
                 }
                 Object->Construct();
-                if (MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>();)
+                if (MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>())
                 {
                     m_Renderer->Register(Mesh);
                 }
