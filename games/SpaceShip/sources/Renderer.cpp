@@ -38,6 +38,7 @@ namespace SpaceShipGame
             if (m_Texture->loadFromFile(InMeshComponent->GetTexture()))
             {
                 m_Sprite = MakeShared<sf::Sprite>(*m_Texture.get());
+                m_Sprite->setOrigin(sf::Vector2f(m_Sprite->getLocalBounds().width, m_Sprite->getLocalBounds().height) / 2.f);
 
                 return true;
             }

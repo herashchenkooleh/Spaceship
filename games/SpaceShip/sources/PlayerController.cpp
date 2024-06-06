@@ -1,5 +1,7 @@
 #include "PlayerController.hpp"
 #include "MoveComponent.hpp"
+#include "PositionComponent.hpp"
+#include <iostream>
 
 namespace SpaceShipGame
 {
@@ -30,34 +32,22 @@ namespace SpaceShipGame
             {
             case InputEvent::Key::A:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetXSpeed(-5.0f);
-                }
+                m_Speed.SetX(-3.0);
                 break;
             }
             case InputEvent::Key::S:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetYSpeed(5.0f);
-                }
+                m_Speed.SetY(3.0f);
                 break;
             }
             case InputEvent::Key::D:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetXSpeed(5.0f);
-                }
+                m_Speed.SetX(3.0f);
                 break;
             }
             case InputEvent::Key::W:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetYSpeed(-5.0f);
-                }
+                m_Speed.SetY(-3.0f);
                 break;
             }
             default:
@@ -72,34 +62,22 @@ namespace SpaceShipGame
             {
             case InputEvent::Key::A:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetXSpeed(0.0f);
-                }
+                m_Speed.SetX(0.0f);
                 break;
             }
             case InputEvent::Key::S:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetYSpeed(0.0f);
-                }
+                m_Speed.SetY(0.0f);
                 break;
             }
             case InputEvent::Key::D:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetXSpeed(0.0f);
-                }
+                m_Speed.SetX(0.0);
                 break;
             }
             case InputEvent::Key::W:
             {
-                if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-                {
-                    MComponent->SetYSpeed(0.0f);
-                }
+                m_Speed.SetY(0.0f);
                 break;
             }
             default:
@@ -108,8 +86,32 @@ namespace SpaceShipGame
 
             break;
         }
+        case InputEvent::Type::MouseMove:
+        {
+            m_MousePosition = InEvent.GetMousePosition();
+                    
+                    
+            break;
+        }
         default:
             break;
+        }
+        
+        UpdatePosition();
+    }
+
+    void PlayerController::UpdatePosition()
+    {
+        if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
+        {
+            MComponent->SetSpeed(m_Speed);
+            if (PositionComponent::Ptr PosComponent = m_Object->GetComponent<PositionComponent>())
+            {
+                Vector2D Forward = m_MousePosition - PosComponent->GetPosition();
+                const float PI = 3.14159265;
+                float Angle = ((atan2(Forward.GetY(), Forward.GetX())) * 180 / PI) + 90.0f;
+                MComponent->SetRotation(Angle);
+            }
         }
     }
 }

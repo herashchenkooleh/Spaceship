@@ -17,7 +17,13 @@ namespace SpaceShipGame
 
         virtual void HandleInput(const InputEvent& InEvent) override;
 
+    protected:
+        void UpdatePosition();
+        
     private:
         GameObject::Ptr m_Object;
+        
+        Vector2D m_Speed;
+        Vector2D m_MousePosition;
     };
 }

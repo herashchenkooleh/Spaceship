@@ -81,6 +81,13 @@ namespace SpaceShipGame
             Event.SetKey(static_cast<InputEvent::Key>(HwEvent.getIf<sf::Event::KeyReleased>()->code));
         }
 
+        if (HwEvent.is<sf::Event::MouseMoved>())
+        {
+            sf::Vector2f WorldMousePosition = { (float)HwEvent.getIf<sf::Event::MouseMoved>()->position.x, (float)HwEvent.getIf<sf::Event::MouseMoved>()->position.y };
+            Event.SetType(InputEvent::Type::MouseMove);
+            Event.SetMousePosition({ WorldMousePosition.x, WorldMousePosition.y });
+        }
+
         return Event;
     }
 

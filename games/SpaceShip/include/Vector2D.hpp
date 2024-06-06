@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Configs.hpp"
+#include <cmath>
 
 namespace SpaceShipGame
 {
@@ -20,6 +21,26 @@ namespace SpaceShipGame
 
         void SetX(const float InCoordX) { m_XCoord = InCoordX; };
         void SetY(const float InCoordY) { m_YCoord = InCoordY; };
+        
+        float GetLength() const
+        {
+            return std::sqrtf(m_XCoord * m_XCoord + m_YCoord * m_YCoord);
+        }
+        
+        Vector2D& Normalize()
+        {
+            const float Length = GetLength();
+            m_XCoord /= Length;
+            m_YCoord /= Length;
+            
+            return *this;
+        }
+        
+        float GetAngle(const Vector2D& InVector) const
+        {
+            float Dot = (GetX() * GetY() + InVector.GetX() * InVector.GetY()) / (std::sqrtf(GetX() * GetX() + InVector.GetX() * InVector.GetX()) * std::sqrtf(GetY() * GetY() + InVector.GetY() * InVector.GetY()));
+            return std::acosf(Dot);
+        }
 
         friend Vector2D operator+(const Vector2D& InLhl, const Vector2D& InRhl)
         {

@@ -15,12 +15,14 @@ namespace SpaceShipGame
 
         virtual void Update(const float InDeltaTime) override;
 
-        void SetXSpeed(const float InSpeed) { m_Speed.SetX(InSpeed); };
-        void SetYSpeed(const float InSpeed) { m_Speed.SetY(InSpeed); };
-
-        const Vector2D& GetSpeed() const { return m_Speed; };
+        void SetSpeed(const Vector2D& InSpeed) { m_Speed = InSpeed; }
+        const Vector2D& GetSpeed() const { return m_Speed; }
+        
+        void SetRotation(const float InAngle) { m_Rotation = InAngle; }
+        float GetRotation() const { return m_Rotation; }
 
     private:
         Vector2D m_Speed;
+        float m_Rotation;
     };
 }

@@ -1,5 +1,6 @@
 #include "MoveComponent.hpp"
 #include "PositionComponent.hpp"
+#include "RotationComponent.hpp"
 
 namespace SpaceShipGame
 {
@@ -17,6 +18,11 @@ namespace SpaceShipGame
         {
             Vector2D NewPosition = PosComponent->GetPosition() + m_Speed * InDeltaTime;
             PosComponent->SetPosition(NewPosition);
+        }
+        
+        if (RotationComponent::Ptr RComponent = GetComponent<RotationComponent>())
+        {
+            RComponent->SetDegrees(m_Rotation);
         }
     }
 }

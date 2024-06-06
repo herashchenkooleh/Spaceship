@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vector2D.hpp"
+
 namespace SpaceShipGame
 {
     class InputEvent
@@ -117,6 +119,7 @@ namespace SpaceShipGame
             All,
             KeyPressed,
             KeyReleased,
+            MouseMove,
             Unkwnown
         };
 
@@ -128,9 +131,14 @@ namespace SpaceShipGame
 
         Key GetKey() const { return m_KeyIdentifier; };
         void SetKey(const Key InKeyIdentifier) { m_KeyIdentifier = InKeyIdentifier; }
+        
+        const Vector2D& GetMousePosition() const { return m_MousePosition; }
+        void SetMousePosition(const Vector2D& InMousePos) { m_MousePosition = InMousePos; }
 
     private:
         Type m_Type;
         Key m_KeyIdentifier;
+
+        Vector2D m_MousePosition;
     };
 }
