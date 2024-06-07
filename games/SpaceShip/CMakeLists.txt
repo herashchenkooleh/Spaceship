@@ -14,17 +14,17 @@ set(SFML_STATIC_LIBRARIES TRUE)
 include(ExternalProject)
 
 if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
-    set(BUILD_COMMAND "make generic")
+    set(BUILD_COMMAND "generic")
 elseif(${CMAKE_HOST_SYSTEM_NAME} MATCHES "Darwin")
-    set(BUILD_COMMAND "make macosx")
+    set(BUILD_COMMAND "macosx")
 else()
-    set(BUILD_COMMAND "make linux")
+    set(BUILD_COMMAND "linux")
 endif()
 
 ExternalProject_Add(lua
    URL "https://www.lua.org/ftp/lua-5.4.6.tar.gz"
    CONFIGURE_COMMAND ""
-   BUILD_COMMAND make macosx
+   BUILD_COMMAND make ${BUILD_COMMAND}
    BUILD_ALWAYS YES
    BUILD_IN_SOURCE YES
    INSTALL_COMMAND ""
