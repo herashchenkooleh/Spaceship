@@ -33,11 +33,13 @@ ExternalProject_get_property(lua SOURCE_DIR)
 set(LUA_INCLUDE_DIR ${SOURCE_DIR}/src)
 add_library(liblua STATIC IMPORTED)
 add_dependencies(liblua lua)
+
 if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
-    set(LUA_LIBRARY liblua.lib)
+    set(LUA_LIBRARY lua.lib)
 else()
     set(LUA_LIBRARY liblua.a)
 endif()
+
 set_target_properties(liblua PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lua-prefix/src/lua/src/${LUA_LIBRARY})
 
 include(FetchContent)
