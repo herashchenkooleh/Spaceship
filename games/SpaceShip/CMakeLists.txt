@@ -11,6 +11,27 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../bin)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 
+include(ExternalProject)
+
+ExternalProject_Add(lua
+   URL "https://www.lua.org/ftp/lua-5.4.6.tar.gz"
+   CONFIGURE_COMMAND ""
+   BUILD_COMMAND make macosx
+   BUILD_ALWAYS YES
+   BUILD_IN_SOURCE YES
+   INSTALL_COMMAND ""
+)
+ExternalProject_get_property(lua SOURCE_DIR)
+set(LUA_INCLUDE_DIR ${SOURCE_DIR}/src)
+add_library(liblua STATIC IMPORTED)
+add_dependencies(liblua lua)
+if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
+    set(LUA_LIBRARY liblua.lib)
+else()
+    set(LUA_LIBRARY liblua.a)
+endif()
+set_target_properties(liblua PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lua-prefix/src/lua/src/${LUA_LIBRARY})
+
 include(FetchContent)
 FetchContent_Declare(SFML SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../engine)
 FetchContent_MakeAvailable(SFML)
@@ -75,6 +96,5 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})
-
-target_link_libraries(${PROJECT_NAME} PUBLIC SFML::Window SFML::Graphics SFML::System)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${SFML_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} PUBLIC SFML::Window SFML::Graphics SFML::System liblua)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${SFML_INCLUDE_DIR} ${LUA_INCLUDE_DIR})
