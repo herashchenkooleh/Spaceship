@@ -1,0 +1,72 @@
+#include "ssg/GameEngine.hpp"
+#include "ssg/InputSubSystem.hpp"
+#include "ssg/RenderSubSystem.hpp"
+#include "ssg/GameLoop.hpp"
+
+namespace ssg
+{
+    /*static*/ GameEngine& GameEngine::GetInstance()
+    {
+       static GameEngine s_Instance;
+
+       return s_Instance;
+    }
+
+    GameEngine::GameEngine()
+        : m_Window(nullptr)
+    {
+
+    }
+
+    GameEngine::~GameEngine() = default;
+
+    bool GameEngine::Initialize(GameWindow::Ptr InWindow)
+    {
+        if (!InWindow)
+        {
+            return false;
+        }
+
+        m_Window = InWindow;
+
+        RegisterSubSystem<InputSubSystem>(m_Window);
+        RegisterSubSystem<RenderSubSystem>(m_Window);
+
+        for (auto [SubSystemType, SubSystem]: m_SubSystems)
+        {
+            if (!SubSystem || !SubSystem->Initialize())
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    void GameEngine::Deinitialize()
+    {
+        for (auto [SubSystemType, SubSystem]: m_SubSystems)
+        {
+            if (SubSystem)
+            {
+                SubSystem->Deinitialize();
+            }
+        }
+
+        if (m_Window)
+        {
+            m_Window->Close();
+        }
+    }
+
+    void GameEngine::UpdateSubSystems(const float InDeltaTime)
+    {
+        for (auto [SubSystemType, SubSystem]: m_SubSystems)
+        {
+            if (SubSystem)
+            {
+                SubSystem->Update(InDeltaTime);
+            }
+        }
+    }
+}

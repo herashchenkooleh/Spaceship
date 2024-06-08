@@ -4,13 +4,13 @@
 
 namespace ssg
 {
-    class ISubsystem
+    class ISubSystem
     {
     public:
-        using Ptr = SharedPtr<ISubsystem>;
+        using Ptr = SharedPtr<ISubSystem>;
 
-        ISubsystem();
-        virtual ~ISubsystem();
+        ISubSystem();
+        virtual ~ISubSystem();
 
         virtual bool Initialize() = 0;
         virtual void Update(const float InDeltaTime) = 0;

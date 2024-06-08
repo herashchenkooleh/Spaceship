@@ -1,30 +1,25 @@
 #include "ssg/GameLoop.hpp"
 #include "ssg/Timer.hpp"
 #include "ssg/Renderer.hpp"
+#include "ssg/GameEngine.hpp"
+#include "ssg/InputSubSystem.hpp"
+#include "ssg/RenderSubSystem.hpp"
 
 namespace ssg
 {
     struct GameLoop::Implementation : public InputListener
     {
         bool m_Exit;
-        GameWindow::Ptr m_Window;
-        InputManager::Ptr m_InputManager;
-        World::Ptr m_PlayWorld;
         Timer m_Timer;
-        Renderer::Ptr m_Renderer;
 
-        Implementation(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld);
+        Implementation();
         ~Implementation();
 
         virtual void HandleInput(const InputEvent& InEvent) override;
     };
 
-    GameLoop::Implementation::Implementation(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld)
+    GameLoop::Implementation::Implementation()
         : m_Exit(false)
-        , m_Window(InWindow)
-        , m_InputManager(InInputManager)
-        , m_PlayWorld(InPlayWorld)
-        , m_Renderer(nullptr)
     {
     }
 
@@ -40,9 +35,12 @@ namespace ssg
     {
     }
 
-    GameLoop::~GameLoop() = default;
+    GameLoop::~GameLoop()
+    {
+        Deinitialize();
+    }
 
-    bool GameLoop::Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld, Renderer::Ptr InRenderer)
+    bool GameLoop::Initialize()
     {
         if (m_Implementation)
         {
@@ -51,29 +49,37 @@ namespace ssg
 
         try
         {
-            m_Implementation = MakeShared<Implementation>(InWindow, InInputManager, InPlayWorld);
-            m_Implementation->m_InputManager->Register(m_Implementation, InputEvent::Type::Exit);
-
-            m_Implementation->m_Renderer = InRenderer;
+            m_Implementation = MakeShared<Implementation>();
         }
         catch (...)
         {
             return false;
         }
 
-        return true;
+        if (InputSubSystem::Ptr InpSubSystem = GameEngine::GetInstance().GetSubSystem<InputSubSystem>())
+        {
+            if(InputManager::Ptr InpManager = InpSubSystem->GetManager())
+            {
+                InpManager->Register(m_Implementation, InputEvent::Type::Exit);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void GameLoop::Start()
     {
-        if (!m_Implementation ||
-            !m_Implementation->m_Window ||
-            !m_Implementation->m_InputManager ||
-            !m_Implementation->m_PlayWorld)
+        Renderer::Ptr RendererObject = nullptr;
+        if (RenderSubSystem::Ptr RSubSystem = GameEngine::GetInstance().GetSubSystem<RenderSubSystem>())
+        {
+            RendererObject = RSubSystem->GetRenderer();
+        }
+
+        if (!m_Implementation || !RendererObject)
         {
             return;
         }
-
         unsigned long long TimeSinceLastUpdate = 0;
         unsigned long long TimeStamp = Timer::GetTimestempForFps(60);
         while (!m_Implementation->m_Exit)
@@ -81,25 +87,29 @@ namespace ssg
             auto CurrentTime = m_Implementation->m_Timer.Reset();
             TimeSinceLastUpdate += CurrentTime;
 
-            m_Implementation->m_InputManager->Update();
-            m_Implementation->m_PlayWorld->Update(static_cast<float>(TimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
+            GameEngine::GetInstance().UpdateSubSystems(static_cast<float>(TimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
 
             Timer SubStepingTimer;
             while (TimeSinceLastUpdate >= (2 * TimeStamp))
             {
                 unsigned long long SubStepingTimeSinceLastUpdate = SubStepingTimer.Reset();
-                m_Implementation->m_InputManager->Update();
-                m_Implementation->m_PlayWorld->Update(static_cast<float>(SubStepingTimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
+                GameEngine::GetInstance().UpdateSubSystems(static_cast<float>(SubStepingTimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
                 TimeSinceLastUpdate -= TimeStamp;
             } 
 
             float Interpolation = 0.2; //TODO
-            m_Implementation->m_Renderer->Draw(Interpolation);
+            RendererObject->Draw(Interpolation);
         }
     }
 
     void GameLoop::Deinitialize()
     {
-        m_Implementation->m_Window->Close();
+        if (InputSubSystem::Ptr InpSubSystem = GameEngine::GetInstance().GetSubSystem<InputSubSystem>())
+        {
+            if(InputManager::Ptr InpManager = InpSubSystem->GetManager())
+            {
+                InpManager->Unregister(m_Implementation);
+            }
+        }
     }
 }

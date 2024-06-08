@@ -40,7 +40,6 @@ namespace ssg
             MoveObjectComponent->AddComponent<PositionComponent>(PosComponent);
         }
 
-
         return true;
     }
 }

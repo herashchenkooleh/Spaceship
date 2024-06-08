@@ -56,30 +56,36 @@ namespace ssg
     {
         sf::RenderWindow *m_HwRenderTarget;
         Map<Object::Identifier, SharedPtr<Drawable>> m_Meshes;
+
+        Implementation(GameWindow::Ptr InWindow);
+        ~Implementation();
     };
 
-    Renderer::Renderer()
-        : m_Implementation(MakeShared<Implementation>())
+    Renderer::Implementation::Implementation(GameWindow::Ptr InWindow)
+    {
+        if (InWindow)
+        {
+            m_HwRenderTarget = reinterpret_cast<sf::RenderWindow*>(InWindow->GetRenderTarget());
+        }
+    }
+
+    Renderer::Implementation::~Implementation() = default;
+
+    Renderer::Renderer(GameWindow::Ptr InWindow)
+        : m_Implementation(MakeShared<Implementation>(InWindow))
     {
 
     }
 
     Renderer::~Renderer() = default;
 
-    bool Renderer::Initialize(GameWindow::Ptr InWindow)
-    {
-        if (!InWindow)
-        {
-            return false;
-        }
-
-        m_Implementation->m_HwRenderTarget = reinterpret_cast<sf::RenderWindow*>(InWindow->GetRenderTarget());
-
-        return true;
-    }
-
     void Renderer::Draw(const float InInterpolation)
     {
+        if (!m_Implementation->m_HwRenderTarget)
+        {
+            return;
+        }
+
         m_Implementation->m_HwRenderTarget->clear();
         
         for (auto [Identifier, Mesh] : m_Implementation->m_Meshes)

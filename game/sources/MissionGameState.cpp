@@ -34,7 +34,10 @@ namespace ssg
 
     /*virtual*/ void MissionGameState::HandleInput(const InputEvent& InEvent) /*override*/
     {
+        // if ((InEvent.GetType() == InputEvent::Type::KeyReleased) && ())
+        // {
 
+        // }
     }
 
     /*virtual*/ GameStateBase::Handle MissionGameState::GetHandle() const

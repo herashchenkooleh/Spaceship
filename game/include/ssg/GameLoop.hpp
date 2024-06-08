@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ssg/Global.hpp"
-#include "ssg/GameWindow.hpp"
-#include "ssg/World.hpp"
 
 namespace ssg
 {
@@ -21,7 +19,7 @@ namespace ssg
         GameLoop(const GameLoop& InObj) = delete;
         GameLoop& operator=(const GameLoop& InObj) = delete;
 
-        bool Initialize(GameWindow::Ptr InWindow, InputManager::Ptr InInputManager, World::Ptr InPlayWorld, Renderer::Ptr InRenderer);
+        bool Initialize();
         void Start();
         void Deinitialize();
 

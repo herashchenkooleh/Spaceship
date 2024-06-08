@@ -20,30 +20,16 @@ namespace ssg
 
     InputManager::Implementation::~Implementation() = default;
 
-    InputManager::InputManager()
-        : m_Implementation(nullptr)
+    InputManager::InputManager(GameWindow::Ptr InGameWindow)
+        : m_Implementation(MakeShared<Implementation>(InGameWindow))
     {
 
     }
         
     InputManager::~InputManager() = default;
 
-    bool InputManager::Initialize(GameWindow::Ptr InGameWindow)
+    bool InputManager::Initialize()
     {
-        if (m_Implementation)
-        {
-            return true;
-        }
-
-        try
-        {
-            m_Implementation = MakeShared<Implementation>(InGameWindow);
-        }
-        catch(...)
-        {
-            return false;
-        }
-        
         return true;
     }
 

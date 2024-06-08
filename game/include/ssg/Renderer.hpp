@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ssg/Global.hpp"
-#include "ssg/GameWindow.hpp"
-#include "ssg/MeshComponent.hpp"
+#include "Global.hpp"
+#include "GameWindow.hpp"
+#include "MeshComponent.hpp"
 
 namespace ssg
 {
@@ -14,10 +14,9 @@ namespace ssg
     public:
         using Ptr = SharedPtr<Renderer>;
 
-        Renderer();
+        Renderer(GameWindow::Ptr InWindow);
         ~Renderer();
 
-        bool Initialize(GameWindow::Ptr InWindow);
         void Draw(const float InInterpolation);
 
         void Register(MeshComponent::Ptr InMesh);

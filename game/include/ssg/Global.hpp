@@ -9,9 +9,18 @@
 #include <typeindex>
 #include <array>
 #include <mutex>
+#include <any>
 
 namespace ssg
 {
+    using Any = std::any;
+
+    template<typename Type>
+    decltype(auto) AnyCast(Any InValue)
+    {
+        return std::any_cast<Type>(std::forward<Any>(InValue));
+    }
+
     using String = std::string;
 
     using Mutex = std::mutex;

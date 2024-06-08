@@ -16,10 +16,10 @@ namespace ssg
         using Ptr = SharedPtr<InputManager>;
 
     public:
-        InputManager();
+        InputManager(GameWindow::Ptr InGameWindow);
         ~InputManager();
 
-        bool Initialize(GameWindow::Ptr InGameWindow);
+        bool Initialize();
         void Update();
 
         void Register(InputListener::Ptr InListener, InputEvent::Type InType = InputEvent::Type::All);

@@ -51,7 +51,12 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Physic.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/QuadTree.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Objective.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ISubSystem.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ISubSystem.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Configs.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameEngine.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputSubSystem.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/RenderSubSystem.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Level.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
@@ -83,7 +88,12 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/QuadTree.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Objective.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ISubSystem.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Global.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Global.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Configs.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/GameEngine.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputSubSystem.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/RenderSubSystem.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Level.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})
