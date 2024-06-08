@@ -1,3 +1,9 @@
 [submodule "engine"]
 	path = engine
 	url = https://github.com/SFML/SFML.git
+[submodule "externals/lua"]
+	path = externals/lua
+	url = https://github.com/walterschell/Lua.git
+[submodule "externals/sol2"]
+	path = externals/sol2
+	url = https://github.com/ThePhD/sol2.git

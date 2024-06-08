@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
-project(SpaceShip VERSION 0.0.1 LANGUAGES CXX)
+enable_language(C)
+project(SpaceShip VERSION 0.0.1 LANGUAGES C CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 20)
@@ -10,41 +11,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../bin/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../bin)
 
 set(SFML_STATIC_LIBRARIES TRUE)
-
-include(ExternalProject)
-
-if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
-    set(BUILD_COMMAND "mingw")
-elseif(${CMAKE_HOST_SYSTEM_NAME} MATCHES "Darwin")
-    set(BUILD_COMMAND "macosx")
-else()
-    set(BUILD_COMMAND "linux")
-endif()
-
-ExternalProject_Add(lua
-   URL "https://www.lua.org/ftp/lua-5.4.6.tar.gz"
-   CONFIGURE_COMMAND ""
-   BUILD_COMMAND make ${BUILD_COMMAND}
-   BUILD_ALWAYS YES
-   BUILD_IN_SOURCE YES
-   INSTALL_COMMAND ""
-)
-ExternalProject_get_property(lua SOURCE_DIR)
-set(LUA_INCLUDE_DIR ${SOURCE_DIR}/src)
-add_library(liblua STATIC IMPORTED)
-add_dependencies(liblua lua)
-
-if (${CMAKE_HOST_SYSTEM_NAME} MATCHES "Windows")
-    set(LUA_LIBRARY lua.lib)
-else()
-    set(LUA_LIBRARY liblua.a)
-endif()
-
-set_target_properties(liblua PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lua-prefix/src/lua/src/${LUA_LIBRARY})
-
 include(FetchContent)
 FetchContent_Declare(SFML SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../engine)
 FetchContent_MakeAvailable(SFML)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../externals/lua ${CMAKE_CURRENT_BINARY_DIR}/externals/lua)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../externals/sol2 ${CMAKE_CURRENT_BINARY_DIR}/externals/sol2)
 
 set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Object.cpp
@@ -108,5 +80,5 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/InputEvent.hpp
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})
-target_link_libraries(${PROJECT_NAME} PUBLIC SFML::Window SFML::Graphics SFML::System liblua)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${SFML_INCLUDE_DIR} ${LUA_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} PUBLIC SFML::Window SFML::Graphics SFML::System Lua::Library sol2::sol2)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${SFML_INCLUDE_DIR})

@@ -8,8 +8,5 @@ namespace SpaceShipGame
         Objective();
         ~Objective();
 
-        
-    private:
-
     };
 }
