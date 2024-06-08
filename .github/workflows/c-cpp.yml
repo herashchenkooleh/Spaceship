@@ -12,6 +12,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - uses: leafo/gh-actions-lua@v10
+      with:
+        luaVersion: "5.4.6"
     - uses: actions/checkout@v4
       with: 
         submodules: recursive
