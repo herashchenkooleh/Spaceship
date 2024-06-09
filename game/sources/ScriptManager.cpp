@@ -28,7 +28,7 @@ namespace ssg
         try
         {
             m_Implementation = MakeShared<Implementation>();
-            AddNewScriptContent(GetDefaultContentName());
+            m_Implementation->m_States.insert( { s_DefaultContentName, MakeShared<sol::state>() });
 
         }
         catch(...)

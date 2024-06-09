@@ -60,7 +60,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/LevelScriptBuilder.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/IScriptBuilder.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptSubSystem.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptManager.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptManager.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameStateScriptBuilder.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
@@ -101,7 +102,8 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/LevelScriptBuilder.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/IScriptBuilder.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptSubSystem.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptManager.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptManager.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MissionGameStateScriptBuilder.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

@@ -1,5 +1,6 @@
 #include "ssg/World.hpp"
 #include "ssg/MissionGameState.hpp"
+#include "ssg/MissionGameStateScriptBuilder.hpp"
 
 namespace ssg
 {
@@ -19,7 +20,16 @@ namespace ssg
 
     /*virtual*/ bool MissionGameState::Enter() /*override*/
     {
-        return true;
+        try
+        {
+            MissionGameStateScriptBuilder Buildr = {"assets/DefaultMissionGameState.lua", SharedFromThis<MissionGameState>(this)};
+            return Buildr.ExecuteScript();
+        }
+        catch(...)
+        {
+            //TODO
+        }
+        return false;
     }
 
     /*virtual*/ void MissionGameState::Update() /*override*/

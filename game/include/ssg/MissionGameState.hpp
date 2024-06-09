@@ -4,8 +4,10 @@
 
 namespace ssg
 {
-    class MissionGameState : public GameStateBase
+    class MissionGameState : public GameStateBase, public EnableSharedFromThis<MissionGameState>
     {
+        friend class MissionGameStateScriptBuilder;
+
     public:
         using Ptr = SharedPtr<MissionGameState>;
 
@@ -21,5 +23,8 @@ namespace ssg
         virtual GameStateBase::Handle GetHandle() const override;
 
         static Handle s_MissionHandle;
+
+    private:
+        String m_Level;
     };
 }
