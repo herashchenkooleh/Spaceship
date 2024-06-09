@@ -6,7 +6,7 @@ namespace ssg
         : m_LvlScript(InLvlScript)
         , m_Level(InLevel)
     {
-
+        
     }
 
     /*virtual*/ LevelScriptBuilder::~LevelScriptBuilder() = default;

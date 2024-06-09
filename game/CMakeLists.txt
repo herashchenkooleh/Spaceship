@@ -24,7 +24,6 @@ FetchContent_MakeAvailable(Sol2)
 
 set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Object.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Actor.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputEvent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputManager.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListener.cpp
@@ -39,12 +38,11 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObjectComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Renderer.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Vector2D.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PositionComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Transform.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/TransformComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Timer.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MeshComponent.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Character.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScaleComponent.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/RotationComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Pawn.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/PlayerController.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MoveComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/PhysicComponent.cpp
@@ -69,7 +67,6 @@ source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Object.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Actor.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputManager.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputListener.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/GameStateBase.hpp
@@ -83,12 +80,11 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/GameObjectComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Renderer.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Vector2D.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PositionComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Transform.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/TransformComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Timer.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MeshComponent.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Character.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScaleComponent.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/RotationComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Pawn.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PlayerController.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MoveComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PhysicComponent.hpp
@@ -107,6 +103,7 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptSubSystem.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptManager.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MissionGameStateScriptBuilder.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputListenerComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/FileSystemHelper.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/SpawnGameObject.hpp)
 source_group("Header Files\\game" FILES ${headers_files})

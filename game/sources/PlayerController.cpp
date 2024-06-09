@@ -1,6 +1,6 @@
 #include "ssg/PlayerController.hpp"
 #include "ssg/MoveComponent.hpp"
-#include "ssg/PositionComponent.hpp"
+#include "ssg/TransformComponent.hpp"
 #include "ssg/InputListenerComponent.hpp"
 
 namespace ssg
@@ -143,12 +143,13 @@ namespace ssg
         if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
         {
             MComponent->SetSpeed(m_Speed);
-            if (PositionComponent::Ptr PosComponent = m_Object->GetComponent<PositionComponent>())
+            if (TransformComponent::Ptr TComponent = m_Object->GetComponent<TransformComponent>())
             {
-                Vector2D Forward = m_MousePosition - PosComponent->GetPosition();
+                Transform& CurrentTransform = TComponent->GetTransform();
+                Vector2D Forward = m_MousePosition - CurrentTransform.GetPosition();
                 const float PI = 3.14159265;
                 float Angle = ((atan2(Forward.GetY(), Forward.GetX())) * 180 / PI) + 90.0f;
-                MComponent->SetRotation(Angle);
+                CurrentTransform.SetRotation(Angle);
             }
         }
     }

@@ -3,7 +3,6 @@
 #include "ssg/Global.hpp"
 #include "ssg/GameStateManager.hpp"
 #include "ssg/GameObject.hpp"
-#include "ssg/Character.hpp"
 #include "ssg/PlayerController.hpp"
 #include "ssg/Level.hpp"
 

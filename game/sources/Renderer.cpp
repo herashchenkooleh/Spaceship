@@ -1,8 +1,5 @@
 #include "ssg/Renderer.hpp"
-#include "ssg/ScaleComponent.hpp"
-#include "ssg/RotationComponent.hpp"
-#include "ssg/PositionComponent.hpp"
-
+#include "ssg/TransformComponent.hpp"
 #include "SFML/Graphics.hpp"
 
 namespace ssg
@@ -44,7 +41,6 @@ namespace ssg
             {
                 m_Sprite = MakeShared<sf::Sprite>(m_Texture.value());
                 m_Sprite->setOrigin(sf::Vector2f(m_Sprite->getLocalBounds().width, m_Sprite->getLocalBounds().height) / 2.f);
-                m_Sprite->setPosition({100, 100});
 
                 return true;
             }
@@ -91,20 +87,13 @@ namespace ssg
         
         for (auto [Identifier, Mesh] : m_Implementation->m_Meshes)
         {
-            if (ScaleComponent::Ptr SComponent = Mesh->m_MeshComponent->GetComponent<ScaleComponent>())
+            if (TransformComponent::Ptr TrComponent = Mesh->m_MeshComponent->GetComponent<TransformComponent>())
             {
-                Vector2D Scale = SComponent->GetScale();
+                const Transform& CurrentTransform = TrComponent->GetTransform();
+                Vector2D Scale = CurrentTransform.GetScale();
                 Mesh->m_Sprite->setScale({ Scale.GetX(), Scale.GetY() });
-            }
-
-            if (RotationComponent::Ptr RComponent = Mesh->m_MeshComponent->GetComponent<RotationComponent>())
-            {
-                Mesh->m_Sprite->setRotation(sf::degrees(RComponent->GetDegrees()));
-            }
-
-            if (PositionComponent::Ptr PosComponent = Mesh->m_MeshComponent->GetComponent<PositionComponent>())
-            {
-                Vector2D Position = PosComponent->GetPosition();
+                Mesh->m_Sprite->setRotation(sf::degrees(CurrentTransform.GetRotation()));
+                Vector2D Position = CurrentTransform.GetPosition();
                 Mesh->m_Sprite->setPosition({ Position.GetX(), Position.GetY() });
             }
             m_Implementation->m_HwRenderTarget->draw(*Mesh->m_Sprite.get());

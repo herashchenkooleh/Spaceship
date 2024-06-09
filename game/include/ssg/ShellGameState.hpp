@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ssg/GameStateBase.hpp"
-#include "ssg/Character.hpp"
+#include "ssg/Pawn.hpp"
 
 namespace ssg
 {
@@ -24,6 +24,6 @@ namespace ssg
         static Handle s_ShellHandle;
 
     private:
-        Character::Ptr m_Background;
+        Pawn::Ptr m_Background;
     };
 }

@@ -1,6 +1,5 @@
 #include "ssg/MoveComponent.hpp"
-#include "ssg/PositionComponent.hpp"
-#include "ssg/RotationComponent.hpp"
+#include "ssg/TransformComponent.hpp"
 
 namespace ssg
 {
@@ -14,15 +13,12 @@ namespace ssg
 
     /*virtual*/ void MoveComponent::Update(const float InDeltaTime) /*override*/
     {
-        if (PositionComponent::Ptr PosComponent = GetComponent<PositionComponent>())
+        if (TransformComponent::Ptr TComponent = GetComponent<TransformComponent>())
         {
-            Vector2D NewPosition = PosComponent->GetPosition() + m_Speed * InDeltaTime;
-            PosComponent->SetPosition(NewPosition);
-        }
-        
-        if (RotationComponent::Ptr RComponent = GetComponent<RotationComponent>())
-        {
-            RComponent->SetDegrees(m_Rotation);
+            Transform& CurrentTransform = TComponent->GetTransform();
+            CurrentTransform.SetRotation(m_Rotation);
+            Vector2D NewPosition = CurrentTransform.GetPosition() + m_Speed * InDeltaTime;
+            CurrentTransform.SetPosition(NewPosition);
         }
     }
 }

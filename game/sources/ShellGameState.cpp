@@ -20,7 +20,7 @@ namespace ssg
 
     /*virtual*/ bool ShellGameState::Enter() /*override*/
     {
-        m_Background = SpawnGameObject<Character>("assets/MainMenuBackground.jpeg");
+        m_Background = SpawnGameObject<Pawn>("assets/MainMenuBackground.jpeg");
         return true;
     }
 

@@ -43,11 +43,4 @@ namespace ssg
         m_GameObjects.clear();
         m_Character.reset();
     }
-
-    // auto DeletePredicate = [&](const GameObject::Ptr InObj) 
-    //     {
-    //         return InObj->IsMarkForDelete();
-    //     };
-
-    //     RemoveIf(m_GameObjects.begin(), m_GameObjects.end(), DeletePredicate);
 }
