@@ -3,11 +3,16 @@
 #include "ssg/GameLoop.hpp"
 #include "ssg/Configs.hpp"
 
+#include "ssg/FileSystemHelper.hpp"
+
 int main(int argc, const char * argv[])
 {
     using namespace ssg;
 
-    ssg::Configs::GetInstance().SetSetting<ssg::String>("filesystem.launch_directory", argv[0]);
+    ssg::Configs::GetInstance().SetSetting<ssg::String>(ssg::Configs::s_GlobalRelBinaryPathSettingName, argv[0]);
+    ssg::Configs::GetInstance().SetSetting<ssg::String>(ssg::Configs::s_GlobalRelAssetsPathSettingName, "assets");
+    ssg::Configs::GetInstance().SetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultShellGameStateSettingName, "DefaultShellScript.lua");
+    ssg::Configs::GetInstance().SetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultMissionGameStateSettingName, "DefaultMissionScript.lua");
 
      GameWindow::Ptr Window = MakeShared<GameWindow>();
     if (!Window || !Window->Create(800, 600, "SpaceShip"))

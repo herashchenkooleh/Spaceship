@@ -9,6 +9,7 @@ namespace ssg
     {
     public:
         using Ptr = SharedPtr<GameStateManager>;
+        using StateChangedCallback = Function<void()>;
 
         GameStateManager();
         ~GameStateManager();
@@ -18,14 +19,22 @@ namespace ssg
 
         void RegisterState(GameStateBase::Handle InHandler, GameStateBase::Ptr InState);
 
+        GameStateBase::Ptr GetActiveState() { return m_ActiveState; }
+
         void Activate(GameStateBase::Handle InHandler);
         void Update();
         void DeactivateCurrent();
+
+        void SetOnGameStateExitCallback(StateChangedCallback InCallback) { m_GameStateExitCallback = InCallback; };
+        void SetOnGameStateEnterCallback(StateChangedCallback InCallback) { m_GameStateEnterCallback = InCallback; };
 
     private:
         UnorderedMap<GameStateBase::Handle, GameStateBase::Ptr> m_States;
 
         GameStateBase::Handle m_ActiveStateHandle;
         GameStateBase::Ptr m_ActiveState;
+
+        StateChangedCallback m_GameStateExitCallback;
+        StateChangedCallback m_GameStateEnterCallback;
     };
 }

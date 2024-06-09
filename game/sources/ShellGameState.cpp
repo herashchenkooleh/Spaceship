@@ -1,13 +1,14 @@
 #include "ssg/ShellGameState.hpp"
+#include "ssg/SpawnGameObject.hpp"
 
 namespace ssg
 {
     GameStateBase::Handle ShellGameState::s_ShellHandle = 0;
 
-    ShellGameState::ShellGameState()
-        : GameStateBase({})
+    ShellGameState::ShellGameState(const String& InGameStateFilePath)
+        : GameStateBase(InGameStateFilePath, { InputEvent::Type::WindowResized })
     {
-
+        
     }
 
     ShellGameState::~ShellGameState() = default;
@@ -19,6 +20,7 @@ namespace ssg
 
     /*virtual*/ bool ShellGameState::Enter() /*override*/
     {
+        m_Background = SpawnGameObject<Character>("assets/MainMenuBackground.jpeg");
         return true;
     }
 
@@ -29,7 +31,7 @@ namespace ssg
 
     /*virtual*/ void ShellGameState::Exit() /*override*/
     {
-        
+        m_Background.reset();
     }
 
     /*virtual*/ void ShellGameState::HandleInput(const InputEvent& InEvent) /*override*/

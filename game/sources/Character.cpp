@@ -13,7 +13,7 @@ namespace ssg
 
     }
 
-    Character::~Character() = default;
+    /*virtual*/ Character::~Character() = default;
 
     /*virtual*/ bool Character::Construct() /*override*/
     {

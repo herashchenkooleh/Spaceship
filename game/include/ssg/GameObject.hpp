@@ -50,7 +50,7 @@ namespace ssg
             return DynamicPointerCast<ComponentType>(GameObjectComponent::Ptr{ });
         }
 
-        void MarkForDelete() { m_IsValid = false; };
+        void MarkForDelete();
         bool IsMarkForDelete() const { return !m_IsValid; };
 
     protected:

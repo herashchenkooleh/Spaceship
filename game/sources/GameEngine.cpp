@@ -92,6 +92,7 @@ namespace ssg
             {
                 SubSystem->UnregisterGameObject(InObject);
             }
+
         }
     }
 }

@@ -2,6 +2,11 @@
 
 namespace ssg
 {
+	/*static*/ String Configs::s_GlobalRelBinaryPathSettingName = "global.relative_binary_path";
+	/*static*/ String Configs::s_GlobalRelAssetsPathSettingName = "global.relative_assets_path";
+	/*static*/ String Configs::s_GlobalDefaultMissionGameStateSettingName = "global.default_mission_file";
+	/*static*/ String Configs::s_GlobalDefaultShellGameStateSettingName = "global.default_mission_file";
+
     struct Configs::Implementaion
 	{
 		UnorderedMap<String, Any> m_Settings;

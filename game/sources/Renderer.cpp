@@ -31,8 +31,7 @@ namespace ssg
 
     bool Drawable::Initialize(MeshComponent::Ptr InMeshComponent)
     {
-        m_Texture = sf::Texture::create({ sf::Texture::getMaximumSize(), sf::Texture::getMaximumSize()  });
-        if (!m_Texture.has_value())
+        if (m_Texture.has_value())
         {
             return false;
         }
@@ -40,10 +39,12 @@ namespace ssg
         m_MeshComponent = InMeshComponent;
         if (m_MeshComponent)
         {
-            if (m_Texture.value().loadFromFile(InMeshComponent->GetTexture()))
+            m_Texture = sf::Texture::loadFromFile(InMeshComponent->GetTexture());
+            if (m_Texture.has_value())
             {
                 m_Sprite = MakeShared<sf::Sprite>(m_Texture.value());
                 m_Sprite->setOrigin(sf::Vector2f(m_Sprite->getLocalBounds().width, m_Sprite->getLocalBounds().height) / 2.f);
+                m_Sprite->setPosition({100, 100});
 
                 return true;
             }
@@ -106,7 +107,6 @@ namespace ssg
                 Vector2D Position = PosComponent->GetPosition();
                 Mesh->m_Sprite->setPosition({ Position.GetX(), Position.GetY() });
             }
-            
             m_Implementation->m_HwRenderTarget->draw(*Mesh->m_Sprite.get());
         }
         m_Implementation->m_HwRenderTarget->display();

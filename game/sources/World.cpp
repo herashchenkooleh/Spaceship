@@ -4,6 +4,10 @@
 #include "ssg/MeshComponent.hpp"
 #include "ssg/GameEngine.hpp"
 #include "ssg/InputSubSystem.hpp"
+#include "ssg/Configs.hpp"
+#include "ssg/FileSystemHelper.hpp"
+
+#include "ssg/SpawnGameObject.hpp"
 
 namespace ssg
 {
@@ -24,7 +28,7 @@ namespace ssg
 
     World::World()
         : m_StateManager(nullptr)
-        , m_CurrentLevel(nullptr)
+        , m_Level(nullptr)
     {
 
     }
@@ -35,19 +39,33 @@ namespace ssg
     {
         try
         {
-            GameStateBase::Ptr MGameState = MakeShared<MissionGameState>();
-            GameStateBase::Ptr SGameState = MakeShared<ShellGameState>();
+            String RelAssetsPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelAssetsPathSettingName);
+            String RelBinaryPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelBinaryPathSettingName);
+
+            decltype(auto) FullBinaryPath = FileSystemHelper::Join(ssg::FileSystemHelper::GetLaunchDirectory(), RelBinaryPath);
+            decltype(auto) BinaryPath = FileSystemHelper::GetBasePath(FullBinaryPath);
+            decltype(auto) AssetsFolder = FileSystemHelper::Join(BinaryPath, RelAssetsPath);
+
+            decltype(auto) MissionScriptPath = FileSystemHelper::Join(AssetsFolder, Configs::GetInstance().GetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultMissionGameStateSettingName));
+            decltype(auto) ShellScriptPath = FileSystemHelper::Join(AssetsFolder, Configs::GetInstance().GetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultShellGameStateSettingName));
+
+            GameStateBase::Ptr MGameState = MakeShared<MissionGameState>(MissionScriptPath);
+            GameStateBase::Ptr SGameState = MakeShared<ShellGameState>(ShellScriptPath);
 
             m_StateManager = MakeShared<GameStateManager>();
 
             m_StateManager->RegisterState(MissionGameState::s_MissionHandle, MGameState);
             m_StateManager->RegisterState(ShellGameState::s_ShellHandle, SGameState);
 
-            m_StateManager->Activate(ShellGameState::s_ShellHandle);
+            m_StateManager->SetOnGameStateEnterCallback(Bind(&World::OnGameStateEnter, this));
+            m_StateManager->SetOnGameStateExitCallback(Bind(&World::OnGameStateExit, this));
 
-            m_PlayerController = MakeShared<PlayerController>();
+            m_StateManager->Activate(ShellGameState::s_ShellHandle);
+            m_PlayerController = SpawnGameObject<PlayerController>();
+
+            m_Level = MakeShared<Level>();
         }
-        catch(...)
+        catch(std::exception& e)
         {
             return false;
         }
@@ -63,6 +81,17 @@ namespace ssg
         }
 
         m_StateManager->Update();
+        
+        {
+            Lock<Mutex> Lock(m_MarketDeleteGameObjectsMutex);
+            for (auto Object: m_MarketDeleteGameObjects)
+            {
+                GameEngine::GetInstance().UnregisterGameObject(Object);
+                Object->Destroy();
+            }
+            m_MarketDeleteGameObjects.clear();
+        }
+
         {
             Lock<Mutex> Lock(m_NewPlacedGameObjectsMutex);
             for (auto Object: m_NewPlacedGameObjects)
@@ -77,17 +106,7 @@ namespace ssg
             m_NewPlacedGameObjects.clear();
         }
 
-        m_CurrentLevel->Update(InDeltaTime);        
-
-        {
-            Lock<Mutex> Lock(m_MarketDeleteGameObjectsMutex);
-            for (auto Object: m_MarketDeleteGameObjects)
-            {
-                GameEngine::GetInstance().UnregisterGameObject(Object);
-                Object->Destroy();
-            }
-            m_MarketDeleteGameObjects.clear();
-        }
+        m_Level->Update(InDeltaTime);
     }
 
     void World::RegisterGameObject(GameObject::Ptr InGameObject)
@@ -100,5 +119,20 @@ namespace ssg
     {
         Lock<Mutex> Lock(m_MarketDeleteGameObjectsMutex);
         m_MarketDeleteGameObjects.push_back(InGameObject);
+    }
+
+    void World::OnGameStateExit()
+    {
+        m_PlayerController->Deinitialize();
+        m_Level->Unload();
+    }
+
+    void World::OnGameStateEnter()
+    {
+        if (GameStateBase::Ptr GameState = m_StateManager->GetActiveState())
+        {
+            m_Level->Load(GameState->GetLevelFilePath());
+            m_PlayerController->Initialize(m_Level->GetCharacter());
+        }
     }
 }

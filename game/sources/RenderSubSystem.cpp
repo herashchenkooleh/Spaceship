@@ -26,8 +26,10 @@ namespace ssg
 
     /*virtual*/ void RenderSubSystem::RegisterGameObject(GameObject::Ptr InObject) /*override*/
     {
+
         if (MeshComponent::Ptr Mesh = InObject->GetComponent<MeshComponent>())
         {
+
             m_Renderer->Register(Mesh);
         }
     }

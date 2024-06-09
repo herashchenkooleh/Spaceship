@@ -48,11 +48,13 @@ namespace ssg
                 if (m_ActiveState)
                 {
                     m_ActiveState->Exit();
+                    m_GameStateExitCallback();
                 }
                 
                 m_ActiveState = Iter->second;
 
                 m_ActiveState->Enter();
+                m_GameStateEnterCallback();
             }
         }
 
@@ -64,6 +66,7 @@ namespace ssg
 
     void GameStateManager::DeactivateCurrent()
     {
+        m_ActiveStateHandle = GameStateBase::s_InvalidHandle;
         m_ActiveState = nullptr;
     }
 }

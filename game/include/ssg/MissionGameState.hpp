@@ -11,7 +11,7 @@ namespace ssg
     public:
         using Ptr = SharedPtr<MissionGameState>;
 
-        MissionGameState();
+        MissionGameState(const String& InGameStateFilePath);
         ~MissionGameState();
 
         virtual bool Initialize() override;
@@ -23,8 +23,5 @@ namespace ssg
         virtual GameStateBase::Handle GetHandle() const override;
 
         static Handle s_MissionHandle;
-
-    private:
-        String m_Level;
     };
 }

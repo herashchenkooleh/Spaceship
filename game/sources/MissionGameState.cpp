@@ -6,8 +6,8 @@ namespace ssg
 {
     GameStateBase::Handle MissionGameState::s_MissionHandle = 1;
 
-    MissionGameState::MissionGameState()
-        : GameStateBase({ InputEvent::Type::KeyReleased })
+    MissionGameState::MissionGameState(const String& InGameStateFilePath)
+        : GameStateBase(InGameStateFilePath, { InputEvent::Type::KeyReleased })
     {
 
     }
@@ -21,9 +21,10 @@ namespace ssg
 
     /*virtual*/ bool MissionGameState::Enter() /*override*/
     {
+        bool Status = GameStateBase::Enter();
         try
         {
-            MissionGameStateScriptBuilder Buildr = {"assets/DefaultMissionGameState.lua", SharedFromThis<MissionGameState>(this)};
+            MissionGameStateScriptBuilder Buildr = { m_GameStateFilePath, SharedFromThis<MissionGameState>(this)};
             return Buildr.ExecuteScript();
         }
         catch(...)
@@ -35,12 +36,12 @@ namespace ssg
 
     /*virtual*/ void MissionGameState::Update() /*override*/
     {
-
+        GameStateBase::Update();
     }
 
     /*virtual*/ void MissionGameState::Exit() /*override*/
     {
-
+        GameStateBase::Exit();
     }
 
     /*virtual*/ void MissionGameState::HandleInput(const InputEvent& InEvent) /*override*/

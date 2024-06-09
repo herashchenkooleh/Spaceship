@@ -4,6 +4,7 @@
 #include "ssg/GameEngine.hpp"
 #include "ssg/InputSubSystem.hpp"
 #include "ssg/RenderSubSystem.hpp"
+#include "ssg/World.hpp"
 
 namespace ssg
 {
@@ -71,6 +72,14 @@ namespace ssg
 
     void GameLoop::Start()
     {
+        World::Ptr GameWorld = MakeShared<World>();
+        World::SetCurrentWorld(GameWorld);
+
+        if (!GameWorld->Initialize())
+        {
+            return;
+        }
+
         Renderer::Ptr RendererObject = nullptr;
         if (RenderSubSystem::Ptr RSubSystem = GameEngine::GetInstance().GetSubSystem<RenderSubSystem>())
         {
@@ -88,13 +97,17 @@ namespace ssg
             auto CurrentTime = m_Implementation->m_Timer.Reset();
             TimeSinceLastUpdate += CurrentTime;
 
-            GameEngine::GetInstance().UpdateSubSystems(static_cast<float>(TimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
+            decltype(auto) DeltaTime = static_cast<float>(TimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond());
+            GameEngine::GetInstance().UpdateSubSystems(DeltaTime);
+            GameWorld->Update(DeltaTime);
 
             Timer SubStepingTimer;
             while (TimeSinceLastUpdate >= (2 * TimeStamp))
             {
                 unsigned long long SubStepingTimeSinceLastUpdate = SubStepingTimer.Reset();
-                GameEngine::GetInstance().UpdateSubSystems(static_cast<float>(SubStepingTimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond()));
+                decltype(auto) SubStepingDeltaTime = static_cast<float>(SubStepingTimeSinceLastUpdate) / static_cast<float>(Timer::GetTicksPerSecond());
+                GameEngine::GetInstance().UpdateSubSystems(SubStepingDeltaTime);
+                GameWorld->Update(DeltaTime);
                 TimeSinceLastUpdate -= TimeStamp;
             } 
 

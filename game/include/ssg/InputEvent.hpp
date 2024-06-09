@@ -120,6 +120,7 @@ namespace ssg
             KeyPressed,
             KeyReleased,
             MouseMove,
+            WindowResized,
             Unkwnown
         };
 

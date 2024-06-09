@@ -4,8 +4,9 @@ namespace ssg
 {
     int GameStateBase::s_InvalidHandle = -1;
 
-    GameStateBase::GameStateBase(const Vector<InputEvent::Type>& InEventTypes)
+    GameStateBase::GameStateBase(const String& InGameStateFilePath, const Vector<InputEvent::Type>& InEventTypes)
         : InputListener(InEventTypes)
+        , m_GameStateFilePath(InGameStateFilePath)
     {
 
     }

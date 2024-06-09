@@ -32,6 +32,9 @@ namespace ssg
         bool LoadLevel(const String& InFilePath);
         void UnloadLevel();
 
+        void OnGameStateExit();
+        void OnGameStateEnter();
+
     private:
         GameStateManager::Ptr m_StateManager;
 
@@ -46,6 +49,6 @@ namespace ssg
 
         PlayerController::Ptr m_PlayerController;
 
-        Level::Ptr m_CurrentLevel;
+        Level::Ptr m_Level;
     };
 }

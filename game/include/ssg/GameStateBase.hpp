@@ -2,7 +2,6 @@
 
 #include "ssg/Global.hpp"
 #include "ssg/InputListener.hpp"
-#include "ssg/GameObject.hpp"
 
 namespace ssg
 {
@@ -14,7 +13,7 @@ namespace ssg
 
         static Handle s_InvalidHandle;
 
-        GameStateBase(const Vector<InputEvent::Type>& InEventTypes);
+        GameStateBase(const String& InGameStateFilePath, const Vector<InputEvent::Type>& InEventTypes);
         virtual ~GameStateBase();
 
         virtual bool Initialize();
@@ -24,7 +23,10 @@ namespace ssg
 
         virtual Handle GetHandle() const;
 
-    private:
-        Vector<GameObject::Ptr> m_GameObjects;
+        const String& GetLevelFilePath() const { return m_LevelFilePath; }
+
+    protected:
+        String m_LevelFilePath;
+        String m_GameStateFilePath;
     };
 }

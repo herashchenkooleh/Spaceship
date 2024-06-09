@@ -10,6 +10,11 @@ namespace ssg
 		using ImplementaionPtr = SharedPtr<Implementaion>;
 
 	public:
+		static String s_GlobalRelBinaryPathSettingName;
+		static String s_GlobalRelAssetsPathSettingName;
+		static String s_GlobalDefaultMissionGameStateSettingName;
+		static String s_GlobalDefaultShellGameStateSettingName;
+
         static Configs& GetInstance();
 
         Configs(const Configs& InObj) = delete;

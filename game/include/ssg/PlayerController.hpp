@@ -17,6 +17,7 @@ namespace ssg
         virtual bool Destroy() override;
 
         bool Initialize(GameObject::Ptr InObject);
+        void Deinitialize();
 
         void OnKeyPressed(const InputEvent& InEvent);
         void OnKeyReleased(const InputEvent& InEvent);

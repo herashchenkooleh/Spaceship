@@ -18,7 +18,7 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<MissionGameState>("Mission", "Level", &MissionGameState::m_Level);
+                        SState->new_usertype<MissionGameState>("Mission", "Level", &MissionGameState::m_LevelFilePath);
                     }
                 }
             }
@@ -32,19 +32,19 @@ namespace ssg
 
     /*virtual*/ bool MissionGameStateScriptBuilder::ExecuteScript() /*override*/
     {
-        if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
-        {
-            if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
-            {
-                if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
-                {
-                    SState->do_file(m_Script);
+        // if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
+        // {
+        //     if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
+        //     {
+        //         if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
+        //         {
+        //             SState->do_file(m_Script);
 
-                    m_Mission->m_Level = SState->get<MissionGameState>("mission").m_Level;
-                    return true;
-                }
-            }
-        }
+        //             m_Mission->m_LevelFilePath = SState->get<MissionGameState>("mission").m_LevelFilePath;
+        //             return true;
+        //         }
+        //     }
+        // }
 
         return false;
     }

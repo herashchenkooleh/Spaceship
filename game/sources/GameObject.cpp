@@ -1,31 +1,31 @@
 #include "ssg/GameObject.hpp"
-#include "ssg/GameEngine.hpp"
+#include "ssg/World.hpp"
 
 namespace ssg
 {
     GameObject::GameObject()
     {
-        GameEngine::GetInstance().RegisterGameObject(SharedFromThis(this));
     }
 
     /*virtual*/ GameObject::~GameObject()
     {
         if (m_IsValid)
         {
-            GameEngine::GetInstance().UnregisterGameObject(SharedFromThis(this));
+            World::GetCurrentWorld()->UnregisterGameObject(SharedFromThis(this));
+            Destroy();
         }
     }
 
     /*virtual*/ void GameObject::Update(const float InDeltaTime)
     {
-        for (auto& [TypeID, ChildComponent]: m_Components)
-        {
-            if (ChildComponent)
-            {
-                ChildComponent->Update(InDeltaTime);
-            }
-        }
+
     }
+
+    void GameObject::MarkForDelete()
+    {
+        World::GetCurrentWorld()->UnregisterGameObject(SharedFromThis(this));
+        m_IsValid = false;
+    };
 
     /*virtual*/ bool GameObject::Construct()
     {

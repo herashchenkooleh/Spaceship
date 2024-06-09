@@ -17,17 +17,24 @@ namespace ssg
 
     bool PlayerController::Initialize(GameObject::Ptr InObject)
     {
+        if (!InObject)
+        {
+            return false;
+        }
+
         m_Object = InObject;
 
         return true;
     }
 
-    /*virtual*/ bool PlayerController::Construct() /*override*/
+    void PlayerController::Deinitialize()
     {
-
+        m_MousePosition = { 0.0f, 0.0f };
+        m_Speed = { 0.0f, 0.0f };
+        m_Object.reset();
     }
 
-    /*virtual*/ bool PlayerController::Destroy() /*override*/
+    /*virtual*/ bool PlayerController::Construct() /*override*/
     {
         const Vector<InputEvent::Type> ListenEvents = { InputEvent::Type::KeyPressed, InputEvent::Type::KeyReleased, InputEvent::Type::MouseMove  };
         InputListenerComponent::Ptr Listener = AddComponent<InputListenerComponent>(ListenEvents);
@@ -35,10 +42,22 @@ namespace ssg
         Listener->AddCallback(InputEvent::Type::KeyPressed, Bind(&PlayerController::OnKeyPressed, this, Placeholder1));
         Listener->AddCallback(InputEvent::Type::KeyReleased, Bind(&PlayerController::OnKeyReleased, this, Placeholder1));
         Listener->AddCallback(InputEvent::Type::MouseMove, Bind(&PlayerController::OnMouseMove, this, Placeholder1));
+
+        return true;
+    }
+
+    /*virtual*/ bool PlayerController::Destroy() /*override*/
+    {
+        return true;
     }
 
     void PlayerController::OnKeyPressed(const InputEvent& InEvent)
     {
+        if (!m_Object)
+        {
+            return;
+        }
+
         switch (InEvent.GetKey())
         {
         case InputEvent::Key::A:
@@ -70,6 +89,11 @@ namespace ssg
 
     void PlayerController::OnKeyReleased(const InputEvent& InEvent)
     {
+        if (!m_Object)
+        {
+            return;
+        }
+
         switch (InEvent.GetKey())
         {
         case InputEvent::Key::A:
@@ -100,12 +124,22 @@ namespace ssg
 
     void PlayerController::OnMouseMove(const InputEvent& InEvent)
     {
+        if (!m_Object)
+        {
+            return;
+        }
+
         m_MousePosition = InEvent.GetMousePosition();
         UpdatePosition();
     }
 
     void PlayerController::UpdatePosition()
     {
+        if (!m_Object)
+        {
+            return;
+        }
+
         if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
         {
             MComponent->SetSpeed(m_Speed);

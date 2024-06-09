@@ -4,6 +4,10 @@
 
 namespace ssg
 {
+    Actor::Actor() = default;
+
+    /*virtual*/ Actor::~Actor() = default;
+
     /*virtual*/ bool Actor::Construct() /*override*/
     {
         if (!GameObject::Construct())

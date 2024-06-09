@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ssg/GameStateBase.hpp"
+#include "ssg/Character.hpp"
 
 namespace ssg
 {
@@ -9,7 +10,7 @@ namespace ssg
     public:
         using Ptr = SharedPtr<ShellGameState>;
 
-        ShellGameState();
+        ShellGameState(const String& InGameStateFilePath);
         ~ShellGameState();
 
         virtual bool Initialize() override;
@@ -21,5 +22,8 @@ namespace ssg
         virtual GameStateBase::Handle GetHandle() const override;
 
         static Handle s_ShellHandle;
+
+    private:
+        Character::Ptr m_Background;
     };
 }

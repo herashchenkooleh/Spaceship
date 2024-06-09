@@ -19,6 +19,7 @@ namespace ssg
 
         bool Load(const String& InLvlScript);
         void Update(const float InDeltaTime);
+        void Unload();
 
         Character::Ptr GetCharacter() { return m_Character; }
 
