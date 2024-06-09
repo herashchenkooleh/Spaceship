@@ -16,5 +16,8 @@ namespace ssg
         virtual bool Initialize() = 0;
         virtual void Update(const float InDeltaTime) = 0;
         virtual void Deinitialize() = 0;
+
+        virtual void RegisterGameObject(GameObject::Ptr InObject) = 0;
+        virtual void UnregisterGameObject(GameObject::Ptr InObject) = 0;
     };
 }

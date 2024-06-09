@@ -1,10 +1,20 @@
 #include "ssg/GameObject.hpp"
+#include "ssg/GameEngine.hpp"
 
 namespace ssg
 {
-    GameObject::GameObject() = default;
+    GameObject::GameObject()
+    {
+        GameEngine::GetInstance().RegisterGameObject(SharedFromThis(this));
+    }
 
-    /*virtual*/ GameObject::~GameObject() = default;
+    /*virtual*/ GameObject::~GameObject()
+    {
+        if (m_IsValid)
+        {
+            GameEngine::GetInstance().UnregisterGameObject(SharedFromThis(this));
+        }
+    }
 
     /*virtual*/ void GameObject::Update(const float InDeltaTime)
     {

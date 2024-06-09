@@ -5,7 +5,7 @@ namespace ssg
 {
     Level::Level()
     {
-
+        m_Character = MakeShared<Character>("assets/ship.png");
     }
     
     /*virtual*/ Level::~Level() = default;
@@ -16,4 +16,16 @@ namespace ssg
 
         return Builder.ExecuteScript();
     }
+
+    void Level::Update(const float InDeltaTime)
+    {
+
+    }
+
+    // auto DeletePredicate = [&](const GameObject::Ptr InObj) 
+    //     {
+    //         return InObj->IsMarkForDelete();
+    //     };
+
+    //     RemoveIf(m_GameObjects.begin(), m_GameObjects.end(), DeletePredicate);
 }

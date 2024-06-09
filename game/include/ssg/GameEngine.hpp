@@ -2,6 +2,7 @@
 
 #include "ssg/ISubSystem.hpp"
 #include "ssg/GameWindow.hpp"
+#include "ssg/GameObject.hpp"
 
 namespace ssg
 {
@@ -43,6 +44,9 @@ namespace ssg
 
             return DynamicPointerCast<Type>(ISubSystem::Ptr{});
         }
+
+        void RegisterGameObject(GameObject::Ptr InObject);
+        void UnregisterGameObject(GameObject::Ptr InObject);
 
     private:
         GameEngine();

@@ -22,7 +22,7 @@ namespace ssg
         bool Initialize();
         void Update();
 
-        void Register(InputListener::Ptr InListener, InputEvent::Type InType = InputEvent::Type::All);
+        void Register(InputListener::Ptr InListener);
         void Unregister(InputListener::Ptr InListener);
 
     private:

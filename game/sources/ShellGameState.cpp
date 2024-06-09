@@ -5,6 +5,7 @@ namespace ssg
     GameStateBase::Handle ShellGameState::s_ShellHandle = 0;
 
     ShellGameState::ShellGameState()
+        : GameStateBase({})
     {
 
     }

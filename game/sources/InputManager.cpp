@@ -50,13 +50,19 @@ namespace ssg
         }
     }
 
-    void InputManager::Register(InputListener::Ptr InListener, InputEvent::Type InType /*= InputEvent::Type::All*/)
+    void InputManager::Register(InputListener::Ptr InListener)
     {
-        m_Implementation->m_Listeners.insert({ InType, InListener });
+        for (auto Type: InListener->GetEventTypes())
+        {
+            m_Implementation->m_Listeners.insert({ Type, InListener });
+        }
     }
 
     void InputManager::Unregister(InputListener::Ptr InListener)
     {
-        //TODO
+        // for (auto Type: InListener->GetEventTypes())
+        // {
+        //     m_Implementation->m_Listeners.er({ Type, InListener });
+        // }
     }
 }

@@ -19,6 +19,9 @@ namespace ssg
 
         ScriptManager::Ptr GetManager() { return m_Manager; }
 
+        virtual void RegisterGameObject(GameObject::Ptr InObject) override;
+        virtual void UnregisterGameObject(GameObject::Ptr InObject) override;
+
     private:
         ScriptManager::Ptr m_Manager;
     };

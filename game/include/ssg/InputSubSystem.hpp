@@ -19,6 +19,9 @@ namespace ssg
 
         InputManager::Ptr GetManager() const { return m_Manager; }
 
+        virtual void RegisterGameObject(GameObject::Ptr InObject) override;
+        virtual void UnregisterGameObject(GameObject::Ptr InObject) override;
+
     private:
         InputManager::Ptr m_Manager;
     };

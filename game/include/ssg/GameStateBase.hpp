@@ -14,7 +14,7 @@ namespace ssg
 
         static Handle s_InvalidHandle;
 
-        GameStateBase();
+        GameStateBase(const Vector<InputEvent::Type>& InEventTypes);
         virtual ~GameStateBase();
 
         virtual bool Initialize();

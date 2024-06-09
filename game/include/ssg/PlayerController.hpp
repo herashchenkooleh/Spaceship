@@ -1,11 +1,11 @@
 #pragma once
 
+#include "ssg/InputEvent.hpp"
 #include "ssg/GameObject.hpp"
-#include "ssg/InputListener.hpp"
 
 namespace ssg
 {
-    class PlayerController : public InputListener
+    class PlayerController : public GameObject
     {
     public:
         using Ptr = SharedPtr<PlayerController>;
@@ -13,9 +13,14 @@ namespace ssg
         PlayerController();
         ~PlayerController();
 
+        virtual bool Construct() override;
+        virtual bool Destroy() override;
+
         bool Initialize(GameObject::Ptr InObject);
 
-        virtual void HandleInput(const InputEvent& InEvent) override;
+        void OnKeyPressed(const InputEvent& InEvent);
+        void OnKeyReleased(const InputEvent& InEvent);
+        void OnMouseMove(const InputEvent& InEvent);
 
     protected:
         void UpdatePosition();

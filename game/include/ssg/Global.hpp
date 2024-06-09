@@ -78,16 +78,16 @@ namespace ssg
     using NullPtr = std::nullptr_t;
 
 
-    // template<typename Type>
-    // using Function = std::function<Type>;
+    template<typename Type>
+    using Function = std::function<Type>;
 
-    // template<typename FunctionType, typename ...Args>
-    // decltype(auto) Bind(FunctionType&& InFunction, Args... InArgs)
-    // {
-    //     return std::bind(std::forward<FunctionType>(InFunction), std::forward<Args>(InArgs)...);
-    // }
+    template<typename FunctionType, typename ...Args>
+    decltype(auto) Bind(FunctionType&& InFunction, Args... InArgs)
+    {
+        return std::bind(std::forward<FunctionType>(InFunction), std::forward<Args>(InArgs)...);
+    }
 
-    // extern std::placeholders::__ph<1> Placeholder1;
+    extern std::placeholders::__ph<1> Placeholder1;
 
     template<typename Type, typename ...Args>
     SharedPtr<Type> MakeShared(Args&& ...InArgs)

@@ -7,6 +7,7 @@ namespace ssg
     GameStateBase::Handle MissionGameState::s_MissionHandle = 1;
 
     MissionGameState::MissionGameState()
+        : GameStateBase({ InputEvent::Type::KeyReleased })
     {
 
     }

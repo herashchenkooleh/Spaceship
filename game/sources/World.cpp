@@ -1,146 +1,104 @@
-// #include "ssg/World.hpp"
-// #include "ssg/MissionGameState.hpp"
-// #include "ssg/ShellGameState.hpp"
-// #include "ssg/MeshComponent.hpp"
+#include "ssg/World.hpp"
+#include "ssg/MissionGameState.hpp"
+#include "ssg/ShellGameState.hpp"
+#include "ssg/MeshComponent.hpp"
+#include "ssg/GameEngine.hpp"
+#include "ssg/InputSubSystem.hpp"
 
-// namespace ssg
-// {
-//     /*static*/ World::Ptr World::s_CurrentWorld = nullptr;
-//     /*static*/ Mutex World::s_CurrentWorldMutex;
+namespace ssg
+{
+    /*static*/ World::Ptr World::s_CurrentWorld = nullptr;
+    /*static*/ Mutex World::s_CurrentWorldMutex;
 
-//     /*static*/ void World::SetCurrentWorld(World::Ptr InCurrentWorld)
-//     {
-//         Lock<Mutex> Lock(s_CurrentWorldMutex);
-//         s_CurrentWorld = InCurrentWorld;
-//     }
+    /*static*/ void World::SetCurrentWorld(World::Ptr InCurrentWorld)
+    {
+        Lock<Mutex> Lock(s_CurrentWorldMutex);
+        s_CurrentWorld = InCurrentWorld;
+    }
 
-//     /*static*/ World::Ptr World::GetCurrentWorld()
-//     {
-//         Lock<Mutex> Lock(s_CurrentWorldMutex);
-//         return s_CurrentWorld;
-//     }
+    /*static*/ World::Ptr World::GetCurrentWorld()
+    {
+        Lock<Mutex> Lock(s_CurrentWorldMutex);
+        return s_CurrentWorld;
+    }
 
-//     World::World()
-//         : m_StateManager(nullptr)
-//         , m_InputManager(nullptr)
-//         , m_Physic(nullptr)
-//     {
+    World::World()
+        : m_StateManager(nullptr)
+        , m_CurrentLevel(nullptr)
+    {
 
-//     }
+    }
 
-//     World::~World() = default;
+    World::~World() = default;
 
-//     bool World::Initialize(InputManager::Ptr InInputManager, Renderer::Ptr InRenderer)
-//     {
-//         if (!InInputManager || !InRenderer)
-//         {
-//             return false;
-//         }
+    bool World::Initialize()
+    {
+        try
+        {
+            GameStateBase::Ptr MGameState = MakeShared<MissionGameState>();
+            GameStateBase::Ptr SGameState = MakeShared<ShellGameState>();
 
-//         m_InputManager = InInputManager;
-//         m_Renderer = InRenderer;
+            m_StateManager = MakeShared<GameStateManager>();
 
-//         try
-//         {
-//             GameStateBase::Ptr MGameState = MakeShared<MissionGameState>();
-//             GameStateBase::Ptr SGameState = MakeShared<ShellGameState>();
+            m_StateManager->RegisterState(MissionGameState::s_MissionHandle, MGameState);
+            m_StateManager->RegisterState(ShellGameState::s_ShellHandle, SGameState);
 
-//             m_StateManager = MakeShared<GameStateManager>();
+            m_StateManager->Activate(ShellGameState::s_ShellHandle);
 
-//             m_StateManager->RegisterState(MissionGameState::s_MissionHandle, MGameState);
-//             m_StateManager->RegisterState(ShellGameState::s_ShellHandle, SGameState);
-
-//             m_StateManager->Activate(MissionGameState::s_MissionHandle);
-
-//             m_Character = MakeShared<Character>("assets/ship.png");
-//             RegisterGameObject(m_Character);
-//             m_PlayerController = MakeShared<PlayerController>();
-//             if (m_PlayerController && m_PlayerController->Initialize(m_Character))
-//             {
-//                 m_InputManager->Register(m_PlayerController);
-//             }
-
-//             m_Physic = MakeShared<Physic>();
-//             if(!m_Physic || !m_Physic->Initialize())
-//             {
-//                 return false;
-//             }
-//         }
-//         catch(...)
-//         {
-//             return false;
-//         }
+            m_PlayerController = MakeShared<PlayerController>();
+        }
+        catch(...)
+        {
+            return false;
+        }
         
-//         return true;
-//     }
+        return true;
+    }
 
-//     void World::Update(const float InDeltaTime)
-//     {
-//         if (!m_StateManager || !m_InputManager)
-//         {
-//             return;
-//         }
+    void World::Update(const float InDeltaTime)
+    {
+        if (!m_StateManager)
+        {
+            return;
+        }
 
-//         {
-//             Lock<Mutex> Lock(m_NewPlacedGameObjectsMutex);
-//             for (auto Object: m_NewPlacedGameObjects)
-//             {
-//                 if (!Object)
-//                 {
-//                     continue;
-//                 }
-//                 Object->Construct();
-//                 if (MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>())
-//                 {
-//                     m_Renderer->Register(Mesh);
-//                 }
+        m_StateManager->Update();
+        {
+            Lock<Mutex> Lock(m_NewPlacedGameObjectsMutex);
+            for (auto Object: m_NewPlacedGameObjects)
+            {
+                if (!Object)
+                {
+                    continue;
+                }
+                Object->Construct();
+                GameEngine::GetInstance().RegisterGameObject(Object);
+            }
+            m_NewPlacedGameObjects.clear();
+        }
 
-//                 if(PhysicComponent::Ptr PhComponent = Object->GetComponent<PhysicComponent>())
-//                 {
-//                     m_Physic->Register(PhComponent);
-//                 }
-//                 m_GameObjects.push_back(Object);
-//             }
-//             m_NewPlacedGameObjects.clear();
-//         }
-//         m_StateManager->Update();
+        m_CurrentLevel->Update(InDeltaTime);        
 
-//         for (auto Object: m_GameObjects)
-//         {
-//             if (Object)
-//             {
-//                 Object->Update(InDeltaTime);
-//             }
-//         }
+        {
+            Lock<Mutex> Lock(m_MarketDeleteGameObjectsMutex);
+            for (auto Object: m_MarketDeleteGameObjects)
+            {
+                GameEngine::GetInstance().UnregisterGameObject(Object);
+                Object->Destroy();
+            }
+            m_MarketDeleteGameObjects.clear();
+        }
+    }
 
-//         for (auto Object: m_GameObjects)
-//         {
-//             if (Object->IsMarkForDelete())
-//             {
-//                 if (MeshComponent::Ptr Mesh = Object->GetComponent<MeshComponent>())
-//                 {
-//                     m_Renderer->Unregister(Mesh);
-//                 }
+    void World::RegisterGameObject(GameObject::Ptr InGameObject)
+    {
+        Lock<Mutex> Lock(m_NewPlacedGameObjectsMutex);
+        m_NewPlacedGameObjects.push_back(InGameObject);
+    }
 
-//                 if (PhysicComponent::Ptr PhComponent = Object->GetComponent<PhysicComponent>())
-//                 {
-//                     m_Physic->Unregister(PhComponent);
-//                 }
-//                 Object->Destroy();
-//             }
-//         }
-
-//         auto DeletePredicate = [&](const GameObject::Ptr InObj) 
-//         {
-//             return InObj->IsMarkForDelete();
-//         };
-
-//         RemoveIf(m_GameObjects.begin(), m_GameObjects.end(), DeletePredicate);
-//     }
-
-//     void World::RegisterGameObject(GameObject::Ptr InGameObject)
-//     {
-//         Lock<Mutex> Lock(m_NewPlacedGameObjectsMutex);
-//         m_NewPlacedGameObjects.push_back(InGameObject);
-//     }
-// }
+    void World::UnregisterGameObject(GameObject::Ptr InGameObject)
+    {
+        Lock<Mutex> Lock(m_MarketDeleteGameObjectsMutex);
+        m_MarketDeleteGameObjects.push_back(InGameObject);
+    }
+}

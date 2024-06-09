@@ -61,7 +61,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/IScriptBuilder.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptSubSystem.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptManager.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameStateScriptBuilder.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameStateScriptBuilder.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListenerComponent.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp

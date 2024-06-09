@@ -5,7 +5,7 @@
 
 namespace ssg
 {
-    class GameObjectComponent : public Object
+    class GameObjectComponent : public virtual Object
     {
     public:
         using Ptr = SharedPtr<GameObjectComponent>;

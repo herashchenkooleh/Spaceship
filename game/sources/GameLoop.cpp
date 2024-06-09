@@ -19,7 +19,8 @@ namespace ssg
     };
 
     GameLoop::Implementation::Implementation()
-        : m_Exit(false)
+        : InputListener({ InputEvent::Type::Exit })
+        , m_Exit(false)
     {
     }
 
@@ -60,7 +61,7 @@ namespace ssg
         {
             if(InputManager::Ptr InpManager = InpSubSystem->GetManager())
             {
-                InpManager->Register(m_Implementation, InputEvent::Type::Exit);
+                InpManager->Register(m_Implementation);
                 return true;
             }
         }

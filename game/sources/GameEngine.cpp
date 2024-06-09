@@ -72,4 +72,26 @@ namespace ssg
             }
         }
     }
+
+    void GameEngine::RegisterGameObject(GameObject::Ptr InObject)
+    {
+        for (auto [SubSystemType, SubSystem]: m_SubSystems)
+        {
+            if (SubSystem)
+            {
+                SubSystem->RegisterGameObject(InObject);
+            }
+        }
+    }
+
+    void GameEngine::UnregisterGameObject(GameObject::Ptr InObject)
+    {
+        for (auto [SubSystemType, SubSystem]: m_SubSystems)
+        {
+            if (SubSystem)
+            {
+                SubSystem->UnregisterGameObject(InObject);
+            }
+        }
+    }
 }

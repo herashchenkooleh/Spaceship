@@ -1,4 +1,5 @@
 #include "ssg/InputSubSystem.hpp"
+#include "ssg/InputListenerComponent.hpp"
 
 namespace ssg
 {
@@ -27,5 +28,21 @@ namespace ssg
     /*virtual*/ void InputSubSystem::Deinitialize() /*override*/
     {
         
+    }
+
+    /*virtual*/ void InputSubSystem::RegisterGameObject(GameObject::Ptr InObject) /*override*/
+    {
+        if (InputListenerComponent::Ptr InpListener = InObject->GetComponent<InputListenerComponent>())
+        {
+            m_Manager->Register(InpListener);
+        }
+    }
+
+    /*virtual*/ void InputSubSystem::UnregisterGameObject(GameObject::Ptr InObject) /*override*/
+    {
+        if (InputListenerComponent::Ptr InpListener = InObject->GetComponent<InputListenerComponent>())
+        {
+            m_Manager->Unregister(InpListener);
+        }
     }
 }

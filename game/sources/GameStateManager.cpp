@@ -1,4 +1,6 @@
 #include "ssg/GameStateManager.hpp"
+#include "ssg/GameEngine.hpp"
+#include "ssg/InputSubSystem.hpp"
 
 namespace ssg
 {
@@ -16,6 +18,13 @@ namespace ssg
         if (InState && InState->Initialize())
         {
             m_States[InHandler] = InState;
+            if (InputSubSystem::Ptr InpSubSystem = GameEngine::GetInstance().GetSubSystem<InputSubSystem>())
+            {
+                if (InputManager::Ptr InpManager = InpSubSystem->GetManager())
+                {
+                    InpManager->Register(InState);
+                }
+            }
         }
     }
 

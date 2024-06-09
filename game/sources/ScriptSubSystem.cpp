@@ -37,4 +37,14 @@ namespace ssg
     {
 
     }
+
+    /*virtual*/ void ScriptSubSystem::RegisterGameObject(GameObject::Ptr InObject) /*override*/
+    {
+
+    }
+    
+    /*virtual*/ void ScriptSubSystem::UnregisterGameObject(GameObject::Ptr InObject) /*override*/
+    {
+
+    }
 }

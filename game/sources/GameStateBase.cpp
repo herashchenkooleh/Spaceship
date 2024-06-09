@@ -4,7 +4,12 @@ namespace ssg
 {
     int GameStateBase::s_InvalidHandle = -1;
 
-    GameStateBase::GameStateBase() = default;
+    GameStateBase::GameStateBase(const Vector<InputEvent::Type>& InEventTypes)
+        : InputListener(InEventTypes)
+    {
+
+    }
+
     /*virtual*/ GameStateBase::~GameStateBase() = default;
 
     /*virtual*/ bool GameStateBase::Initialize()

@@ -20,6 +20,9 @@ namespace ssg
 
         Renderer::Ptr GetRenderer() { return m_Renderer; }
 
+        virtual void RegisterGameObject(GameObject::Ptr InObject) override;
+        virtual void UnregisterGameObject(GameObject::Ptr InObject) override;
+
     private:
         Renderer::Ptr m_Renderer;
     };
