@@ -12,11 +12,16 @@ namespace ssg
 
         sol::state lua;
         lua.open_libraries();
-        lua.new_usertype<vars>("vars", "boop", &vars::boop);
-        lua.script("beep = vars.new()\n"
+
+        void* handler = reinterpret_cast<void*>(&lua);
+
+        sol::state* lua_ptr = reinterpret_cast<sol::state*>(handler);
+
+        lua_ptr->new_usertype<vars>("vars", "boop", &vars::boop);
+        lua_ptr->script("beep = vars.new()\n"
                "beep.boop = 1\n"
                "print(\"FUCK\")");
-        assert(lua.get<vars>("beep").boop == 1);
+        assert(lua_ptr->get<vars>("beep").boop == 1);
     }
 
     Objective::~Objective()

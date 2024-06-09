@@ -7,3 +7,6 @@
 [submodule "externals/sfml"]
 	path = externals/sfml
 	url = https://github.com/SFML/SFML.git
+[submodule "externals/json"]
+	path = externals/json
+	url = https://github.com/nlohmann/json.git

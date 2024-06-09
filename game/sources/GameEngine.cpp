@@ -1,6 +1,7 @@
 #include "ssg/GameEngine.hpp"
 #include "ssg/InputSubSystem.hpp"
 #include "ssg/RenderSubSystem.hpp"
+#include "ssg/ScriptSubSystem.hpp"
 #include "ssg/GameLoop.hpp"
 
 namespace ssg
@@ -29,7 +30,9 @@ namespace ssg
 
         m_Window = InWindow;
 
+        //TODO priority?
         RegisterSubSystem<InputSubSystem>(m_Window);
+        RegisterSubSystem<ScriptSubSystem>();
         RegisterSubSystem<RenderSubSystem>(m_Window);
 
         for (auto [SubSystemType, SubSystem]: m_SubSystems)

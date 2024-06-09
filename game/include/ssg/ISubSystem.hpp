@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ssg/Global.hpp"
+#include "ssg/GameObject.hpp"
 
 namespace ssg
 {

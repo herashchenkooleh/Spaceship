@@ -10,6 +10,7 @@
 #include <array>
 #include <mutex>
 #include <any>
+#include <stack>
 
 namespace ssg
 {
@@ -93,4 +94,7 @@ namespace ssg
     {
         return std::make_shared<Type>(std::forward<Args>(InArgs)...);
     }
+
+    template<typename Type>
+    using Stack = std::stack<Type>;
 }

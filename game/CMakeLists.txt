@@ -56,7 +56,11 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameEngine.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputSubSystem.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/RenderSubSystem.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Level.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Level.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/LevelScriptBuilder.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/IScriptBuilder.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptSubSystem.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptManager.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
@@ -93,7 +97,11 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/GameEngine.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputSubSystem.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/RenderSubSystem.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Level.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Level.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/LevelScriptBuilder.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/IScriptBuilder.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptSubSystem.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptManager.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})
