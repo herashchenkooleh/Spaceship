@@ -39,4 +39,9 @@ namespace ssg
 
         return *this;
     }
+
+    void Transform::AddPosition(const Vector2D& InOffset)
+    {
+        m_Position += InOffset;
+    }
 }
