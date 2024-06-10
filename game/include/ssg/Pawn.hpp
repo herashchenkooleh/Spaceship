@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ssg/Vector2D.hpp"
+#include "ssg/Transform.hpp"
 #include "ssg/GameObject.hpp"
 
 namespace ssg
@@ -10,12 +10,13 @@ namespace ssg
     public:
         using Ptr = SharedPtr<Pawn>;
 
-        Pawn(const String& InTexturePath);
+        Pawn(const String& InTexturePath, const Transform& InTransform);
         virtual ~Pawn();
 
         virtual bool Construct() override;   
 
     private:
-        String m_TexturePath; 
+        String m_TexturePath;
+        Transform m_Transform;
     };
 }

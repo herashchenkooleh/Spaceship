@@ -5,8 +5,9 @@
 
 namespace ssg
 {
-    Pawn::Pawn(const String& InTexturePath)
+    Pawn::Pawn(const String& InTexturePath, const Transform& InTransform)
         : m_TexturePath(InTexturePath)
+        , m_Transform(InTransform)
     {
 
     }
@@ -18,6 +19,7 @@ namespace ssg
         TransformComponent::Ptr TComponent = AddComponent<TransformComponent>();
         if(auto MComponent = AddComponent<MeshComponent>(m_TexturePath))
         {
+            TComponent->SetTransform(m_Transform);
             MComponent->AddComponent<TransformComponent>(TComponent);
         }
 

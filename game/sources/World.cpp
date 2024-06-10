@@ -39,16 +39,8 @@ namespace ssg
     {
         try
         {
-            String RelAssetsPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelAssetsPathSettingName);
-            String RelBinaryPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelBinaryPathSettingName);
-
-            decltype(auto) FullBinaryPath = FileSystemHelper::Join(ssg::FileSystemHelper::GetLaunchDirectory(), RelBinaryPath);
-            decltype(auto) BinaryPath = FileSystemHelper::GetBasePath(FullBinaryPath);
-            decltype(auto) AssetsFolder = FileSystemHelper::Join(BinaryPath, RelAssetsPath);
-
-            decltype(auto) MissionScriptPath = FileSystemHelper::Join(AssetsFolder, Configs::GetInstance().GetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultMissionGameStateSettingName));
-            decltype(auto) ShellScriptPath = FileSystemHelper::Join(AssetsFolder, Configs::GetInstance().GetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultShellGameStateSettingName));
-
+            decltype(auto) MissionScriptPath = FileSystemHelper::GetAssetFilePath(Configs::GetInstance().GetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultMissionGameStateSettingName));
+            decltype(auto) ShellScriptPath = FileSystemHelper::GetAssetFilePath(Configs::GetInstance().GetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultShellGameStateSettingName));
 
             GameStateBase::Ptr MGameState = MakeShared<MissionGameState>();
             GameStateBase::Ptr SGameState = MakeShared<ShellGameState>();
@@ -135,14 +127,7 @@ namespace ssg
     {
         if (GameStateBase::Ptr GameState = m_StateManager->GetActiveState())
         {
-            String RelAssetsPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelAssetsPathSettingName);
-            String RelBinaryPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelBinaryPathSettingName);
-
-            decltype(auto) FullBinaryPath = FileSystemHelper::Join(ssg::FileSystemHelper::GetLaunchDirectory(), RelBinaryPath);
-            decltype(auto) BinaryPath = FileSystemHelper::GetBasePath(FullBinaryPath);
-            decltype(auto) AssetsFolder = FileSystemHelper::Join(BinaryPath, RelAssetsPath);
-
-            m_Level->Load(FileSystemHelper::Join(AssetsFolder, GameState->GetLevelFilePath()));
+            m_Level->Load(FileSystemHelper::GetAssetFilePath(GameState->GetLevelFilePath()));
             m_PlayerController->Initialize(m_Level->GetCharacter());
         }
     }

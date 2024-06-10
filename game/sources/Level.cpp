@@ -46,14 +46,8 @@ namespace ssg
             return false;
         }
 
-        String RelAssetsPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelAssetsPathSettingName);
-        String RelBinaryPath = Configs::GetInstance().GetSetting<String>(Configs::s_GlobalRelBinaryPathSettingName);
-
-        decltype(auto) FullBinaryPath = FileSystemHelper::Join(ssg::FileSystemHelper::GetLaunchDirectory(), RelBinaryPath);
-        decltype(auto) BinaryPath = FileSystemHelper::GetBasePath(FullBinaryPath);
-        decltype(auto) AssetsFolder = FileSystemHelper::Join(BinaryPath, RelAssetsPath);
-
-        m_Background = SpawnGameObject<Pawn>(FileSystemHelper::Join(AssetsFolder, m_BackgroundAsset));
+        //TODO transform from lua
+        m_Background = SpawnGameObject<Pawn>(FileSystemHelper::GetAssetFilePath(m_BackgroundAsset), Transform{{0.5f, 0.6f}, 0.0f, {330.0f , 300.0f}});
 
         return true;
     }

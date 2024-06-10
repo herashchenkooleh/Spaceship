@@ -12,5 +12,7 @@ namespace ssg
         static String Join(const String& InLPath, const String& InRPath);
 
         static String GetBasePath(const String& InPath);
+
+        static String GetAssetFilePath(const String& InAsset);
     };
 }
