@@ -23,6 +23,8 @@ namespace ssg
         const Vector2D& GetPosition() const { return m_Position; }
         void SetPosition(const Vector2D& InPosition) { m_Position = InPosition; }
 
+        void AddPosition(const Vector2D& InOffset);
+
     private:
         Vector2D m_Scale;
         Vector2D m_Position;

@@ -13,6 +13,7 @@
 #include <stack>
 
 #include "sol/sol.hpp"
+#include "SFML/Graphics.hpp"
 
 namespace ssg
 {
@@ -114,4 +115,6 @@ namespace ssg
     using ScriptNilObjectType = sol::lua_nil_t;
 
     extern ScriptNilObjectType ScriptNilObject;
+
+    using FloatRect = sf::FloatRect;
 }

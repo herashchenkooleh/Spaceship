@@ -46,8 +46,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Pawn.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/PlayerController.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MoveComponent.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PhysicComponent.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Physic.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/CollisionComponent.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/CollisionSubSystem.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/QuadTree.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Objective.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ISubSystem.cpp
@@ -89,8 +89,8 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Pawn.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PlayerController.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MoveComponent.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PhysicComponent.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Physic.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/CollisionComponent.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/CollisionSubSystem.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/QuadTree.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Objective.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ISubSystem.hpp
