@@ -5,12 +5,13 @@
 
 namespace ssg
 {
-    class ShellGameState : public GameStateBase
+    class ShellGameState : public GameStateBase, public EnableSharedFromThis<ShellGameState>
     {
+        friend class ShellGameStateScript;
     public:
         using Ptr = SharedPtr<ShellGameState>;
 
-        ShellGameState(const String& InGameStateFilePath);
+        ShellGameState();
         ~ShellGameState();
 
         virtual bool Initialize() override;
@@ -23,7 +24,6 @@ namespace ssg
 
         static Handle s_ShellHandle;
 
-    private:
-        Pawn::Ptr m_Background;
+        static bool RegisterScriptType();
     };
 }

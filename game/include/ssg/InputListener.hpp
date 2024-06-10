@@ -10,15 +10,16 @@ namespace ssg
     {
     public:
         using Ptr = SharedPtr<InputListener>;
-        
-        InputListener(const Vector<InputEvent::Type>& InEventTypes);
+
+        InputListener();
         virtual ~InputListener();
 
         virtual void HandleInput(const InputEvent& InEvent);
 
-        const Vector<InputEvent::Type>& GetEventTypes() const { return m_EventTypes; };
+        void SetListenEventTypes(const Vector<InputEvent::Type>& InListenEventTypes) { m_ListenEventTypes = InListenEventTypes; }
+        const Vector<InputEvent::Type>& GetEventTypes() const { return m_ListenEventTypes; };
 
     private:
-        Vector<InputEvent::Type> m_EventTypes;
+        Vector<InputEvent::Type> m_ListenEventTypes;
     };
 }

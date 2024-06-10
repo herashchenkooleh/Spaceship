@@ -1,15 +1,39 @@
 #include "ssg/ShellGameState.hpp"
+#include "ssg/ShellGameStateScript.hpp"
 #include "ssg/SpawnGameObject.hpp"
+#include "ssg/GameEngine.hpp"
+#include "ssg/ScriptSubSystem.hpp"
+#include "sol/sol.hpp"
 
 namespace ssg
 {
+
+    /*static*/ bool ShellGameState::RegisterScriptType()
+    {
+        try
+        {
+            if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
+            {
+                if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
+                {
+                    if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
+                    {
+                        SState->new_usertype<ShellGameState>("ShellGameState",  sol::base_classes, sol::bases<GameStateBase>());
+                    }
+                }
+            }
+        }
+        catch(...)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     GameStateBase::Handle ShellGameState::s_ShellHandle = 0;
 
-    ShellGameState::ShellGameState(const String& InGameStateFilePath)
-        : GameStateBase(InGameStateFilePath, { InputEvent::Type::WindowResized })
-    {
-        
-    }
+    ShellGameState::ShellGameState() = default;
 
     ShellGameState::~ShellGameState() = default;
 
@@ -20,8 +44,12 @@ namespace ssg
 
     /*virtual*/ bool ShellGameState::Enter() /*override*/
     {
-        m_Background = SpawnGameObject<Pawn>("assets/MainMenuBackground.jpeg");
-        return true;
+        bool Status = GameStateBase::Enter();
+
+        ShellGameStateScript Script = { SharedFromThis(this) };
+        Status = Script.Execute(m_ScriptFilePath);
+
+        return Status;
     }
 
     /*virtual*/ void ShellGameState::Update() /*override*/
@@ -31,7 +59,7 @@ namespace ssg
 
     /*virtual*/ void ShellGameState::Exit() /*override*/
     {
-        m_Background.reset();
+
     }
 
     /*virtual*/ void ShellGameState::HandleInput(const InputEvent& InEvent) /*override*/

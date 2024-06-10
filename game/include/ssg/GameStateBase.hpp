@@ -13,7 +13,7 @@ namespace ssg
 
         static Handle s_InvalidHandle;
 
-        GameStateBase(const String& InGameStateFilePath, const Vector<InputEvent::Type>& InEventTypes);
+        GameStateBase();
         virtual ~GameStateBase();
 
         virtual bool Initialize();
@@ -25,8 +25,12 @@ namespace ssg
 
         const String& GetLevelFilePath() const { return m_LevelFilePath; }
 
+        static bool RegisterScriptType();
+
+        void SetScriptFilePath(const String& InScriptFilePath) { m_ScriptFilePath = InScriptFilePath; }
+
     protected:
         String m_LevelFilePath;
-        String m_GameStateFilePath;
+        String m_ScriptFilePath;
     };
 }

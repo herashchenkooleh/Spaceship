@@ -1,4 +1,4 @@
-state = GameState.new()
+state = MissionGameState.new()
 
 state.level = "DefenceMissionLevel.lua"
 state.number_objectives = 3

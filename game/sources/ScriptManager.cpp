@@ -1,6 +1,11 @@
 #include "ssg/ScriptManager.hpp"
 #include "sol/sol.hpp"
 
+#include "ssg/GameStateBase.hpp"
+#include "ssg/ShellGameState.hpp"
+#include "ssg/MissionGameState.hpp"
+#include "ssg/Level.hpp"
+
 namespace ssg
 {
     /*static*/ String ScriptManager::s_DefaultContentName = "global";
@@ -28,7 +33,14 @@ namespace ssg
         try
         {
             m_Implementation = MakeShared<Implementation>();
-            m_Implementation->m_States.insert( { s_DefaultContentName, MakeShared<sol::state>() });
+            decltype(auto) LuaState = MakeShared<sol::state>();
+            LuaState->open_libraries();
+            m_Implementation->m_States.insert( { s_DefaultContentName, LuaState });
+
+            GameStateBase::RegisterScriptType();
+            ShellGameState::RegisterScriptType();
+            MissionGameState::RegisterScriptType();
+            Level::RegisterScriptType();
 
         }
         catch(...)

@@ -13,7 +13,6 @@ namespace ssg
         using EventCallback = Function<void(const InputEvent&)>;
 
         InputListenerComponent();
-        InputListenerComponent(const Vector<InputEvent::Type>& InEventTypes);
         virtual ~InputListenerComponent();
 
         virtual void HandleInput(const InputEvent& InEvent) override;

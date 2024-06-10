@@ -37,7 +37,9 @@ namespace ssg
     /*virtual*/ bool PlayerController::Construct() /*override*/
     {
         const Vector<InputEvent::Type> ListenEvents = { InputEvent::Type::KeyPressed, InputEvent::Type::KeyReleased, InputEvent::Type::MouseMove  };
-        InputListenerComponent::Ptr Listener = AddComponent<InputListenerComponent>(ListenEvents);
+        InputListenerComponent::Ptr Listener = AddComponent<InputListenerComponent>();
+
+        Listener->SetListenEventTypes(ListenEvents);
 
         Listener->AddCallback(InputEvent::Type::KeyPressed, Bind(&PlayerController::OnKeyPressed, this, Placeholder1));
         Listener->AddCallback(InputEvent::Type::KeyReleased, Bind(&PlayerController::OnKeyReleased, this, Placeholder1));

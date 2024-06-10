@@ -34,6 +34,7 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/World.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameState.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ShellGameState.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/ShellGameStateScript.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObject.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/GameObjectComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Renderer.cpp
@@ -55,11 +56,11 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputSubSystem.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/RenderSubSystem.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Level.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/LevelScriptBuilder.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/IScriptBuilder.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/LevelScript.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/IScript.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptSubSystem.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/ScriptManager.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameStateScriptBuilder.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameStateScript.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListenerComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/FileSystemHelper.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Global.cpp)
@@ -76,6 +77,7 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/World.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MissionGameState.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ShellGameState.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ShellGameStateScript.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/GameObject.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/GameObjectComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Renderer.hpp
@@ -98,11 +100,11 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputSubSystem.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/RenderSubSystem.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Level.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/LevelScriptBuilder.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/IScriptBuilder.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/LevelScript.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/IScript.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptSubSystem.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/ScriptManager.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MissionGameStateScriptBuilder.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MissionGameStateScript.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputListenerComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/FileSystemHelper.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/SpawnGameObject.hpp)

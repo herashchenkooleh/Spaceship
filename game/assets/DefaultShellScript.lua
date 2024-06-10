@@ -1,3 +1,3 @@
-state = GameState.new()
+state = ShellGameState.new()
 
 state.level = "MainMenuLevel.lua"

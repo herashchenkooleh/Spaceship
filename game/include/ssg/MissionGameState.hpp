@@ -1,17 +1,18 @@
 #pragma once
 
 #include "ssg/GameStateBase.hpp"
+#include "ssg/Objective.hpp"
 
 namespace ssg
 {
     class MissionGameState : public GameStateBase, public EnableSharedFromThis<MissionGameState>
     {
-        friend class MissionGameStateScriptBuilder;
+        friend class MissionGameStateScriptTypeBuilder;
 
     public:
         using Ptr = SharedPtr<MissionGameState>;
 
-        MissionGameState(const String& InGameStateFilePath);
+        MissionGameState();
         ~MissionGameState();
 
         virtual bool Initialize() override;
@@ -23,5 +24,10 @@ namespace ssg
         virtual GameStateBase::Handle GetHandle() const override;
 
         static Handle s_MissionHandle;
+
+    private:
+        int m_NumberObjectives;
+        String m_PlayerControllerScript;
+        Vector<Objective> m_Objectives;
     };
 }

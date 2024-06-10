@@ -2,17 +2,8 @@
 
 namespace ssg
 {
-    InputListenerComponent::InputListenerComponent()
-        : InputListener({ InputEvent::Type::All })
-    {
-
-    }
-
-    InputListenerComponent::InputListenerComponent(const Vector<InputEvent::Type>& InEventTypes)
-        : InputListener(InEventTypes)
-    {
-
-    }
+    InputListenerComponent::InputListenerComponent() = default;
+    
     /*virtual*/ InputListenerComponent::~InputListenerComponent() = default;
 
     /*virtual*/ void InputListenerComponent::HandleInput(const InputEvent& InEvent) /*override*/
