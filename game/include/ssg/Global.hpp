@@ -12,6 +12,8 @@
 #include <any>
 #include <stack>
 
+#include "sol/sol.hpp"
+
 namespace ssg
 {
     using Any = std::any;
@@ -20,6 +22,12 @@ namespace ssg
     decltype(auto) AnyCast(Any InValue)
     {
         return std::any_cast<Type>(std::forward<Any>(InValue));
+    }
+
+    template <typename Type>
+    decltype(auto) Move(Type&& InObj)
+    {
+        return std::move(std::forward<Type>(InObj));
     }
 
     using String = std::string;
@@ -99,4 +107,11 @@ namespace ssg
 
     template <typename Type>
     using Stack = std::stack<Type>;
+
+    using ScriptFunction = sol::function;
+    using ScriptObject = sol::object;
+    using ScriptStackObject = sol::stack_object;
+    using ScriptNilObjectType = sol::lua_nil_t;
+
+    extern ScriptNilObjectType ScriptNilObject;
 }

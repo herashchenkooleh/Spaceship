@@ -1,8 +1,6 @@
 #include "ssg/MoveComponent.hpp"
 #include "ssg/TransformComponent.hpp"
 
-#include <iostream>
-
 namespace ssg
 {
     MoveComponent::MoveComponent()

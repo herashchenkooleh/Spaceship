@@ -3,8 +3,6 @@
 #include "ssg/ScriptSubSystem.hpp"
 #include "sol/sol.hpp"
 
-#include "sol/sol.hpp"
-
 namespace ssg
 {
     MissionGameStateScript::MissionGameStateScript(MissionGameState::Ptr InMissionState)
@@ -20,12 +18,16 @@ namespace ssg
         if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
         {
             if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
-            {
+            {  
                 if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                 {
                     SState->do_file(InFilePath);
 
-                    m_Mission->m_LevelFilePath = SState->get<MissionGameState>("state").m_LevelFilePath;
+                    m_Mission->m_LevelFilePath = SState->get<MissionGameState>("mission").m_LevelFilePath;
+                    m_Mission->m_NumberObjectives = SState->get<MissionGameState>("mission").m_NumberObjectives;
+                    m_Mission->m_PlayerControllerScript = SState->get<MissionGameState>("mission").m_PlayerControllerScript;
+                    m_Mission->m_Objectives = SState->get<MissionGameState>("mission").m_Objectives;
+
                     return true;
                 }
             }

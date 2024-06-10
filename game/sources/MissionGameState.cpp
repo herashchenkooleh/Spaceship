@@ -2,11 +2,10 @@
 #include "ssg/MissionGameStateScript.hpp"
 #include "ssg/GameEngine.hpp"
 #include "ssg/ScriptSubSystem.hpp"
-#include "sol/sol.hpp"
+#include "sol/sol.hpp"  
 
 namespace ssg
 {
-
     /*static*/ bool MissionGameState::RegisterScriptType()
     {
         try
@@ -18,9 +17,9 @@ namespace ssg
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
                         SState->new_usertype<MissionGameState>("MissionGameState", sol::base_classes, sol::bases<GameStateBase>(),
-                                                                "number_objectives", &MissionGameState::m_NumberObjectives,
-                                                                "player_controller", &MissionGameState::m_PlayerControllerScript,
-                                                                "objectives",        &MissionGameState::m_Objectives);
+                                                               "number_objectives", &MissionGameState::m_NumberObjectives,
+                                                               "player_controller", &MissionGameState::m_PlayerControllerScript,
+                                                               "objectives",        &MissionGameState::m_Objectives);
                     }
                 }
             }

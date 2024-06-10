@@ -5,6 +5,7 @@
 #include "ssg/ShellGameState.hpp"
 #include "ssg/MissionGameState.hpp"
 #include "ssg/Level.hpp"
+#include "ssg/Objective.hpp"
 
 namespace ssg
 {
@@ -41,6 +42,7 @@ namespace ssg
             ShellGameState::RegisterScriptType();
             MissionGameState::RegisterScriptType();
             Level::RegisterScriptType();
+            Objective::RegisterScriptType();
 
         }
         catch(...)

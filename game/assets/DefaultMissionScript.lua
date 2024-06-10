@@ -1,10 +1,18 @@
-state = MissionGameState.new()
+mission = MissionGameState.new()
 
-state.level = "DefenceMissionLevel.lua"
-state.number_objectives = 3
-state.player_controller = "PlayerContoller.lua"
-state.objectives = {}
+mission.level = "DefenceMissionLevel.lua"
+mission.number_objectives = 3
+mission.player_controller = "PlayerContoller.lua"
 
-state.objectives[1] = "MissionObjective_1.lua"
-state.objectives[2] = "MissionObjective_2.lua"
-state.objectives[3] = "MissionObjective_3.lua"
+objective1 = Objective.new()
+objective1.name = "MissionObjective1"
+
+function objective1:Update (self)
+    print("Hello from objective1")
+end
+
+mission.objectives = {
+    objective1,
+    Objective.new(),
+    Objective.new()
+}
