@@ -20,7 +20,8 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<Level>("Level", "background", &Level::m_BackgroundAsset);
+                        SState->new_usertype<Level>("Level", "background", &Level::m_BackgroundAsset,
+                                                              "character_mesh", &Level::m_CharacterMesh);
                     }
                 }
             }
@@ -49,11 +50,22 @@ namespace ssg
         //TODO transform from lua
         m_Background = SpawnGameObject<Pawn>(FileSystemHelper::GetAssetFilePath(m_BackgroundAsset), Transform{{0.5f, 0.6f}, 0.0f, {330.0f , 300.0f}});
 
+        if (!m_CharacterMesh.empty())
+        {
+           m_Character = SpawnGameObject<Pawn>(FileSystemHelper::GetAssetFilePath(m_CharacterMesh), Transform{{0.07f, 0.07f}, 0.0f, {330.0f , 300.0f}});
+        }
+
         return true;
     }
 
     void Level::Update(const float InDeltaTime)
     {
+        m_Character->Update(InDeltaTime);
+
+        for (auto Object: m_GameObjects)
+        {
+            Object->Update(InDeltaTime);
+        }
 
         auto DeletePredicate = [&](const GameObject::Ptr InObj) 
         {

@@ -9,6 +9,10 @@ namespace ssg
     public:
         using Ptr = SharedPtr<QuadTree>;
 
-        
+        QuadTree();
+        ~QuadTree();
+
+        QuadTree(const QuadTree& InObject) = delete;
+        QuadTree& operator=(const QuadTree& InObject) = delete;
     };
 }

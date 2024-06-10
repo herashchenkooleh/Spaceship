@@ -26,6 +26,7 @@ namespace ssg
     private:
         Pawn::Ptr m_Background;
         String m_BackgroundAsset;
+        String m_CharacterMesh;
         Pawn::Ptr m_Character;
         Vector<GameObject::Ptr> m_GameObjects;
     };

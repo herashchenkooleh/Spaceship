@@ -18,7 +18,13 @@ namespace ssg
 
     /*virtual*/ void GameObject::Update(const float InDeltaTime)
     {
-
+        for (auto [Type, Component]: m_Components)
+        {
+            if (Component)
+            {
+                Component->Update(InDeltaTime);
+            }
+        }
     }
 
     void GameObject::MarkForDelete()

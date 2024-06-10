@@ -45,6 +45,10 @@ namespace ssg
     /*virtual*/ bool ShellGameState::Enter() /*override*/
     {
         bool Status = GameStateBase::Enter();
+        if (!Status)
+        {
+            return false;
+        }
 
         ShellGameStateScript Script = { SharedFromThis(this) };
         Status = Script.Execute(m_ScriptFilePath);

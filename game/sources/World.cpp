@@ -56,7 +56,7 @@ namespace ssg
             m_StateManager->SetOnGameStateEnterCallback(Bind(&World::OnGameStateEnter, this));
             m_StateManager->SetOnGameStateExitCallback(Bind(&World::OnGameStateExit, this));
 
-            m_StateManager->Activate(ShellGameState::s_ShellHandle);
+            m_StateManager->Activate(MissionGameState::s_MissionHandle);
             m_PlayerController = SpawnGameObject<PlayerController>();
 
             m_Level = MakeShared<Level>();

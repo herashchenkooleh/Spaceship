@@ -1,20 +1,19 @@
-// #pragma once
+#pragma once
 
-// #include "ssg/MissionGameState.hpp"
-// #include "ssg/IScriptBuilder.hpp"
+#include "ssg/MissionGameState.hpp"
+#include "ssg/IScript.hpp"
 
-// namespace ssg
-// {
-//     class MissionGameStateScriptBuilder : public IScriptBuilder
-//     {
-//     public:
-//         MissionGameStateScriptBuilder(const String& InMissionPath, MissionGameState::Ptr InMissionState);
-//         virtual ~MissionGameStateScriptBuilder();
+namespace ssg
+{
+    class MissionGameStateScript : public IScript
+    {
+    public:
+        MissionGameStateScript(MissionGameState::Ptr InMissionState);
+        virtual ~MissionGameStateScript();
 
-//         virtual bool ExecuteScript() override;
+        virtual bool Execute(const String& InFilePath) override;
 
-//     private:
-//         String m_Script;
-//         MissionGameState::Ptr m_Mission;
-//     };
-// }
+    private:
+        MissionGameState::Ptr m_Mission;
+    };
+}

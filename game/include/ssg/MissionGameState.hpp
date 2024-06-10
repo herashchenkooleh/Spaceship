@@ -7,8 +7,7 @@ namespace ssg
 {
     class MissionGameState : public GameStateBase, public EnableSharedFromThis<MissionGameState>
     {
-        friend class MissionGameStateScriptTypeBuilder;
-
+        friend class MissionGameStateScript;
     public:
         using Ptr = SharedPtr<MissionGameState>;
 
@@ -24,6 +23,8 @@ namespace ssg
         virtual GameStateBase::Handle GetHandle() const override;
 
         static Handle s_MissionHandle;
+
+        static bool RegisterScriptType();
 
     private:
         int m_NumberObjectives;

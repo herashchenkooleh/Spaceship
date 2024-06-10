@@ -1,6 +1,8 @@
 #include "ssg/MoveComponent.hpp"
 #include "ssg/TransformComponent.hpp"
 
+#include <iostream>
+
 namespace ssg
 {
     MoveComponent::MoveComponent()
@@ -16,7 +18,6 @@ namespace ssg
         if (TransformComponent::Ptr TComponent = GetComponent<TransformComponent>())
         {
             Transform& CurrentTransform = TComponent->GetTransform();
-            CurrentTransform.SetRotation(m_Rotation);
             Vector2D NewPosition = CurrentTransform.GetPosition() + m_Speed * InDeltaTime;
             CurrentTransform.SetPosition(NewPosition);
         }
