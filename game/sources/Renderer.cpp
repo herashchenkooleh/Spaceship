@@ -1,6 +1,7 @@
 #include "ssg/Renderer.hpp"
 #include "ssg/TransformComponent.hpp"
 #include "SFML/Graphics.hpp"
+#include "ssg/FileSystemHelper.hpp"
 
 namespace ssg
 {
@@ -36,11 +37,12 @@ namespace ssg
         m_MeshComponent = InMeshComponent;
         if (m_MeshComponent)
         {
-            m_Texture = sf::Texture::loadFromFile(InMeshComponent->GetTexture());
+            m_Texture = sf::Texture::loadFromFile(FileSystemHelper::GetAssetFilePath(InMeshComponent->GetTexture()));
             if (m_Texture.has_value())
             {
                 m_Sprite = MakeShared<sf::Sprite>(m_Texture.value());
                 m_Texture->setSmooth(true);
+                m_Texture->setRepeated(true);
                 return true;
             }
         }

@@ -15,7 +15,7 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<Transform>("Transform", sol::constructors<Transform(), Transform(const Vector2D&, const float, const Vector2D&)>(),
+                        SState->new_usertype<Transform>("Transform", sol::constructors<Transform(), Transform(const Vector2D&, const float, const Vector2D&), Transform(const Vector2D&, const float, const Vector2D&, const Vector2D&)>(),
                                                         "size", &Transform::m_Size,
                                                         "rotation", &Transform::m_Rotation,
                                                         "position", &Transform::m_Position,

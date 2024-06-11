@@ -1,5 +1,6 @@
 #include "ssg/GameWindow.hpp"
 #include "SFML/Graphics.hpp"
+#include "SFML/Window/WindowEnums.hpp"
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/Event.hpp"
 #include "SFML/System/String.hpp"
@@ -25,8 +26,8 @@ namespace ssg
     {
 
         const auto HwWindowTitle = sf::String{ m_Title };
-        const auto HWVideoMode = sf::VideoMode{ sf::Vector2u{ m_Width, m_Height } };
-        m_HwWindow.create(HWVideoMode, HwWindowTitle);
+        const auto HWVideoMode = sf::VideoMode::getDesktopMode();
+        m_HwWindow.create(HWVideoMode, HwWindowTitle, sf::Style::Default, sf::State::Fullscreen);
         m_HwWindow.setFramerateLimit(60.0f);
     }
 
@@ -65,7 +66,8 @@ namespace ssg
 
         sf::Event HwEvent = m_Implementation->m_HwWindow.pollEvent();
 
-        if (HwEvent.is<sf::Event::Closed>())
+        bool IsAltF4Pressed = (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F4) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LAlt) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LSystem)));
+        if (HwEvent.is<sf::Event::Closed>() || IsAltF4Pressed)
         {
             Event.SetType(InputEvent::Type::Exit);
         }
@@ -100,5 +102,11 @@ namespace ssg
     GameWindow::RenderTargetHandle GameWindow::GetRenderTarget() const
     {
         return reinterpret_cast<void*>(&m_Implementation->m_HwWindow);
+    }
+
+    Vector2D GameWindow::GetSize() const
+    {
+        decltype(auto) HWSize = m_Implementation->m_HwWindow.getSize();
+        return Vector2D{ static_cast<float>(HWSize.x), static_cast<float>(HWSize.y) };
     }
 }

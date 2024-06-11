@@ -13,23 +13,29 @@ namespace ssg
         PlayerController();
         ~PlayerController();
 
+        virtual void Update(const float InDeltaTime) override;
+
         virtual bool Construct() override;
         virtual bool Destroy() override;
 
-        bool Initialize(GameObject::Ptr InObject);
+        bool Initialize(const String& InFilePath, GameObject::Ptr InObject);
         void Deinitialize();
 
         void OnKeyPressed(const InputEvent& InEvent);
         void OnKeyReleased(const InputEvent& InEvent);
         void OnMouseMove(const InputEvent& InEvent);
 
-    protected:
-        void UpdatePosition();
+        static bool RegisterScriptType();
+
+        void SetSpeed(const float InSpeed) { m_Speed = InSpeed; }
+        float GetSpeed() const { return m_Speed; }
         
     private:
         GameObject::Ptr m_Object;
         
-        Vector2D m_Speed;
+        float m_Speed;
+
+        Vector2D m_Acceleration;
         Vector2D m_MousePosition;
     };
 }

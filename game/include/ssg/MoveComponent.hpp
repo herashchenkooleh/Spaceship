@@ -15,10 +15,15 @@ namespace ssg
 
         virtual void Update(const float InDeltaTime) override;
 
-        void SetSpeed(const Vector2D& InSpeed) { m_Speed = InSpeed; }
-        const Vector2D& GetSpeed() const { return m_Speed; }
+        void SetAcceleration(const Vector2D& InSpeed) { m_Acceleration = InSpeed; }
+        const Vector2D& GetAcceleration() const { return m_Acceleration; }
+
+        void SetSpeed(const float InSpeed) { m_Speed = InSpeed; };
+        float GetSpeed() const { return m_Speed; }
 
     private:
-        Vector2D m_Speed;
+        Vector2D m_Acceleration;
+
+        float m_Speed;
     };
 }

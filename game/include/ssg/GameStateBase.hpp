@@ -24,6 +24,7 @@ namespace ssg
         virtual Handle GetHandle() const;
 
         const String& GetLevelFilePath() const { return m_LevelFilePath; }
+        const String& GetPlayerControllerFilePath() const { return m_PlayerControllerScript; }
 
         static bool RegisterScriptType();
 
@@ -32,5 +33,6 @@ namespace ssg
     protected:
         String m_LevelFilePath;
         String m_ScriptFilePath;
+        String m_PlayerControllerScript;
     };
 }

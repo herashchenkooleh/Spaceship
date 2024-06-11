@@ -22,9 +22,10 @@ namespace ssg
                 if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                 {
                     SState->do_file(InFilePath);
-                    m_Level->m_BackgroundAsset = SState->get<Level>("level").m_BackgroundAsset;
-                    m_Level->m_CharacterMesh = SState->get<Level>("level").m_CharacterMesh;
-                    m_Level->m_CharacterTransform = SState->get<Level>("level").m_CharacterTransform;
+                    m_Level->m_Background = SState->get_or<Pawn::Ptr>("background", nullptr);
+                    m_Level->m_Foreground = SState->get_or<Pawn::Ptr>("foreground", nullptr);
+                    m_Level->m_Character = SState->get_or<Pawn::Ptr>("character", nullptr);
+                    
                     return true;
                 }
             }

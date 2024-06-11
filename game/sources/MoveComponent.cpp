@@ -4,7 +4,8 @@
 namespace ssg
 {
     MoveComponent::MoveComponent()
-        : m_Speed({ 0.0f, 0.0f })
+        : m_Acceleration({ 0.0f, 0.0f })
+        , m_Speed(0.0)
     {
 
     }
@@ -16,7 +17,7 @@ namespace ssg
         if (TransformComponent::Ptr TComponent = GetComponent<TransformComponent>())
         {
             Transform& CurrentTransform = TComponent->GetTransform();
-            Vector2D NewPosition = CurrentTransform.GetPosition() + m_Speed * InDeltaTime;
+            Vector2D NewPosition = CurrentTransform.GetPosition() + (m_Acceleration * m_Speed) * InDeltaTime;
             CurrentTransform.SetPosition(NewPosition);
         }
     }

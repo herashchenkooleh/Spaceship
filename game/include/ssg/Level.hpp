@@ -21,14 +21,15 @@ namespace ssg
 
         Pawn::Ptr GetCharacter() { return m_Character; }
 
+        void AddGameObject(GameObject::Ptr InObj);
+        void RemoveGameObject(GameObject::Ptr InObj);
+
         static bool RegisterScriptType();
 
     private:
         Pawn::Ptr m_Background;
-        String m_BackgroundAsset;
-        String m_CharacterMesh;
-        Transform m_CharacterTransform;
+        Pawn::Ptr m_Foreground;
         Pawn::Ptr m_Character;
-        Vector<GameObject::Ptr> m_GameObjects;
+        Map<Object::Identifier, GameObject::Ptr> m_GameObjects;
     };
 }

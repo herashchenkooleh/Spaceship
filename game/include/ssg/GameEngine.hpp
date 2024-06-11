@@ -48,6 +48,8 @@ namespace ssg
         void RegisterGameObject(GameObject::Ptr InObject);
         void UnregisterGameObject(GameObject::Ptr InObject);
 
+        Vector2D GetWindowSize() const { return (m_Window ? m_Window->GetSize() : Vector2D{ 0.0f, 0.0f }); }
+
     private:
         GameEngine();
         ~GameEngine();

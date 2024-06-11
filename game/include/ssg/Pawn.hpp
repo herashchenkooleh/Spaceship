@@ -13,10 +13,12 @@ namespace ssg
         Pawn(const String& InTexturePath, const Transform& InTransform);
         virtual ~Pawn();
 
-        virtual bool Construct() override;   
+        virtual bool Construct() override;
+
+        static bool RegisterScriptType();
 
     private:
         String m_TexturePath;
-        Transform m_Transform;
+        Transform m_SpawnTransform;
     };
 }

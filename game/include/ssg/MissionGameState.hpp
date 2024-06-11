@@ -28,7 +28,6 @@ namespace ssg
 
     private:
         int m_NumberObjectives;
-        String m_PlayerControllerScript;
         Vector<Objective> m_Objectives;
     };
 }

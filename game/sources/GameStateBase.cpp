@@ -16,7 +16,8 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<GameStateBase>("GameStateBase", "level", &GameStateBase::m_LevelFilePath);
+                        SState->new_usertype<GameStateBase>("GameStateBase", "level", &GameStateBase::m_LevelFilePath,
+                                                                              "player_controller", &GameStateBase::m_PlayerControllerScript);
                     }
                 }
             }

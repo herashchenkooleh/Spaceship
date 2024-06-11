@@ -29,6 +29,8 @@ namespace ssg
 
         RenderTargetHandle GetRenderTarget() const;
 
+        Vector2D GetSize() const;
+
     private:
         ImplementationPtr m_Implementation;
     };

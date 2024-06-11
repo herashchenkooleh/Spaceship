@@ -2,10 +2,36 @@
 #include "ssg/MoveComponent.hpp"
 #include "ssg/TransformComponent.hpp"
 #include "ssg/InputListenerComponent.hpp"
+#include "ssg/GameEngine.hpp"
+#include "ssg/ScriptSubSystem.hpp"
+#include "ssg/PlayerControllerScript.hpp"
+#include "sol/sol.hpp"
 
 namespace ssg
 {
+    /*static*/ bool PlayerController::RegisterScriptType()
+    {
+        try
+        {
+            if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
+            {
+                if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
+                {
+                    if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
+                    {
+                        SState->new_usertype<PlayerController>("PlayerController", sol::base_classes, sol::bases<GameObject>(),
+                                                               "speed", &PlayerController::m_Speed);
+                    }
+                }
+            }
+        }
+        catch(...)
+        {
+            return false;
+        }
 
+        return true;
+    }
 
     PlayerController::PlayerController()
         : m_Object(nullptr)
@@ -15,7 +41,7 @@ namespace ssg
     
     PlayerController::~PlayerController() = default;
 
-    bool PlayerController::Initialize(GameObject::Ptr InObject)
+    bool PlayerController::Initialize(const String& InScriptPath, GameObject::Ptr InObject)
     {
         if (!InObject)
         {
@@ -24,14 +50,38 @@ namespace ssg
 
         m_Object = InObject;
 
-        return true;
+        PlayerControllerScript Script(DynamicPointerCast<PlayerController>(SharedFromThis(this)));
+        return Script.Execute(InScriptPath);
     }
 
     void PlayerController::Deinitialize()
     {
         m_MousePosition = { 0.0f, 0.0f };
-        m_Speed = { 0.0f, 0.0f };
+        m_Acceleration = { 0.0f, 0.0f };
+        m_Speed = 0.0f;
         m_Object.reset();
+    }
+
+    /*virtual*/ void PlayerController::Update(const float InDeltaTime) /*override*/
+    {
+        if (!m_Object)
+        {
+            return;
+        }
+
+        if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
+        {
+            MComponent->SetSpeed(m_Speed);
+            MComponent->SetAcceleration(m_Acceleration);
+            if (TransformComponent::Ptr TComponent = m_Object->GetComponent<TransformComponent>())
+            {
+                Transform& CurrentTransform = TComponent->GetTransform();
+                Vector2D Forward = m_MousePosition - CurrentTransform.GetPosition();
+                const float PI = 3.14159265;
+                float Angle = ((atan2(Forward.GetY(), Forward.GetX())) * 180 / PI) + 90.0f;
+                CurrentTransform.SetRotation(Angle);
+            }
+        }
     }
 
     /*virtual*/ bool PlayerController::Construct() /*override*/
@@ -64,29 +114,27 @@ namespace ssg
         {
         case InputEvent::Key::A:
         {
-            m_Speed.SetX(-3.0);
+            m_Acceleration.SetX(-1.0);
             break;
         }
         case InputEvent::Key::S:
         {
-            m_Speed.SetY(3.0f);
+            m_Acceleration.SetY(1.0f);
             break;
         }
         case InputEvent::Key::D:
         {
-            m_Speed.SetX(3.0f);
+            m_Acceleration.SetX(1.0f);
             break;
         }
         case InputEvent::Key::W:
         {
-            m_Speed.SetY(-3.0f);
+            m_Acceleration.SetY(-1.0f);
             break;
         }
         default:
             break;
         }
-
-        UpdatePosition();
     }
 
     void PlayerController::OnKeyReleased(const InputEvent& InEvent)
@@ -100,28 +148,27 @@ namespace ssg
         {
         case InputEvent::Key::A:
         {
-            m_Speed.SetX(0.0f);
+            m_Acceleration.SetX(0.0f);
             break;
         }
         case InputEvent::Key::S:
         {
-            m_Speed.SetY(0.0f);
+            m_Acceleration.SetY(0.0f);
             break;
         }
         case InputEvent::Key::D:
         {
-            m_Speed.SetX(0.0);
+            m_Acceleration.SetX(0.0);
             break;
         }
         case InputEvent::Key::W:
         {
-            m_Speed.SetY(0.0f);
+            m_Acceleration.SetY(0.0f);
             break;
         }
         default:
             break;
         }
-        UpdatePosition();
     }
 
     void PlayerController::OnMouseMove(const InputEvent& InEvent)
@@ -132,27 +179,5 @@ namespace ssg
         }
 
         m_MousePosition = InEvent.GetMousePosition();
-        UpdatePosition();
-    }
-
-    void PlayerController::UpdatePosition()
-    {
-        if (!m_Object)
-        {
-            return;
-        }
-
-        if (MoveComponent::Ptr MComponent = m_Object->GetComponent<MoveComponent>())
-        {
-            MComponent->SetSpeed(m_Speed);
-            if (TransformComponent::Ptr TComponent = m_Object->GetComponent<TransformComponent>())
-            {
-                Transform& CurrentTransform = TComponent->GetTransform();
-                Vector2D Forward = m_MousePosition - CurrentTransform.GetPosition();
-                const float PI = 3.14159265;
-                float Angle = ((atan2(Forward.GetY(), Forward.GetX())) * 180 / PI) + 90.0f;
-                CurrentTransform.SetRotation(Angle);
-            }
-        }
     }
 }

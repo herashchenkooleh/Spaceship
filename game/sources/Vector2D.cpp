@@ -17,7 +17,11 @@ namespace ssg
                     {
                         SState->new_usertype<Vector2D>("Vector2D", sol::constructors<Vector2D(), Vector2D(const float), Vector2D(const float, const float)>(),
                                                        "X", &Vector2D::m_XCoord,
-                                                       "Y", &Vector2D::m_YCoord);
+                                                       "Y", &Vector2D::m_YCoord,
+                                                       sol::meta_function::addition, &Vector2D::operator+,
+                                                       sol::meta_function::subtraction, &Vector2D::operator-,
+                                                       sol::meta_function::multiplication, &Vector2D::operator*,
+                                                       sol::meta_function::division, &Vector2D::operator/);
                     }
                 }
             }

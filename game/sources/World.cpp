@@ -57,7 +57,9 @@ namespace ssg
             m_StateManager->SetOnGameStateExitCallback(Bind(&World::OnGameStateExit, this));
 
             m_StateManager->Activate(MissionGameState::s_MissionHandle);
-            m_PlayerController = SpawnGameObject<PlayerController>();
+            m_PlayerController = MakeShared<PlayerController>();
+            m_PlayerController->Construct();
+            GameEngine::GetInstance().RegisterGameObject(m_PlayerController);
 
             m_Level = MakeShared<Level>();
         }
@@ -77,11 +79,13 @@ namespace ssg
         }
 
         m_StateManager->Update();
+        m_PlayerController->Update(InDeltaTime);
         
         {
             Lock<Mutex> Lock(m_MarketDeleteGameObjectsMutex);
             for (auto Object: m_MarketDeleteGameObjects)
             {
+                m_Level->RemoveGameObject(Object);
                 GameEngine::GetInstance().UnregisterGameObject(Object);
                 Object->Destroy();
             }
@@ -98,6 +102,7 @@ namespace ssg
                 }
                 Object->Construct();
                 GameEngine::GetInstance().RegisterGameObject(Object);
+                m_Level->AddGameObject(Object);
             }
             m_NewPlacedGameObjects.clear();
         }
@@ -128,7 +133,12 @@ namespace ssg
         if (GameStateBase::Ptr GameState = m_StateManager->GetActiveState())
         {
             m_Level->Load(FileSystemHelper::GetAssetFilePath(GameState->GetLevelFilePath()));
-            m_PlayerController->Initialize(m_Level->GetCharacter());
+
+            decltype(auto) PlayerControllerScript = GameState->GetPlayerControllerFilePath();
+            if (!PlayerControllerScript.empty())
+            {
+                m_PlayerController->Initialize(FileSystemHelper::GetAssetFilePath(PlayerControllerScript), m_Level->GetCharacter());
+            }
         }
     }
 }

@@ -59,12 +59,10 @@ namespace ssg
 
     /*virtual*/ void GameObject::Update(const float InDeltaTime)
     {
-        for (auto [Type, Component]: m_Components)
+        decltype(auto) Status = m_UpdateFunction.call(InDeltaTime);
+        if (!Status.valid())
         {
-            if (Component)
-            {
-                Component->Update(InDeltaTime);
-            }
+            DefaultScriptUpdate(InDeltaTime);
         }
     }
 
@@ -96,7 +94,13 @@ namespace ssg
 
     void GameObject::DefaultScriptUpdate(const float InDeltaTime)
     {
-        this->Update(InDeltaTime);
+        for (auto [Type, Component]: m_Components)
+        {
+            if (Component)
+            {
+                Component->Update(InDeltaTime);
+            }
+        }
     }
 
     bool GameObject::DefaultScriptConstruct()

@@ -43,42 +43,42 @@ namespace ssg
             return std::acosf(Dot);
         }
 
-        friend Vector2D operator+(const Vector2D& InLhl, const Vector2D& InRhl)
+        Vector2D operator+(const Vector2D& InRhl) const
         {
             Vector2D Temp;
 
-            Temp.m_XCoord = InLhl.m_XCoord + InRhl.m_XCoord;
-            Temp.m_YCoord = InLhl.m_YCoord + InRhl.m_YCoord;
+            Temp.m_XCoord = m_XCoord + InRhl.m_XCoord;
+            Temp.m_YCoord = m_YCoord + InRhl.m_YCoord;
 
             return Temp;
         }
 
-        friend Vector2D operator-(const Vector2D& InLhl, const Vector2D& InRhl)
+        Vector2D operator-(const Vector2D& InRhl) const
         {
             Vector2D Temp;
 
-            Temp.m_XCoord = InLhl.m_XCoord - InRhl.m_XCoord;
-            Temp.m_YCoord = InLhl.m_YCoord - InRhl.m_YCoord;
+            Temp.m_XCoord = m_XCoord - InRhl.m_XCoord;
+            Temp.m_YCoord = m_YCoord - InRhl.m_YCoord;
 
             return Temp;
         }
 
-        friend Vector2D operator*(const Vector2D& InLhl, const Vector2D& InRhl)
+        Vector2D operator*(const Vector2D& InRhl) const
         {
             Vector2D Temp;
 
-            Temp.m_XCoord = InLhl.m_XCoord * InRhl.m_XCoord;
-            Temp.m_YCoord = InLhl.m_YCoord * InRhl.m_YCoord;
+            Temp.m_XCoord = m_XCoord * InRhl.m_XCoord;
+            Temp.m_YCoord = m_YCoord * InRhl.m_YCoord;
 
             return Temp;
         }
 
-        friend Vector2D operator/(const Vector2D& InLhl, const Vector2D& InRhl)
+        Vector2D operator/(const Vector2D& InRhl) const
         {
             Vector2D Temp;
 
-            Temp.m_XCoord = InLhl.m_XCoord / InRhl.m_XCoord;
-            Temp.m_YCoord = InLhl.m_YCoord / InRhl.m_YCoord;
+            Temp.m_XCoord = m_XCoord / InRhl.m_XCoord;
+            Temp.m_YCoord = m_YCoord / InRhl.m_YCoord;
 
             return Temp;
         }

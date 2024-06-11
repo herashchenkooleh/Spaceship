@@ -1,6 +1,7 @@
 #include "ssg/ScriptManager.hpp"
 #include "sol/sol.hpp"
 
+#include "ssg/GameEngine.hpp"
 #include "ssg/GameStateBase.hpp"
 #include "ssg/ShellGameState.hpp"
 #include "ssg/MissionGameState.hpp"
@@ -8,6 +9,9 @@
 #include "ssg/Objective.hpp"
 #include "ssg/Vector2D.hpp"
 #include "ssg/Transform.hpp"
+#include "ssg/Pawn.hpp"
+#include "ssg/PlayerController.hpp"
+#include "ssg/SpawnGameObject.hpp"
 
 namespace ssg
 {
@@ -37,7 +41,7 @@ namespace ssg
         {
             m_Implementation = MakeShared<Implementation>();
             decltype(auto) LuaState = MakeShared<sol::state>();
-            LuaState->open_libraries();
+            LuaState->open_libraries(sol::lib::base, sol::lib::string, sol::lib::math);
             m_Implementation->m_States.insert( { s_DefaultContentName, LuaState });
 
             //TODO need refactor
@@ -45,11 +49,17 @@ namespace ssg
             Transform::RegisterScriptType();
             Object::RegisterScriptType();
             GameObject::RegisterScriptType();
+            Pawn::RegisterScriptType();
             GameStateBase::RegisterScriptType();
             ShellGameState::RegisterScriptType();
             MissionGameState::RegisterScriptType();
             Level::RegisterScriptType();
             Objective::RegisterScriptType();
+            PlayerController::RegisterScriptType();
+
+            LuaState->set_function("SpawnGameObject", []() -> GameObject::Ptr { return SpawnGameObject<GameObject>(); });
+            LuaState->set_function("SpawnPawnObject", [](const String& InFilePat, const Transform& InTransform) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform); });
+            LuaState->set_function("GetWindowSize", []() -> Vector2D { return GameEngine::GetInstance().GetWindowSize(); });
 
         }
         catch(...)
