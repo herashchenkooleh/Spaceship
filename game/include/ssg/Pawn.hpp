@@ -17,6 +17,9 @@ namespace ssg
 
         static bool RegisterScriptType();
 
+        void SetVisibleInGame(const bool InVisibility);
+        bool GetVisibleInGame() const;
+
     private:
         String m_TexturePath;
         Transform m_SpawnTransform;

@@ -18,7 +18,8 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<Pawn>("Pawn", sol::constructors<Pawn(const String&, const Transform&)>(), sol::base_classes, sol::bases<GameObject>());
+                        SState->new_usertype<Pawn>("Pawn", sol::constructors<Pawn(const String&, const Transform&)>(), sol::base_classes, sol::bases<GameObject>(),
+                                                   "visibile", sol::property(&Pawn::GetVisibleInGame, &Pawn::SetVisibleInGame));
                     }
                 }
             }
@@ -55,5 +56,23 @@ namespace ssg
         }
 
         return true;
+    }
+
+    void Pawn::SetVisibleInGame(const bool InVisibility)
+    {
+        if(auto MComponent = GetComponent<MeshComponent>())
+        {
+            MComponent->SetVisible(InVisibility);
+        }
+    }
+
+    bool Pawn::GetVisibleInGame() const
+    {
+        if(auto MComponent = GetComponent<MeshComponent>())
+        {
+            return MComponent->IsVisible();
+        }
+
+        return false;
     }
 }

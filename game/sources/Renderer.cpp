@@ -88,6 +88,11 @@ namespace ssg
         
         for (auto [Identifier, Mesh] : m_Implementation->m_Meshes)
         {
+            if(!Mesh->m_MeshComponent->IsVisible())
+            {
+                continue;
+            }
+
             if (TransformComponent::Ptr TrComponent = Mesh->m_MeshComponent->GetComponent<TransformComponent>())
             {
                 sf::Vector2u OriginSize = Mesh->m_Texture->getSize();

@@ -4,6 +4,7 @@ namespace ssg
 {
     MeshComponent::MeshComponent(const String InTexture)
         : m_Texture(InTexture)
+        , m_Visible(true)
     {
 
     }

@@ -15,7 +15,11 @@ namespace ssg
 
         const String& GetTexture() const;
 
+        void SetVisible(const bool InVisibility) { m_Visible = InVisibility; }
+        bool IsVisible() const { return m_Visible; }
+
     private:
         String m_Texture;
+        bool m_Visible;
     };
 }
