@@ -40,8 +40,7 @@ namespace ssg
             if (m_Texture.has_value())
             {
                 m_Sprite = MakeShared<sf::Sprite>(m_Texture.value());
-                m_Sprite->setOrigin(sf::Vector2f(m_Sprite->getLocalBounds().width, m_Sprite->getLocalBounds().height) / 2.f);
-
+                m_Texture->setSmooth(true);
                 return true;
             }
         }
@@ -89,8 +88,16 @@ namespace ssg
         {
             if (TransformComponent::Ptr TrComponent = Mesh->m_MeshComponent->GetComponent<TransformComponent>())
             {
+                sf::Vector2u OriginSize = Mesh->m_Texture->getSize();
                 const Transform& CurrentTransform = TrComponent->GetTransform();
-                Vector2D Scale = CurrentTransform.GetScale();
+
+                // TODO origin normalize
+                Vector2D SpriteSize = { static_cast<float>(Mesh->m_Sprite->getLocalBounds().width), static_cast<float>(Mesh->m_Sprite->getLocalBounds().height) };
+                Vector2D Origin = SpriteSize * CurrentTransform.GetOrigin();
+                Mesh->m_Sprite->setOrigin({ Origin.GetX(), Origin.GetY() });
+ 
+                Vector2D Scale = CurrentTransform.GetSize() / Vector2D{ static_cast<float>(OriginSize.x), static_cast<float>(OriginSize.y) };
+
                 Mesh->m_Sprite->setScale({ Scale.GetX(), Scale.GetY() });
                 Mesh->m_Sprite->setRotation(sf::degrees(CurrentTransform.GetRotation()));
                 Vector2D Position = CurrentTransform.GetPosition();

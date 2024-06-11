@@ -27,6 +27,7 @@ namespace ssg
         const auto HwWindowTitle = sf::String{ m_Title };
         const auto HWVideoMode = sf::VideoMode{ sf::Vector2u{ m_Width, m_Height } };
         m_HwWindow.create(HWVideoMode, HwWindowTitle);
+        m_HwWindow.setFramerateLimit(60.0f);
     }
 
     GameWindow::Implementation::~Implementation() = default;

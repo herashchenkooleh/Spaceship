@@ -20,7 +20,13 @@ namespace ssg
             return InLhl.GetID() == InRhl.GetID();
         }
 
+        void DynamicSet(const String& InKey, ScriptStackObject InValue);
+	    ScriptObject DynamicGet(const String& InKey);
+
+        static bool RegisterScriptType();
+
     private:
+        UnorderedMap<String, ScriptObject> m_Entries;
         Identifier m_ID;
 
         static Identifier s_Counter;

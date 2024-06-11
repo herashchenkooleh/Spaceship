@@ -9,6 +9,7 @@ namespace ssg
     {
     public:
         Vector2D();
+        Vector2D(const float InCoord);
         Vector2D(const float InXCoord, const float InYCoord);
 
         Vector2D(const Vector2D& InVector2D);
@@ -185,6 +186,8 @@ namespace ssg
 
             return *this;
         }
+
+        static bool RegisterScriptType();
 
     private:
         float m_XCoord;

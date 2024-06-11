@@ -14,7 +14,7 @@ int main(int argc, const char * argv[])
     ssg::Configs::GetInstance().SetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultShellGameStateSettingName, "DefaultShellScript.lua");
     ssg::Configs::GetInstance().SetSetting<ssg::String>(ssg::Configs::s_GlobalDefaultMissionGameStateSettingName, "DefaultMissionScript.lua");
 
-     GameWindow::Ptr Window = MakeShared<GameWindow>();
+    GameWindow::Ptr Window = MakeShared<GameWindow>();
     if (!Window || !Window->Create(800, 600, "SpaceShip"))
     {
         return -1;

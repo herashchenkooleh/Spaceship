@@ -21,7 +21,8 @@ namespace ssg
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
                         SState->new_usertype<Level>("Level", "background", &Level::m_BackgroundAsset,
-                                                              "character_mesh", &Level::m_CharacterMesh);
+                                                             "character_mesh", &Level::m_CharacterMesh,
+                                                             "character_transform", &Level::m_CharacterTransform);
                     }
                 }
             }
@@ -52,7 +53,7 @@ namespace ssg
 
         if (!m_CharacterMesh.empty())
         {
-           m_Character = SpawnGameObject<Pawn>(FileSystemHelper::GetAssetFilePath(m_CharacterMesh), Transform{{0.07f, 0.07f}, 0.0f, {330.0f , 300.0f}});
+           m_Character = SpawnGameObject<Pawn>(FileSystemHelper::GetAssetFilePath(m_CharacterMesh), m_CharacterTransform);
         }
 
         return true;

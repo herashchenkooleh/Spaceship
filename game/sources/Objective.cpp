@@ -19,13 +19,7 @@ namespace ssg
                                                         "Update", 
                                                         &Objective::m_Function,
 	                                                    "name",
-                                                        &Objective::m_Name,
-                                                        sol::meta_function::index,
-	                                                    &Objective::DynamicGet,
-	                                                    sol::meta_function::new_index,
-	                                                    &Objective::DynamicSet,
-	                                                    sol::meta_function::length,
-	                                                    [](Objective& InObj) { return InObj.m_Entries.size(); });        
+                                                        &Objective::m_Name);        
                     }
                 }
             }
@@ -40,7 +34,6 @@ namespace ssg
 
     Objective::Objective()
     {
-        std::cout << "Condtract" << std::endl;
         if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
         {
             if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
@@ -81,30 +74,5 @@ namespace ssg
     void Objective::Update()
     {
         m_Function.call();
-    }
-
-    void Objective::DynamicSet(const String& InKey, ScriptStackObject InValue)
-    {
-		auto Itr = m_Entries.find(InKey);
-		if (Itr == m_Entries.cend())
-        {
-		    m_Entries.insert(Itr, { Move(InKey), Move(InValue) });
-		}
-		else
-        {
-			Pair<const String, ScriptObject>& KVP = *Itr;
-			ScriptObject& Entry = KVP.second;
-			Entry = ScriptObject(Move(InValue));
-		}
-	}
-
-	ScriptObject Objective::DynamicGet(const String& InKey)
-    {
-		auto Itr = m_Entries.find(InKey);
-		if (Itr == m_Entries.cend())
-        {
-			return ScriptNilObject;
-		}
-		return Itr->second;
-	}
+    }    
 }

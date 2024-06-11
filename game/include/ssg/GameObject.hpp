@@ -20,6 +20,14 @@ namespace ssg
         virtual bool Destroy();
 
         template<typename ComponentType, typename ...Args>
+        void AddComponent(typename ComponentType::Ptr InComponent, Args... InArgs)
+        {
+            m_Components[TypeIndex(typeid(ComponentType))] = InComponent;
+
+            return InComponent;
+        }
+
+        template<typename ComponentType, typename ...Args>
         decltype(auto) AddComponent(Args... InArgs)
         {
             if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
@@ -50,11 +58,34 @@ namespace ssg
             return DynamicPointerCast<ComponentType>(GameObjectComponent::Ptr{ });
         }
 
+        template<typename ComponentType>
+        decltype(auto) GetComponent() const
+        {
+            if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
+            {
+                return DynamicPointerCast<ComponentType>(Iter->second);
+            }
+            
+            return DynamicPointerCast<ComponentType>(GameObjectComponent::Ptr{ });
+        }
+
+
         void MarkForDelete();
         bool IsMarkForDelete() const { return !m_IsValid; };
 
+        static bool RegisterScriptType();
+
     protected:
+        void DefaultScriptUpdate(const float InDeltaTime);
+        bool DefaultScriptConstruct();
+        bool DefaultScriptDestroy();
+
         bool m_IsValid;
+
+        ScriptFunction m_UpdateFunction;
+        ScriptFunction m_ConstructFunction;
+        ScriptFunction m_DestroyFunction;
+
         UnorderedMap<TypeIndex, GameObjectComponent::Ptr> m_Components;
     };
 }

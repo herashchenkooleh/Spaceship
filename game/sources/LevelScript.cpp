@@ -24,6 +24,7 @@ namespace ssg
                     SState->do_file(InFilePath);
                     m_Level->m_BackgroundAsset = SState->get<Level>("level").m_BackgroundAsset;
                     m_Level->m_CharacterMesh = SState->get<Level>("level").m_CharacterMesh;
+                    m_Level->m_CharacterTransform = SState->get<Level>("level").m_CharacterTransform;
                     return true;
                 }
             }

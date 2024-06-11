@@ -22,13 +22,8 @@ namespace ssg
 
         const String& GetName() const { return m_Name; }
 
-        void DynamicSet(const String& InKey, ScriptStackObject InValue);
-	    ScriptObject DynamicGet(const String& InKey);
-
     private:
         String m_Name;
         ScriptFunction m_Function;
-
-        UnorderedMap<String, ScriptObject> m_Entries;
     };
 }

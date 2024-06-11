@@ -6,6 +6,8 @@
 #include "ssg/MissionGameState.hpp"
 #include "ssg/Level.hpp"
 #include "ssg/Objective.hpp"
+#include "ssg/Vector2D.hpp"
+#include "ssg/Transform.hpp"
 
 namespace ssg
 {
@@ -38,6 +40,11 @@ namespace ssg
             LuaState->open_libraries();
             m_Implementation->m_States.insert( { s_DefaultContentName, LuaState });
 
+            //TODO need refactor
+            Vector2D::RegisterScriptType();
+            Transform::RegisterScriptType();
+            Object::RegisterScriptType();
+            GameObject::RegisterScriptType();
             GameStateBase::RegisterScriptType();
             ShellGameState::RegisterScriptType();
             MissionGameState::RegisterScriptType();

@@ -63,7 +63,8 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MissionGameStateScript.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListenerComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/FileSystemHelper.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Global.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Global.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Projectile.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
@@ -107,7 +108,8 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MissionGameStateScript.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputListenerComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/FileSystemHelper.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/SpawnGameObject.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/SpawnGameObject.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Projectile.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

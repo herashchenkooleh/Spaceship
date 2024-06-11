@@ -1,10 +1,45 @@
 #include "ssg/Vector2D.hpp"
+#include "ssg/GameEngine.hpp"
+#include "ssg/ScriptSubSystem.hpp"
+#include "sol/sol.hpp"  
 
 namespace ssg
 {
+    /*static*/ bool Vector2D::RegisterScriptType()
+    {
+        try
+        {
+            if(ScriptSubSystem::Ptr SSubSystem = GameEngine::GetInstance().GetSubSystem<ScriptSubSystem>())
+            {
+                if (ScriptManager::Ptr SManager = SSubSystem->GetManager())
+                {
+                    if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
+                    {
+                        SState->new_usertype<Vector2D>("Vector2D", sol::constructors<Vector2D(), Vector2D(const float), Vector2D(const float, const float)>(),
+                                                       "X", &Vector2D::m_XCoord,
+                                                       "Y", &Vector2D::m_YCoord);
+                    }
+                }
+            }
+        }
+        catch(...)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     Vector2D::Vector2D()
         : m_XCoord(0)
         , m_YCoord(0)
+    {
+
+    }
+
+    Vector2D::Vector2D(const float InCoord)
+        : m_XCoord(InCoord)
+        , m_YCoord(InCoord)
     {
 
     }

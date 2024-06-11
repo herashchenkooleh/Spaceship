@@ -27,6 +27,7 @@ namespace ssg
         Pawn::Ptr m_Background;
         String m_BackgroundAsset;
         String m_CharacterMesh;
+        Transform m_CharacterTransform;
         Pawn::Ptr m_Character;
         Vector<GameObject::Ptr> m_GameObjects;
     };
