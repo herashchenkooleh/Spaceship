@@ -20,8 +20,9 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<Pawn>("Pawn", sol::constructors<Pawn(const String&, const Transform&), Pawn(const String&, const Transform&, const String&, const float)>(), sol::base_classes, sol::bases<GameObject>(),
-                                                   "visibile", sol::property(&Pawn::GetVisibleInGame, &Pawn::SetVisibleInGame));
+                        SState->new_usertype<Pawn>("Pawn", sol::constructors<Pawn(const String&, const Transform&), Pawn(const String&, const Transform&, const String&, const float)>(), sol::base_classes, sol::bases<GameObject, Object>(),
+                                                   "visible", sol::property(&Pawn::GetVisibleInGame, &Pawn::SetVisibleInGame),
+                                                   "transform", sol::property(&Pawn::GetTransform, &Pawn::SetTransform));
                     }
                 }
             }
@@ -88,5 +89,24 @@ namespace ssg
         }
 
         return false;
+    }
+
+    void Pawn::SetTransform(const Transform& InTransform)
+    {
+        if (TransformComponent::Ptr TrComponent = GetComponent<TransformComponent>())
+        {
+            TrComponent->SetTransform(InTransform);
+        }
+    }
+
+    const Transform& Pawn::GetTransform() const
+    {
+        if (TransformComponent::Ptr TrComponent = GetComponent<TransformComponent>())
+        {
+            return TrComponent->GetTransform();
+        }
+
+        static Transform s_ZeroTransform = {};
+        return s_ZeroTransform;
     }
 }

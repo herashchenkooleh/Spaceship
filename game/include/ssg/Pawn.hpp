@@ -18,5 +18,8 @@ namespace ssg
 
         void SetVisibleInGame(const bool InVisibility);
         bool GetVisibleInGame() const;
+
+        void SetTransform(const Transform& InTransform);
+        const Transform& GetTransform() const;
     };
 }

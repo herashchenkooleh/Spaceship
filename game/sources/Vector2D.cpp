@@ -22,6 +22,7 @@ namespace ssg
                                                        sol::meta_function::subtraction, &Vector2D::operator-,
                                                        sol::meta_function::multiplication, &Vector2D::operator*,
                                                        sol::meta_function::division, &Vector2D::operator/);
+                        SState->set_function("Length", [](const Vector2D& InObj) { return InObj.GetLength(); });
                     }
                 }
             }

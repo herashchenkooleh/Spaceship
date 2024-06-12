@@ -58,7 +58,7 @@ namespace ssg
     /*virtual*/ void GameObject::Update(const float InDeltaTime)
     {
         decltype(auto) Status = m_UpdateFunction.call(InDeltaTime);
-        if (!Status.valid())
+        if ((int)Status.status() != 0)
         {
             DefaultScriptUpdate(InDeltaTime);
         }
