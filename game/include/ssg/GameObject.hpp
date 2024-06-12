@@ -16,9 +16,6 @@ namespace ssg
 
         virtual void Update(const float InDeltaTime);
 
-        virtual bool Construct();
-        virtual bool Destroy();
-
         template<typename ComponentType, typename ...Args>
         void AddComponent(typename ComponentType::Ptr InComponent, Args... InArgs)
         {
@@ -77,14 +74,10 @@ namespace ssg
 
     protected:
         void DefaultScriptUpdate(const float InDeltaTime);
-        bool DefaultScriptConstruct();
-        bool DefaultScriptDestroy();
 
         bool m_IsValid;
 
         ScriptFunction m_UpdateFunction;
-        ScriptFunction m_ConstructFunction;
-        ScriptFunction m_DestroyFunction;
 
         UnorderedMap<TypeIndex, GameObjectComponent::Ptr> m_Components;
     };

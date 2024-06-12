@@ -36,7 +36,15 @@ namespace ssg
     PlayerController::PlayerController()
         : m_Object(nullptr)
     {
+        const Vector<InputEvent::Type> ListenEvents = { InputEvent::Type::KeyPressed, InputEvent::Type::KeyReleased, InputEvent::Type::MouseMove, InputEvent::Type::MouseLeftButtonReleased };
+        InputListenerComponent::Ptr Listener = AddComponent<InputListenerComponent>();
 
+        Listener->SetListenEventTypes(ListenEvents);
+
+        Listener->AddCallback(InputEvent::Type::KeyPressed, Bind(&PlayerController::OnKeyPressed, this, Placeholder1));
+        Listener->AddCallback(InputEvent::Type::KeyReleased, Bind(&PlayerController::OnKeyReleased, this, Placeholder1));
+        Listener->AddCallback(InputEvent::Type::MouseMove, Bind(&PlayerController::OnMouseMove, this, Placeholder1));
+        Listener->AddCallback(InputEvent::Type::MouseLeftButtonReleased, Bind(&PlayerController::OnMouseButtonReleased, this, Placeholder1));
     }
     
     PlayerController::~PlayerController() = default;
@@ -80,27 +88,10 @@ namespace ssg
                 const float PI = 3.14159265;
                 float Angle = ((atan2(Forward.GetY(), Forward.GetX())) * 180 / PI) + 90.0f;
                 CurrentTransform.SetRotation(Angle);
+                Forward.Normalize();
+                MComponent->SetLookAt(Forward);
             }
         }
-    }
-
-    /*virtual*/ bool PlayerController::Construct() /*override*/
-    {
-        const Vector<InputEvent::Type> ListenEvents = { InputEvent::Type::KeyPressed, InputEvent::Type::KeyReleased, InputEvent::Type::MouseMove  };
-        InputListenerComponent::Ptr Listener = AddComponent<InputListenerComponent>();
-
-        Listener->SetListenEventTypes(ListenEvents);
-
-        Listener->AddCallback(InputEvent::Type::KeyPressed, Bind(&PlayerController::OnKeyPressed, this, Placeholder1));
-        Listener->AddCallback(InputEvent::Type::KeyReleased, Bind(&PlayerController::OnKeyReleased, this, Placeholder1));
-        Listener->AddCallback(InputEvent::Type::MouseMove, Bind(&PlayerController::OnMouseMove, this, Placeholder1));
-
-        return true;
-    }
-
-    /*virtual*/ bool PlayerController::Destroy() /*override*/
-    {
-        return true;
     }
 
     void PlayerController::OnKeyPressed(const InputEvent& InEvent)

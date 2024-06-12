@@ -91,6 +91,26 @@ namespace ssg
             Event.SetMousePosition({ WorldMousePosition.x, WorldMousePosition.y });
         }
 
+        if (HwEvent.is<sf::Event::MouseButtonReleased>())
+        {
+            if (HwEvent.getIf<sf::Event::MouseButtonReleased>()->button == sf::Mouse::Button::Left)
+            {
+                sf::Vector2f WorldMousePosition = { (float)HwEvent.getIf<sf::Event::MouseButtonReleased>()->position.x, (float)HwEvent.getIf<sf::Event::MouseButtonReleased>()->position.y };
+                Event.SetType(InputEvent::Type::MouseLeftButtonReleased);
+                Event.SetMousePosition({ WorldMousePosition.x, WorldMousePosition.y });
+            }
+        }
+
+        if (HwEvent.is<sf::Event::MouseButtonPressed>())
+        {
+            if (HwEvent.getIf<sf::Event::MouseButtonPressed>()->button == sf::Mouse::Button::Left)
+            {
+                sf::Vector2f WorldMousePosition = { (float)HwEvent.getIf<sf::Event::MouseButtonPressed>()->position.x, (float)HwEvent.getIf<sf::Event::MouseButtonPressed>()->position.y };
+                Event.SetType(InputEvent::Type::MouseLeftButtonPressed);
+                Event.SetMousePosition({ WorldMousePosition.x, WorldMousePosition.y });
+            }
+        }
+
         return Event;
     }
 

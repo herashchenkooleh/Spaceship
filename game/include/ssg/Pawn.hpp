@@ -13,15 +13,9 @@ namespace ssg
         Pawn(const String& InTexturePath, const Transform& InTransform);
         virtual ~Pawn();
 
-        virtual bool Construct() override;
-
         static bool RegisterScriptType();
 
         void SetVisibleInGame(const bool InVisibility);
         bool GetVisibleInGame() const;
-
-    private:
-        String m_TexturePath;
-        Transform m_SpawnTransform;
     };
 }

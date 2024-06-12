@@ -21,8 +21,12 @@ namespace ssg
         void SetSpeed(const float InSpeed) { m_Speed = InSpeed; };
         float GetSpeed() const { return m_Speed; }
 
+        void SetLookAt(const Vector2D& InLookAt) { m_LookAt = InLookAt; }
+        const Vector2D& GetLookAt() const { return m_LookAt; } 
+
     private:
         Vector2D m_Acceleration;
+        Vector2D m_LookAt;
 
         float m_Speed;
     };

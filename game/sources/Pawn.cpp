@@ -33,20 +33,11 @@ namespace ssg
     }
 
     Pawn::Pawn(const String& InTexturePath, const Transform& InTransform)
-        : m_TexturePath(InTexturePath)
-        , m_SpawnTransform(InTransform)
-    {
-
-    }
-
-    /*virtual*/ Pawn::~Pawn() = default;
-
-    /*virtual*/ bool Pawn::Construct() /*override*/
     {
         TransformComponent::Ptr TComponent = AddComponent<TransformComponent>();
-        if(auto MComponent = AddComponent<MeshComponent>(m_TexturePath))
+        if(auto MComponent = AddComponent<MeshComponent>(InTexturePath))
         {
-            TComponent->SetTransform(m_SpawnTransform);
+            TComponent->SetTransform(InTransform);
             MComponent->AddComponent<TransformComponent>(TComponent);
         }
 
@@ -54,10 +45,10 @@ namespace ssg
         {
             MoveObjectComponent->AddComponent<TransformComponent>(TComponent);
         }
-
-        return true;
     }
 
+    /*virtual*/ Pawn::~Pawn() = default;
+    
     void Pawn::SetVisibleInGame(const bool InVisibility)
     {
         if(auto MComponent = GetComponent<MeshComponent>())

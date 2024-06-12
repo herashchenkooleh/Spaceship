@@ -15,15 +15,13 @@ namespace ssg
 
         virtual void Update(const float InDeltaTime) override;
 
-        virtual bool Construct() override;
-        virtual bool Destroy() override;
-
         bool Initialize(const String& InFilePath, GameObject::Ptr InObject);
         void Deinitialize();
 
         void OnKeyPressed(const InputEvent& InEvent);
         void OnKeyReleased(const InputEvent& InEvent);
         void OnMouseMove(const InputEvent& InEvent);
+        void OnMouseButtonReleased(const InputEvent& InEvent);
 
         static bool RegisterScriptType();
 

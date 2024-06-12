@@ -17,9 +17,7 @@ namespace ssg
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
                         SState->new_usertype<GameObject>("GameObject", sol::base_classes, sol::bases<Object>(),
-                                                         "Update", &GameObject::m_UpdateFunction,
-                                                         "COnstruct", &GameObject::m_ConstructFunction,
-                                                         "Destroy", &GameObject::m_DestroyFunction);
+                                                         "Update", &GameObject::m_UpdateFunction);
                     }
                 }
             }
@@ -41,8 +39,8 @@ namespace ssg
                 if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                 {
                     m_UpdateFunction = sol::make_reference<sol::function>(SState->lua_state(), &GameObject::DefaultScriptUpdate);
-                    m_ConstructFunction = sol::make_reference<sol::function>(SState->lua_state(), &GameObject::DefaultScriptConstruct);
-                    m_DestroyFunction = sol::make_reference<sol::function>(SState->lua_state(), &GameObject::DefaultScriptDestroy);
+
+                    m_IsValid = true;
                 }
             }
         }
@@ -53,7 +51,6 @@ namespace ssg
         if (m_IsValid)
         {
             World::GetCurrentWorld()->UnregisterGameObject(SharedFromThis(this));
-            Destroy();
         }
     }
 
@@ -72,26 +69,6 @@ namespace ssg
         m_IsValid = false;
     };
 
-    /*virtual*/ bool GameObject::Construct()
-    {
-        m_IsValid = true;
-
-        return true;
-    }
-
-    /*virtual*/ bool GameObject::Destroy()
-    {
-        for (auto& [TypeID, ChildComponent]: m_Components)
-        {
-            if (ChildComponent)
-            {
-                ChildComponent->Destroy();
-            }
-        }
-
-        return true;
-    }
-
     void GameObject::DefaultScriptUpdate(const float InDeltaTime)
     {
         for (auto [Type, Component]: m_Components)
@@ -101,15 +78,5 @@ namespace ssg
                 Component->Update(InDeltaTime);
             }
         }
-    }
-
-    bool GameObject::DefaultScriptConstruct()
-    {
-        return this->Construct();
-    }
-
-    bool GameObject::DefaultScriptDestroy()
-    {
-        return this->Destroy();
     }
 }

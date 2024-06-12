@@ -6,6 +6,7 @@ namespace ssg
     MoveComponent::MoveComponent()
         : m_Acceleration({ 0.0f, 0.0f })
         , m_Speed(0.0)
+        , m_LookAt(0.0)
     {
 
     }

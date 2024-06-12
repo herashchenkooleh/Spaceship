@@ -58,7 +58,6 @@ namespace ssg
 
             m_StateManager->Activate(MissionGameState::s_MissionHandle);
             m_PlayerController = MakeShared<PlayerController>();
-            m_PlayerController->Construct();
             GameEngine::GetInstance().RegisterGameObject(m_PlayerController);
 
             m_Level = MakeShared<Level>();
@@ -87,7 +86,6 @@ namespace ssg
             {
                 m_Level->RemoveGameObject(Object);
                 GameEngine::GetInstance().UnregisterGameObject(Object);
-                Object->Destroy();
             }
             m_MarketDeleteGameObjects.clear();
         }
@@ -100,7 +98,6 @@ namespace ssg
                 {
                     continue;
                 }
-                Object->Construct();
                 GameEngine::GetInstance().RegisterGameObject(Object);
                 m_Level->AddGameObject(Object);
             }
