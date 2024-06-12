@@ -17,7 +17,7 @@ namespace ssg
 
     /*static*/ String FileSystemHelper::GetBasePath(const String& InPath)
     {
-        return std::filesystem::path(InPath).remove_filename();
+        return std::filesystem::path(InPath).remove_filename().string();
     }
 
     /*static*/ String FileSystemHelper::GetAssetFilePath(const String& InAsset)
