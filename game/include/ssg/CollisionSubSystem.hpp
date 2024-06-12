@@ -26,8 +26,6 @@ namespace ssg
         virtual void UnregisterGameObject(GameObject::Ptr InObject) override;
 
     private:
-        QuadTree m_Tree;
-
         Vector<CollisionComponent> m_Components;
     };
 }

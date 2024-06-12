@@ -5,8 +5,8 @@
 
 namespace ssg
 {
-    Projectile::Projectile(const String& InTexturePath, const Transform& InTransform)
-        : Pawn(InTexturePath, InTransform)
+    Projectile::Projectile(const String& InTexturePath, const Transform& InTransform, const int InLayer)
+        : Pawn(InTexturePath, InTransform, InLayer)
     {
 
     }
@@ -16,7 +16,7 @@ namespace ssg
     /*virtual*/ void Projectile::Update(const float InDeltaTime) /*override*/
     {
         Pawn::Update(InDeltaTime);
-        
+
         if(MoveComponent::Ptr MComponent = GetComponent<MoveComponent>())
         {
             if (TransformComponent::Ptr TComponent = GetComponent<TransformComponent>())

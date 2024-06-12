@@ -3,6 +3,7 @@
 #include "ssg/RenderSubSystem.hpp"
 #include "ssg/ScriptSubSystem.hpp"
 #include "ssg/GameLoop.hpp"
+#include "ssg/CollisionSubSystem.hpp"
 
 namespace ssg
 {
@@ -30,8 +31,8 @@ namespace ssg
 
         m_Window = InWindow;
 
-        //TODO priority?
         RegisterSubSystem<InputSubSystem>(m_Window);
+        RegisterSubSystem<CollisionSubSystem>();
         RegisterSubSystem<ScriptSubSystem>();
         RegisterSubSystem<RenderSubSystem>(m_Window);
 

@@ -17,11 +17,9 @@
 
 namespace ssg
 {
-    /*static*/ String ScriptManager::s_DefaultContentName = "global";
-
     struct ScriptManager::Implementation
     {
-        Map<String, SharedPtr<sol::state>> m_States;
+        sol::state m_State;
     };
 
     ScriptManager::ScriptManager()
@@ -42,11 +40,8 @@ namespace ssg
         try
         {
             m_Implementation = MakeShared<Implementation>();
-            decltype(auto) LuaState = MakeShared<sol::state>();
-            LuaState->open_libraries(sol::lib::base, sol::lib::string, sol::lib::math);
-            m_Implementation->m_States.insert( { s_DefaultContentName, LuaState });
+            m_Implementation->m_State.open_libraries();
 
-            //TODO need refactor
             Vector2D::RegisterScriptType();
             Transform::RegisterScriptType();
             Object::RegisterScriptType();
@@ -61,10 +56,10 @@ namespace ssg
             Weapon::RegisterScriptType();
             AsteroidSpawner::RegisterScriptType();
 
-            LuaState->set_function("SpawnAsteroidSpawner", [](const String& InFilePat, const float InSpeed, const float InInterval) -> AsteroidSpawner::Ptr {  return SpawnGameObject<AsteroidSpawner>(InFilePat, InSpeed, InInterval); });
-            LuaState->set_function("SpawnPawnObject", [](const String& InFilePat, const Transform& InTransform) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform); });
-            LuaState->set_function("SpawnCharacter", [](const String& InFilePat, const Transform& InTransform, const String& InBulletsMesh, const float InBulletsSpeed) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform, InBulletsMesh, InBulletsSpeed); });
-            LuaState->set_function("GetWindowSize", []() -> Vector2D { return GameEngine::GetInstance().GetWindowSize(); });
+            m_Implementation->m_State.set_function("SpawnAsteroidSpawner", [](const String& InFilePat, const float InSpeed, const float InInterval, const int InLayer) -> AsteroidSpawner::Ptr {  return SpawnGameObject<AsteroidSpawner>(InFilePat, InSpeed, InInterval, InLayer); });
+            m_Implementation->m_State.set_function("SpawnPawnObject", [](const String& InFilePat, const Transform& InTransform, const int InLayer) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform, InLayer); });
+            m_Implementation->m_State.set_function("SpawnCharacter", [](const String& InFilePat, const Transform& InTransform, const String& InBulletsMesh, const float InBulletsSpeed, const int InPawnLayer, const int InWeaponLayer) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform, InBulletsMesh, InBulletsSpeed, InPawnLayer, InWeaponLayer); });
+            m_Implementation->m_State.set_function("GetWindowSize", []() -> Vector2D { return GameEngine::GetInstance().GetWindowSize(); });
 
         }
         catch(...)
@@ -75,35 +70,8 @@ namespace ssg
         return true;
     }
 
-    bool ScriptManager::AddNewScriptContent(const String& InContentName)
+    ScriptManager::ScriptContentHandle ScriptManager::GetScriptContent()
     {
-        if (InContentName == s_DefaultContentName)
-        {
-            return true;
-        }
-
-        m_Implementation->m_States.insert( { InContentName, MakeShared<sol::state>() });
-
-        return true;
-    }
-
-    ScriptManager::ScriptContentHandle ScriptManager::GetScriptContent(const String& InContentName /*= s_DefaultContentName*/)
-    {
-        if (auto Itr = m_Implementation->m_States.find(InContentName); Itr != m_Implementation->m_States.end())
-        {
-            return reinterpret_cast<void*>(Itr->second.get());
-        }
-
-        return nullptr;
-    }
-
-    void ScriptManager::DeleteScriptContent(const String& InContentName)
-    {
-        if (InContentName == s_DefaultContentName)
-        {
-            return;
-        }
-
-        m_Implementation->m_States.erase(InContentName);
+        return static_cast<ScriptContentHandle>(&(m_Implementation->m_State));
     }
 }

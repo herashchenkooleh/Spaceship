@@ -9,7 +9,7 @@ namespace ssg
     public:
         using Ptr = SharedPtr<Projectile>;
 
-        Projectile(const String& InTexturePath, const Transform& InTransform);
+        Projectile(const String& InTexturePath, const Transform& InTransform, const int InLayer);
         virtual ~Projectile();
 
         virtual void Update(const float InDeltaTime) override;

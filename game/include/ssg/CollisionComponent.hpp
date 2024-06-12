@@ -8,6 +8,15 @@ namespace ssg
     class CollisionComponent : public GameObjectComponent
     {
     public:
+        enum class Layer : int
+        {
+            Default,
+            Asteroid,
+            Bullet,
+            Planet,
+            Character
+        };
+
         using Ptr = SharedPtr<CollisionComponent>;
 
         struct Manifold
@@ -16,15 +25,16 @@ namespace ssg
             CollisionComponent::Ptr m_Other = nullptr;
         };
 
-        CollisionComponent();
+        CollisionComponent(const  Layer InLayer);
         ~CollisionComponent();
 
         Manifold Intersect(CollisionComponent::Ptr InOther);
         void Resolve(const Manifold& InManifold);
 
-        const FloatRect& GetCollidable() const { return m_Collidables; };
+        Layer GetLayer() const { return m_Layer; }
+        void SetLayer(const Layer InLayer) { m_Layer = InLayer; }
 
     private:
-        FloatRect m_Collidables;
+        Layer m_Layer;
     };
 }

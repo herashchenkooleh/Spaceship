@@ -7,6 +7,7 @@
 #include "sol/sol.hpp"
 #include "ssg/WeaponComponent.hpp"
 #include "ssg/InputListenerComponent.hpp"
+#include "ssg/CollisionComponent.hpp"
 
 namespace ssg
 {
@@ -20,7 +21,7 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<Pawn>("Pawn", sol::constructors<Pawn(const String&, const Transform&), Pawn(const String&, const Transform&, const String&, const float)>(), sol::base_classes, sol::bases<GameObject, Object>(),
+                        SState->new_usertype<Pawn>("Pawn", sol::constructors<Pawn(const String&, const Transform&, const int), Pawn(const String&, const Transform&, const String&, const float, const int, const int)>(), sol::base_classes, sol::bases<GameObject, Object>(),
                                                    "visible", sol::property(&Pawn::GetVisibleInGame, &Pawn::SetVisibleInGame),
                                                    "transform", sol::property(&Pawn::GetTransform, &Pawn::SetTransform));
                     }
@@ -35,10 +36,11 @@ namespace ssg
         return true;
     }
 
-    Pawn::Pawn(const String& InTexturePath, const Transform& InTransform)
+    Pawn::Pawn(const String& InTexturePath, const Transform& InTransform, const int InLayer)
     {
         TransformComponent::Ptr TComponent = AddNewComponent<TransformComponent>();
-        if(auto MComponent = AddNewComponent<MeshComponent>(InTexturePath))
+        auto MComponent = AddNewComponent<MeshComponent>(InTexturePath);
+        if(MComponent)
         {
             TComponent->SetTransform(InTransform);
             MComponent->AddComponent<TransformComponent>(TComponent);
@@ -48,12 +50,18 @@ namespace ssg
         {
             MoveObjectComponent->AddComponent<TransformComponent>(TComponent);
         }
+
+        if (CollisionComponent::Ptr CComponent = AddNewComponent<CollisionComponent>(static_cast<CollisionComponent::Layer>(InLayer)))
+        {
+            CComponent->AddComponent<MeshComponent>(MComponent);
+        }
     }
 
-    Pawn::Pawn(const String& InTexturePath, const Transform& InTransform, const String& InBulletMesh, const float InBulletSpeed)
+    Pawn::Pawn(const String& InTexturePath, const Transform& InTransform, const String& InBulletMesh, const float InBulletSpeed, const int InLayer, const int InWeaponLayer)
     {
         TransformComponent::Ptr TComponent = AddNewComponent<TransformComponent>();
-        if(auto MComponent = AddNewComponent<MeshComponent>(InTexturePath))
+        auto MComponent = AddNewComponent<MeshComponent>(InTexturePath);
+        if(MComponent)
         {
             TComponent->SetTransform(InTransform);
             MComponent->AddComponent<TransformComponent>(TComponent);
@@ -66,8 +74,13 @@ namespace ssg
             const Vector<InputEvent::Type> ListenEvents = { InputEvent::Type::MouseLeftButtonReleased };
             InputListenerComponent::Ptr Listener = AddNewComponent<InputListenerComponent>();
             Listener->SetListenEventTypes(ListenEvents);
-            decltype(auto) WComponent = AddNewComponent<WeaponComponent>(this, InBulletMesh, InBulletSpeed);
+            decltype(auto) WComponent = AddNewComponent<WeaponComponent>(this, InBulletMesh, InBulletSpeed, InWeaponLayer);
             Listener->AddCallback(InputEvent::Type::MouseLeftButtonReleased, Bind(&WeaponComponent::OnMouseLeftButtonReleased, WComponent.get(), Placeholder1));
+        }
+
+        if (CollisionComponent::Ptr CComponent = AddNewComponent<CollisionComponent>(static_cast<CollisionComponent::Layer>(InLayer)))
+        {
+            CComponent->AddComponent<MeshComponent>(MComponent);
         }
     }
 

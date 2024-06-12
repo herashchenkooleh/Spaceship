@@ -46,7 +46,7 @@ namespace ssg
     public:
         using Ptr = SharedPtr<AsteroidSpawner>;
 
-        AsteroidSpawner(const String& InAsteroidsMesh, const float InAsteroidsSpeed, const float InSpawnInterval);
+        AsteroidSpawner(const String& InAsteroidsMesh, const float InAsteroidsSpeed, const float InSpawnInterval, const int InLayer);
         virtual ~AsteroidSpawner();
 
         virtual void Update(const float InDeltaTime) override;
@@ -63,6 +63,7 @@ namespace ssg
 
         String  m_AsteroidsMesh;
         float m_AsteroidsSpeed;
+        int m_AsteroidsLayer;
 
         Random<std::uniform_int_distribution<size_t>, size_t> m_SideSelect;
         Random<std::uniform_real_distribution<float>, float> m_PositionXSelect;

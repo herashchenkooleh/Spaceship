@@ -26,7 +26,7 @@ namespace ssg
 
     /*virtual*/ void CollisionSubSystem::RegisterGameObject(GameObject::Ptr InObject) /*override*/
     {
-
+        
     }
 
     /*virtual*/ void CollisionSubSystem::UnregisterGameObject(GameObject::Ptr InObject) /*override*/

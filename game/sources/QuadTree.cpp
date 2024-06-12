@@ -23,7 +23,7 @@ namespace ssg
     {
         if(m_Children[0] != nullptr)
         {
-            int indexToPlaceObject = GetChildIndexForObject(InObject->GetCollidable());
+            int indexToPlaceObject = 0;//GetChildIndexForObject(InObject->GetCollidable());
             if(indexToPlaceObject != s_ThisTree)
             {
                 m_Children[indexToPlaceObject]->Insert(InObject);
@@ -41,8 +41,8 @@ namespace ssg
             while (ObjIterator != m_Objects.end())
             {
                 auto Obj = *ObjIterator;
-                int indexToPlaceObject = 
-                    GetChildIndexForObject(Obj->GetCollidable());
+                int indexToPlaceObject = 0;
+                    //GetChildIndexForObject(Obj->GetCollidable());
                 
                 if (indexToPlaceObject != s_ThisTree)
                 {
@@ -60,7 +60,7 @@ namespace ssg
 
     void QuadTree::Remove(CollisionComponent::Ptr InObject)
     {
-        int Index = GetChildIndexForObject(InObject->GetCollidable());
+        int Index = 0;//GetChildIndexForObject(InObject->GetCollidable());
         
         if(Index == s_ThisTree || m_Children[Index] == nullptr)
         {
@@ -103,10 +103,10 @@ namespace ssg
         
         for (auto Collider : PossibleOverlaps)
         {
-            if (InArea.findIntersection(Collider->GetCollidable()))
-            {
-                ReturnList.emplace_back(Collider);
-            }
+            // if (InArea.findIntersection(Collider->GetCollidable()))
+            // {
+            //     ReturnList.emplace_back(Collider);
+            // }
         }
 
         return ReturnList;

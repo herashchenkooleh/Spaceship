@@ -27,8 +27,6 @@ namespace ssg
                     m_Level->m_Foreground = SState->get_or<Pawn::Ptr>("foreground", nullptr);
                     m_Level->m_Character = SState->get_or<Pawn::Ptr>("character", nullptr);
                     m_Level->m_Spawner = SState->get<AsteroidSpawner::Ptr>("asteroid_spawner");
-                    std::cout << "Spawner: " << (m_Level->m_Spawner ? m_Level->m_Spawner->GetID() :  -1) << std::endl;
-                    //World::GetCurrentWorld()->RegisterGameObject(m_Level->m_Spawner);
 
                     return true;
                 }

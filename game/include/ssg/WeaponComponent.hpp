@@ -11,7 +11,7 @@ namespace ssg
     public:
         using Ptr = SharedPtr<WeaponComponent>;
 
-        WeaponComponent(class GameObject* InOwmer, const String& InWeaponMesh, const float InWeaponSpeed);
+        WeaponComponent(class GameObject* InOwmer, const String& InWeaponMesh, const float InWeaponSpeed, const int InWeaponLayer);
         virtual ~WeaponComponent();
 
         Weapon::Ptr GetWeapon() { return m_Weapon; }

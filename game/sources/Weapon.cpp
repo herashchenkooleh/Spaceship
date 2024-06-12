@@ -34,10 +34,11 @@ namespace ssg
         return true;
     }
 
-    Weapon::Weapon(GameObject* InOwner, const std::string& InBulletMesh, const float InBulletSpeed /*= 50.0f*/)
+    Weapon::Weapon(GameObject* InOwner, const std::string& InBulletMesh, const int InBulletsLayer, const float InBulletSpeed /*= 50.0f*/)
         : m_BulletSpeed(InBulletSpeed)
         , m_BulletMesh(InBulletMesh)
         , m_Owner(InOwner)
+        , m_BulletsLayer(InBulletsLayer)
     {
 
     }
@@ -53,7 +54,7 @@ namespace ssg
 
         if (decltype(auto) TComponent = m_Owner->GetComponent<TransformComponent>())
         {
-            Projectile::Ptr Bullet = SpawnGameObject<Projectile>(m_BulletMesh, TComponent->GetTransform());
+            Projectile::Ptr Bullet = SpawnGameObject<Projectile>(m_BulletMesh, TComponent->GetTransform(), m_BulletsLayer);
 
             Bullet->SetAcceleration(m_Owner->GetComponent<MoveComponent>()->GetLookAt());
             Bullet->SetSpeed(m_BulletSpeed);

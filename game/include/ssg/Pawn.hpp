@@ -2,6 +2,7 @@
 
 #include "ssg/Transform.hpp"
 #include "ssg/GameObject.hpp"
+#include "ssg/CollisionComponent.hpp"
 
 namespace ssg
 {
@@ -10,8 +11,8 @@ namespace ssg
     public:
         using Ptr = SharedPtr<Pawn>;
 
-        Pawn(const String& InTexturePath, const Transform& InTransform);
-        Pawn(const String& InTexturePath, const Transform& InTransform, const String& InBulletMesh, const float InBulletSpeed);
+        Pawn(const String& InTexturePath, const Transform& InTransform, const int InLayer);
+        Pawn(const String& InTexturePath, const Transform& InTransform, const String& InBulletMesh, const float InBulletSpeed, const int InPawnLayer, const int InWeaponLayer);
         virtual ~Pawn();
 
         static bool RegisterScriptType();

@@ -18,7 +18,7 @@ namespace ssg
                 {
                     if (sol::state* SState = reinterpret_cast<sol::state*>(SManager->GetScriptContent()))
                     {
-                        SState->new_usertype<AsteroidSpawner>("AsteroidSpawner", sol::constructors<AsteroidSpawner(const String&, const float, const float)>(), sol::base_classes, sol::bases<GameObject>(),
+                        SState->new_usertype<AsteroidSpawner>("AsteroidSpawner", sol::constructors<AsteroidSpawner(const String&, const float, const float, const int)>(), sol::base_classes, sol::bases<GameObject>(),
                                                                "AddTarget", &AsteroidSpawner::AddTarget,
                                                                "RemoveTarget", &AsteroidSpawner::RemoveTarget);
                     }
@@ -33,7 +33,7 @@ namespace ssg
         return true;
     }
 
-    AsteroidSpawner::AsteroidSpawner(const String& InAsteroidsMesh, const float InAsteroidsSpeed, const float InSpawnInterval)
+    AsteroidSpawner::AsteroidSpawner(const String& InAsteroidsMesh, const float InAsteroidsSpeed, const float InSpawnInterval, const int InLayer)
         : m_AccumulatedTime(0.0f)
         , m_SideSelect(1, 4)
         , m_PositionXSelect(0.0f, GameEngine::GetInstance().GetWindowSize().GetX())
@@ -42,6 +42,7 @@ namespace ssg
         , m_AsteroidsMesh(InAsteroidsMesh)
         , m_AsteroidsSpeed(InAsteroidsSpeed)
         , m_SpawnInterval(InSpawnInterval)
+        , m_AsteroidsLayer(InLayer)
     {
     }
     
@@ -91,7 +92,7 @@ namespace ssg
             }
             if(decltype(auto) TrComponent =  TargetItr->second->GetComponent<TransformComponent>())
             {
-                Projectile::Ptr Asteroid = SpawnGameObject<Projectile>(m_AsteroidsMesh, AsteroidTransform);
+                Projectile::Ptr Asteroid = SpawnGameObject<Projectile>(m_AsteroidsMesh, AsteroidTransform, m_AsteroidsLayer);
                 Asteroid->SetSpeed(m_AsteroidsSpeed); //TODO
                 decltype(auto) Direction = TrComponent->GetTransform().GetPosition() - AsteroidTransform.GetPosition();
                 Direction.Normalize();

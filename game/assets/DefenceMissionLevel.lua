@@ -1,7 +1,7 @@
 window_size = GetWindowSize()
 
-background = SpawnPawnObject("background.png", Transform.new(window_size, 0.0, Vector2D.new(0.0, 0.0)))
-foreground = SpawnPawnObject("foreground.png", Transform.new(window_size, 0.0, Vector2D.new(0.0, 0.0)))
+background = SpawnPawnObject("background.png", Transform.new(window_size, 0.0, Vector2D.new(0.0, 0.0)), 0)
+foreground = SpawnPawnObject("foreground.png", Transform.new(window_size, 0.0, Vector2D.new(0.0, 0.0)), 0)
 
 relative_defence_area_1_pos = Vector2D.new(0.3, 0.3)
 relative_defence_area_2_pos = Vector2D.new(0.7, 0.3)
@@ -18,20 +18,20 @@ relative_planet_3_size = Vector2D.new(300.0 / min_window_dim, 250.0 / min_window
 
 min_window_size = Vector2D.new(min_window_dim, min_window_dim)
 
-defence_area_1 = SpawnPawnObject("defence_area.png", Transform.new(relative_defence_area_1_size * min_window_size, 0.0, relative_defence_area_1_pos * window_size, Vector2D.new(0.5, 0.5)))
-defence_area_2 = SpawnPawnObject("defence_area.png", Transform.new(relative_defence_area_2_size * min_window_size, 0.0, relative_defence_area_2_pos * window_size, Vector2D.new(0.5, 0.5)))
-defence_area_3 = SpawnPawnObject("defence_area.png", Transform.new(relative_defence_area_3_size * min_window_size, 0.0, relative_defence_area_3_pos * window_size, Vector2D.new(0.5, 0.5)))
+defence_area_1 = SpawnPawnObject("defence_area.png", Transform.new(relative_defence_area_1_size * min_window_size, 0.0, relative_defence_area_1_pos * window_size, Vector2D.new(0.5, 0.5)), 0)
+defence_area_2 = SpawnPawnObject("defence_area.png", Transform.new(relative_defence_area_2_size * min_window_size, 0.0, relative_defence_area_2_pos * window_size, Vector2D.new(0.5, 0.5)), 0)
+defence_area_3 = SpawnPawnObject("defence_area.png", Transform.new(relative_defence_area_3_size * min_window_size, 0.0, relative_defence_area_3_pos * window_size, Vector2D.new(0.5, 0.5)), 0)
 
 defence_area_1.visible = false
 defence_area_2.visible = false
 defence_area_3.visible = false
 
-planet_1 = SpawnPawnObject("planet1.png", Transform.new(relative_planet_1_size * min_window_size, 0.0, relative_defence_area_1_pos * window_size, Vector2D.new(0.5, 0.5)))
-planet_2 = SpawnPawnObject("planet2.png", Transform.new(relative_planet_2_size * min_window_size, 0.0, relative_defence_area_2_pos * window_size, Vector2D.new(0.5, 0.5)))
-planet_3 = SpawnPawnObject("planet3.png", Transform.new(relative_planet_3_size * min_window_size, 0.0, relative_defence_area_3_pos * window_size, Vector2D.new(0.5, 0.5)))
+planet_1 = SpawnPawnObject("planet1.png", Transform.new(relative_planet_1_size * min_window_size, 0.0, relative_defence_area_1_pos * window_size, Vector2D.new(0.5, 0.5)), 3)
+planet_2 = SpawnPawnObject("planet2.png", Transform.new(relative_planet_2_size * min_window_size, 0.0, relative_defence_area_2_pos * window_size, Vector2D.new(0.5, 0.5)), 3)
+planet_3 = SpawnPawnObject("planet3.png", Transform.new(relative_planet_3_size * min_window_size, 0.0, relative_defence_area_3_pos * window_size, Vector2D.new(0.5, 0.5)), 3)
 
-character = SpawnCharacter("ship.png", Transform.new(Vector2D.new(65.0, 65.0), 0.0, Vector2D.new(300.0, 300.0), Vector2D.new(0.5, 0.5)), "bullet.png", 100.0)
-asteroid_spawner = SpawnAsteroidSpawner("asteroid.png", 45.0, 5.0)
+character = SpawnCharacter("ship.png", Transform.new(Vector2D.new(65.0, 65.0), 0.0, Vector2D.new(300.0, 300.0), Vector2D.new(0.5, 0.5)), "bullet.png", 100.0, 4, 2)
+asteroid_spawner = SpawnAsteroidSpawner("asteroid.png", 45.0, 5.0, 1)
 
 defence_area_1.Update = function (self)
     dist_vec = character.transform.position - defence_area_1.transform.position

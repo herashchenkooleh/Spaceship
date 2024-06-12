@@ -4,9 +4,9 @@
 
 namespace ssg
 {
-    WeaponComponent::WeaponComponent(GameObject* InOwmer, const String& InWeaponMesh, const float InWeaponSpeed)
+    WeaponComponent::WeaponComponent(GameObject* InOwmer, const String& InWeaponMesh, const float InWeaponSpeed, const int InWeaponLayer)
     {
-        m_Weapon = MakeShared<Weapon>(InOwmer, InWeaponMesh, InWeaponSpeed);
+        m_Weapon = MakeShared<Weapon>(InOwmer, InWeaponMesh, InWeaponLayer, InWeaponSpeed);
     }
     
     /*virtual*/ WeaponComponent::~WeaponComponent() = default;

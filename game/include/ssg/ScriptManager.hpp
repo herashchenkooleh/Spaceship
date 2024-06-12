@@ -18,15 +18,9 @@ namespace ssg
 
         bool Initialize();
 
-        const String& GetDefaultContentName() const { return s_DefaultContentName; }
-
-        bool AddNewScriptContent(const String& InContentName);
-        ScriptContentHandle GetScriptContent(const String& InContentName = s_DefaultContentName);
-        void DeleteScriptContent(const String& InContentName);
+        ScriptContentHandle GetScriptContent();
         
     private:
         ImplementationPtr m_Implementation;
-
-        static String s_DefaultContentName;
     };
 }
