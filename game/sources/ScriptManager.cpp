@@ -12,6 +12,7 @@
 #include "ssg/Pawn.hpp"
 #include "ssg/PlayerController.hpp"
 #include "ssg/SpawnGameObject.hpp"
+#include "ssg/Weapon.hpp"
 
 namespace ssg
 {
@@ -56,9 +57,11 @@ namespace ssg
             Level::RegisterScriptType();
             Objective::RegisterScriptType();
             PlayerController::RegisterScriptType();
+            Weapon::RegisterScriptType();
 
             LuaState->set_function("SpawnGameObject", []() -> GameObject::Ptr { return SpawnGameObject<GameObject>(); });
             LuaState->set_function("SpawnPawnObject", [](const String& InFilePat, const Transform& InTransform) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform); });
+            LuaState->set_function("SpawnCharacter", [](const String& InFilePat, const Transform& InTransform, const String& InBulletsMesh, const float InBulletsSpeed) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform, InBulletsMesh, InBulletsSpeed); });
             LuaState->set_function("GetWindowSize", []() -> Vector2D { return GameEngine::GetInstance().GetWindowSize(); });
 
         }

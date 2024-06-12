@@ -25,7 +25,7 @@ namespace ssg
         }
 
         template<typename ComponentType, typename ...Args>
-        decltype(auto) AddComponent(Args... InArgs)
+        decltype(auto) AddNewComponent(Args... InArgs)
         {
             if (auto Iter = m_Components.find(TypeIndex(typeid(ComponentType))); Iter != m_Components.end())
             {
@@ -51,6 +51,8 @@ namespace ssg
             {
                 return DynamicPointerCast<ComponentType>(Iter->second);
             }
+
+            
             
             return DynamicPointerCast<ComponentType>(GameObjectComponent::Ptr{ });
         }

@@ -126,5 +126,6 @@ namespace ssg
 
     void Renderer::Unregister(MeshComponent::Ptr InMesh)
     {
+        m_Implementation->m_Meshes.erase(InMesh->GetID());
     }
 }

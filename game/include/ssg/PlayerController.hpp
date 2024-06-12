@@ -21,7 +21,6 @@ namespace ssg
         void OnKeyPressed(const InputEvent& InEvent);
         void OnKeyReleased(const InputEvent& InEvent);
         void OnMouseMove(const InputEvent& InEvent);
-        void OnMouseButtonReleased(const InputEvent& InEvent);
 
         static bool RegisterScriptType();
 

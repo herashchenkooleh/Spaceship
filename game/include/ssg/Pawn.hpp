@@ -11,6 +11,7 @@ namespace ssg
         using Ptr = SharedPtr<Pawn>;
 
         Pawn(const String& InTexturePath, const Transform& InTransform);
+        Pawn(const String& InTexturePath, const Transform& InTransform, const String& InBulletMesh, const float InBulletSpeed);
         virtual ~Pawn();
 
         static bool RegisterScriptType();

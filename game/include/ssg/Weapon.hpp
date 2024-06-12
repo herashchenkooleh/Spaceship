@@ -7,12 +7,18 @@ namespace ssg
     class Weapon
     {
     public:
-        Weapon(GameObject::Ptr InOwner);
+        using Ptr = SharedPtr<Weapon>;
+
+        Weapon(GameObject* InOwner,const std::string& InBulletMesh, const float InBulletSpeed = 50.0f);
         ~Weapon();
 
-        Projectile::Ptr Shoot();
+        void Shoot();
+
+        static bool RegisterScriptType();
 
     private:
-        GameObject::Ptr m_Owner;
+        float m_BulletSpeed;
+        String m_BulletMesh;
+        GameObject* m_Owner;
     };
 }

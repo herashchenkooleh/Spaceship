@@ -45,6 +45,7 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MeshComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Pawn.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/PlayerController.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/PlayerControllerScript.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/MoveComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/CollisionComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/CollisionSubSystem.cpp
@@ -64,7 +65,9 @@ set(sources_files ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/InputListenerComponent.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/FileSystemHelper.cpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/sources/Global.cpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Projectile.cpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Projectile.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/Weapon.cpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/sources/WeaponComponent.cpp)
 source_group("Source Files\\game" FILES ${sources_files})
 
 set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
@@ -89,6 +92,7 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MeshComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Pawn.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PlayerController.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/PlayerControllerScript.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/MoveComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/CollisionComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/CollisionSubSystem.hpp
@@ -109,7 +113,9 @@ set(headers_files ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputEvent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/InputListenerComponent.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/FileSystemHelper.hpp
                   ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/SpawnGameObject.hpp
-                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Projectile.hpp)
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Projectile.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/Weapon.hpp
+                  ${CMAKE_CURRENT_SOURCE_DIR}/include/ssg/WeaponComponent.hpp)
 source_group("Header Files\\game" FILES ${headers_files})
 
 add_executable(${PROJECT_NAME} ${headers_files} ${sources_files})

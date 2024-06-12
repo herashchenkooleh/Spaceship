@@ -16,30 +16,4 @@ namespace ssg
             }
         }
     }
-
-    /*virtual*/ bool GameObjectComponent::Construct()
-    {
-        for(auto& [TypeID, ChildComponent]: m_Components)
-        {
-            if (ChildComponent.first)
-            {
-                ChildComponent.second->Construct();
-            }
-        }
-
-        return true;
-    }
-
-    /*virtual*/ bool GameObjectComponent::Destroy()
-    {
-        for(auto& [TypeID, ChildComponent]: m_Components)
-        {
-            if (ChildComponent.first)
-            {
-                ChildComponent.second->Destroy();
-            }
-        }
-
-        return true;
-    }
 }

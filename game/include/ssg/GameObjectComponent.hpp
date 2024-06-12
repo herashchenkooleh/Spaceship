@@ -15,9 +15,6 @@ namespace ssg
 
         virtual void Update(const float InDeltaTime);
 
-        virtual bool Construct();
-        virtual bool Destroy();
-
         template<typename ComponentType>
         decltype(auto) AddComponent(typename ComponentType::Ptr InComponent, bool NeedUpdate = false)
         {

@@ -12,11 +12,12 @@ namespace ssg
         Projectile(const String& InTexturePath, const Transform& InTransform);
         virtual ~Projectile();
 
+        virtual void Update(const float InDeltaTime) override;
+
         void SetSpeed(const float InSpeed);
         float GetSpeed() const;
 
         void SetAcceleration(const Vector2D& InAcceleration);
         const Vector2D& GetAcceleration() const;
-
     };
 }

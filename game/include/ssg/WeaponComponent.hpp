@@ -1,19 +1,25 @@
 #pragma once
 
-#include "ssg/Waepon.hpp"
+#include "ssg/InputEvent.hpp"
+#include "ssg/Weapon.hpp"
 #include "ssg/GameObjectComponent.hpp"
 
 namespace ssg
 {
     class WeaponComponent : public GameObjectComponent
     {
-    private:
-        WeaponComponent();
+    public:
+        using Ptr = SharedPtr<WeaponComponent>;
+
+        WeaponComponent(class GameObject* InOwmer, const String& InWeaponMesh, const float InWeaponSpeed);
         virtual ~WeaponComponent();
 
-        virtual void Update(const float InDeltaTime);
+        Weapon::Ptr GetWeapon() { return m_Weapon; }
+        void SetWeapon(Weapon::Ptr InWeapon) { m_Weapon = InWeapon; }
 
-        virtual bool Construct();
-        virtual bool Destroy();
+        void OnMouseLeftButtonReleased(const InputEvent& InEvent);
+
+    private:
+        Weapon::Ptr m_Weapon;
     };
 }

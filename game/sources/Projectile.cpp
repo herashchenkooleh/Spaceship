@@ -1,5 +1,7 @@
 #include "ssg/Projectile.hpp"
 #include "ssg/MoveComponent.hpp"
+#include "ssg/TransformComponent.hpp"
+#include "ssg/GameEngine.hpp"
 
 namespace ssg
 {
@@ -10,6 +12,26 @@ namespace ssg
     }
 
     /*virtual*/ Projectile::~Projectile() = default;
+
+    /*virtual*/ void Projectile::Update(const float InDeltaTime) /*override*/
+    {
+        Pawn::Update(InDeltaTime);
+        
+        if(MoveComponent::Ptr MComponent = GetComponent<MoveComponent>())
+        {
+            if (TransformComponent::Ptr TComponent = GetComponent<TransformComponent>())
+            {
+                decltype(auto) WindowSize = GameEngine::GetInstance().GetWindowSize();
+                decltype(auto) Position = TComponent->GetTransform().GetPosition();
+
+                if (Position.GetX() < 0 || Position.GetY() < 0 || Position.GetX() > WindowSize.GetX() || Position.GetY() > WindowSize.GetY())
+                {
+                    MarkForDelete();
+                    return;
+                }
+            }
+        }
+    }
 
     void Projectile::SetSpeed(const float InSpeed)
     {

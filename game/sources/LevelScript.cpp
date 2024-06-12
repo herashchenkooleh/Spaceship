@@ -25,7 +25,7 @@ namespace ssg
                     m_Level->m_Background = SState->get_or<Pawn::Ptr>("background", nullptr);
                     m_Level->m_Foreground = SState->get_or<Pawn::Ptr>("foreground", nullptr);
                     m_Level->m_Character = SState->get_or<Pawn::Ptr>("character", nullptr);
-                    
+
                     return true;
                 }
             }

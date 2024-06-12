@@ -3,6 +3,7 @@
 #include "ssg/ScriptSubSystem.hpp"
 #include "sol/sol.hpp" 
 #include "ssg/World.hpp"
+#include "ssg/WeaponComponent.hpp"
 
 namespace ssg
 {
