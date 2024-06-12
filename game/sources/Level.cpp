@@ -47,6 +47,10 @@ namespace ssg
 
     void Level::Update(const float InDeltaTime)
     {
+        if (m_Spawner)
+        {
+            m_Spawner->Update(InDeltaTime);
+        }
         for (auto [Identifier, Object]: m_GameObjects)
         {
             Object->Update(InDeltaTime);
@@ -63,6 +67,7 @@ namespace ssg
         m_Character.reset();
         m_Background.reset();
         m_Foreground.reset();
+        m_Spawner.reset();
     }
 
     void Level::AddGameObject(GameObject::Ptr InObj)

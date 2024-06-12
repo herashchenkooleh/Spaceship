@@ -13,6 +13,7 @@
 #include "ssg/PlayerController.hpp"
 #include "ssg/SpawnGameObject.hpp"
 #include "ssg/Weapon.hpp"
+#include "ssg/AsteroidSpawner.hpp"
 
 namespace ssg
 {
@@ -58,8 +59,9 @@ namespace ssg
             Objective::RegisterScriptType();
             PlayerController::RegisterScriptType();
             Weapon::RegisterScriptType();
+            AsteroidSpawner::RegisterScriptType();
 
-            LuaState->set_function("SpawnGameObject", []() -> GameObject::Ptr { return SpawnGameObject<GameObject>(); });
+            LuaState->set_function("SpawnAsteroidSpawner", [](const String& InFilePat, const float InSpeed, const float InInterval) -> AsteroidSpawner::Ptr {  return SpawnGameObject<AsteroidSpawner>(InFilePat, InSpeed, InInterval); });
             LuaState->set_function("SpawnPawnObject", [](const String& InFilePat, const Transform& InTransform) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform); });
             LuaState->set_function("SpawnCharacter", [](const String& InFilePat, const Transform& InTransform, const String& InBulletsMesh, const float InBulletsSpeed) -> Pawn::Ptr { return SpawnGameObject<Pawn>(InFilePat, InTransform, InBulletsMesh, InBulletsSpeed); });
             LuaState->set_function("GetWindowSize", []() -> Vector2D { return GameEngine::GetInstance().GetWindowSize(); });

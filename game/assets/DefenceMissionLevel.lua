@@ -31,37 +31,41 @@ planet_2 = SpawnPawnObject("planet2.png", Transform.new(relative_planet_2_size *
 planet_3 = SpawnPawnObject("planet3.png", Transform.new(relative_planet_3_size * min_window_size, 0.0, relative_defence_area_3_pos * window_size, Vector2D.new(0.5, 0.5)))
 
 character = SpawnCharacter("ship.png", Transform.new(Vector2D.new(65.0, 65.0), 0.0, Vector2D.new(300.0, 300.0), Vector2D.new(0.5, 0.5)), "bullet.png", 100.0)
+asteroid_spawner = SpawnAsteroidSpawner("asteroid.png", 45.0, 5.0)
 
 defence_area_1.Update = function (self)
     dist_vec = character.transform.position - defence_area_1.transform.position
     distance = Length(dist_vec)
-    print(distance, (defence_area_1.transform.size.X / 2.0))
     if distance < (defence_area_1.transform.size.X / 2.0) then
         defence_area_1.visible = true
+        asteroid_spawner:AddTarget(defence_area_1)
     else
         defence_area_1.visible = false
+        asteroid_spawner:RemoveTarget(defence_area_1)
     end
 end
 
 defence_area_2.Update = function (self)
     dist_vec = character.transform.position - defence_area_2.transform.position
     distance = Length(dist_vec)
-    print(distance, (defence_area_2.transform.size.X / 2.0))
     if distance < (defence_area_2.transform.size.X / 2.0) then
         defence_area_2.visible = true
+        asteroid_spawner:AddTarget(defence_area_2)
     else
         defence_area_2.visible = false
+        asteroid_spawner:RemoveTarget(defence_area_2)
     end
 end
 
 defence_area_3.Update = function (self)
     dist_vec = character.transform.position - defence_area_3.transform.position
     distance = Length(dist_vec)
-    print(distance, (defence_area_3.transform.size.X / 2.0))
     if distance < (defence_area_3.transform.size.X / 2.0) then
         defence_area_3.visible = true
+        asteroid_spawner:AddTarget(defence_area_3)
     else
         defence_area_3.visible = false
+        asteroid_spawner:RemoveTarget(defence_area_3)
     end
 end
 

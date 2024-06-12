@@ -1,3 +1,3 @@
 level = Level.new()
 
-level.background = "MainMenuBackground.png"
+level.background = "MainMenuBackground.jpeg"

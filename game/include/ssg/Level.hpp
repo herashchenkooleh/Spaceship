@@ -3,6 +3,7 @@
 #include "ssg/Object.hpp"
 #include "ssg/GameObject.hpp"
 #include "ssg/Pawn.hpp"
+#include "ssg/AsteroidSpawner.hpp"
 
 namespace ssg
 {
@@ -31,5 +32,7 @@ namespace ssg
         Pawn::Ptr m_Foreground;
         Pawn::Ptr m_Character;
         Map<Object::Identifier, GameObject::Ptr> m_GameObjects;
+
+        AsteroidSpawner::Ptr m_Spawner;
     };
 }
