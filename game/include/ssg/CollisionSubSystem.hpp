@@ -26,6 +26,6 @@ namespace ssg
         virtual void UnregisterGameObject(GameObject::Ptr InObject) override;
 
     private:
-        Vector<CollisionComponent> m_Components;
+        Map<CollisionComponent::Layer, Map<Object::Identifier, CollisionComponent::Ptr>> m_Components;
     };
 }

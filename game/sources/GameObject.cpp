@@ -67,6 +67,7 @@ namespace ssg
     void GameObject::MarkForDelete()
     {
         World::GetCurrentWorld()->UnregisterGameObject(SharedFromThis(this));
+
         m_IsValid = false;
     };
 

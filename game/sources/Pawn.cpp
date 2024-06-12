@@ -81,6 +81,7 @@ namespace ssg
         if (CollisionComponent::Ptr CComponent = AddNewComponent<CollisionComponent>(static_cast<CollisionComponent::Layer>(InLayer)))
         {
             CComponent->AddComponent<MeshComponent>(MComponent);
+            //CComponent->SetOnCollisionEnter([]() { this->MarkForDelete(); });
         }
     }
 

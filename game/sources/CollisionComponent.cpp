@@ -1,6 +1,7 @@
 #include "ssg/CollisionComponent.hpp"
 #include "ssg/Transform.hpp"
 #include "ssg/TransformComponent.hpp"
+#include "ssg/MeshComponent.hpp"
 #include <cmath>
 
 namespace ssg
@@ -16,13 +17,23 @@ namespace ssg
     CollisionComponent::Manifold CollisionComponent::Intersect(CollisionComponent::Ptr InOther)
     {
         Manifold Result;
-        // if (m_Collidables.findIntersection(InOther->m_Collidables))
-        // {
-        //     Result.m_Collidig = true;
-        //     Result.m_Other = InOther;
-        // }
+        if (GetColliables().findIntersection(InOther->GetColliables()))
+        {
+            Result.m_Collidig = true;
+            Result.m_Other = InOther;
+        }
 
         return Result;
+    }
+
+    FloatRect CollisionComponent::GetColliables() const
+    {
+        if (MeshComponent::Ptr MComponent = GetComponent<MeshComponent>())
+        {
+            return MComponent->GetViewRect();
+        }
+
+        return FloatRect{};
     }
 
     void CollisionComponent::Resolve(const Manifold& InManifold)

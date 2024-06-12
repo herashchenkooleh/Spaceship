@@ -51,7 +51,8 @@ namespace ssg
     template <typename Iterator, typename Predicate>
     decltype(auto) RemoveIf(Iterator InBegin, Iterator InEnd, Predicate InPredicate)
     {
-        return std::remove_if(std::forward<Iterator>(InBegin), std::forward<Iterator>(InEnd), std::forward<Predicate>(InPredicate));
+        std::remove_if(std::forward<Iterator>(InBegin), std::forward<Iterator>(InEnd), std::forward<Predicate>(InPredicate));
+
     }
 
     template <typename Type>

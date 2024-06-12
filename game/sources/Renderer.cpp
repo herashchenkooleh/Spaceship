@@ -109,6 +109,8 @@ namespace ssg
                 Mesh->m_Sprite->setRotation(sf::degrees(CurrentTransform.GetRotation()));
                 Vector2D Position = CurrentTransform.GetPosition();
                 Mesh->m_Sprite->setPosition({ Position.GetX(), Position.GetY() });
+
+                Mesh->m_MeshComponent->SetViewRect(Mesh->m_Sprite->getGlobalBounds());
             }
             m_Implementation->m_HwRenderTarget->draw(*Mesh->m_Sprite.get());
         }
