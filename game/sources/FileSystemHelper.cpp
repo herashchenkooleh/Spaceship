@@ -6,7 +6,7 @@ namespace ssg
 {
     /*static*/ String FileSystemHelper::GetLaunchDirectory()
     {
-        return std::filesystem::current_path();
+        return std::filesystem::current_path().string();
     }
 
     /*static*/ String FileSystemHelper::Join(const String& InLPath, const String& InRPath)
