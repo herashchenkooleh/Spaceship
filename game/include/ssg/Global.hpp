@@ -96,10 +96,7 @@ namespace ssg
         return std::bind(std::forward<FunctionType>(InFunction), std::forward<Args>(InArgs)...);
     }
 
-    template<size_t Index>
-    using Placeholder = std::placeholders::__ph<Index>;
-
-    extern Placeholder<1> Placeholder1;
+    decltype(auto) Placeholder1 = std::placeholders::_1;
 
     template <typename Type, typename... Args>
     SharedPtr<Type> MakeShared(Args &&...InArgs)
