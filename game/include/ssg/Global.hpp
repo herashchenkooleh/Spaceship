@@ -96,7 +96,15 @@ namespace ssg
         return std::bind(std::forward<FunctionType>(InFunction), std::forward<Args>(InArgs)...);
     }
 
-    decltype(auto) Placeholder1 = std::placeholders::_1;
+#if defined(_MSC_VER)
+    template<int N>
+    using Placeholder = std::_Ph<N>;
+#else
+    template<int N>
+    using Placeholder = std::placeholders::__ph<N>;
+#endif
+
+    extern Placeholder<1> Placeholder1;
 
     template <typename Type, typename... Args>
     SharedPtr<Type> MakeShared(Args &&...InArgs)
